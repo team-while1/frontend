@@ -58,7 +58,7 @@ export default function CategoryPage({ title }) {
           + 모임 추가
         </CommonButton>
       </div>
-
+      <div className="line" />
       <div className="category-list">
         {filteredMeetings.length === 0 ? (
           <p className="empty-text">아직 등록된 모임이 없습니다.</p>

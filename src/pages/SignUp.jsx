@@ -65,56 +65,51 @@ export default function SignUp() {
       <div className="titleWrap">회원가입</div>
 
       <div className="contentWrap">
-        <div className="inputTitle">이름</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="예: 홍길동"
+            placeholder="이름"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
 
-        <div className="inputTitle">학교</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="예: 한국대학교"
+            placeholder="대학교"
             value={school}
             onChange={(e) => setSchool(e.target.value)}
           />
         </div>
 
-        <div className="inputTitle">학번</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="예: 202312345"
+            placeholder="학번"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
           />
         </div>
 
-        <div className="inputTitle">학과</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="예: 소프트웨어공학과"
+            placeholder="학과"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
           />
         </div>
-
-        <div className="inputTitle">이메일</div>
+        <hr className="line" />
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="email@example.com"
+            placeholder="이메일"
             value={email}
             onChange={handleEmail}
           />
@@ -123,12 +118,11 @@ export default function SignUp() {
           {!emailValid && email.length > 0 && <div>올바른 이메일 형식을 입력하세요.</div>}
         </div>
 
-        <div className="inputTitle" style={{ marginTop: '26px' }}>비밀번호</div>
         <div className="inputWrap">
           <input
             type="password"
             className="input"
-            placeholder="영문, 숫자, 특수문자 포함 8자 이상"
+            placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8자 이상)"
             value={pw}
             onChange={handlePw}
           />
@@ -137,12 +131,11 @@ export default function SignUp() {
           {!pwValid && pw.length > 0 && <div>비밀번호 조건을 확인해주세요.</div>}
         </div>
 
-        <div className="inputTitle" style={{ marginTop: '26px' }}>비밀번호 확인</div>
         <div className="inputWrap">
           <input
             type="password"
             className="input"
-            placeholder="비밀번호 재입력"
+            placeholder="비밀번호 확인"
             value={confirmPw}
             onChange={handleConfirmPw}
           />
