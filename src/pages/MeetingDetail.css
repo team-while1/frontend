@@ -1,0 +1,49 @@
+.meeting-detail {
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .meeting-detail h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .meeting-detail p {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .join-button {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #722f37;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .join-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  
+  .participants-section {
+    margin-top: 30px;
+    font-size: 15px;
+  }
+  
+  .participants-section ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .back-button {
+    margin-top: 30px;
+    padding: 8px 16px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }

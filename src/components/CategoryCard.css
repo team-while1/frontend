@@ -1,0 +1,81 @@
+/* CategoryPage.css */
+
+.category-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* 상단 카테고리 버튼 탭 */
+  .category-nav {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .category-tab {
+    padding: 8px 14px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .category-tab:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .category-tab.active {
+    background-color: #2E7D32;
+    color: white;
+    font-weight: bold;
+    border-color: #2E7D32;
+  }
+  
+  /* 타이틀 + 모임 추가 버튼 */
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .category-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .create-button {
+    padding: 8px 16px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .create-button:hover {
+    background-color: #388e3c;
+  }
+  
+  /* 모임 리스트 (그리드) */
+  .category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  /* 비어있을 때 안내 문구 */
+  .empty-text {
+    text-align: center;
+    width: 100%;
+    color: #888;
+    margin-top: 40px;
+  }

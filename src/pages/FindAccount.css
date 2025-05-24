@@ -1,0 +1,82 @@
+.page-findAccount {
+    position: relative;
+    top: 100px;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+    border-radius: 30px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  
+  .tabWrap {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    margin-bottom: 16px;
+  }
+  
+  .tabWrap button {
+    padding: 10px 20px;
+    border: none;
+    font-weight: 700;
+    background-color: #f7f7f7;
+    border-radius: 20px;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .tabWrap button:hover {
+    background-color: #ddd;
+  }
+  
+  .contentWrap {
+    margin-bottom: 30px;
+  }
+  
+  .inputTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #262626;
+    margin-top: 20px;
+  }
+  
+  .inputWrap {
+    display: flex;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    background-color: white;
+    border: 1px solid #e2e0e0;
+  }
+  
+  .input {
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 20px;
+    font-size: 14px;
+  }
+  
+  .bottomButton {
+    width: 100%;
+    height: 48px;
+    border: none;
+    font-weight: 700;
+    background-color: #722f37;
+    border-radius: 64px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .resultMessageWrap {
+    text-align: center;
+    color: #222;
+    font-weight: bold;
+  }

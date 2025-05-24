@@ -1,0 +1,42 @@
+.home-container {
+  display: grid;
+  grid-template-columns: 160px 160px;  /* 한 줄에 두 칼럼 고정 */
+  justify-content: center;             /* 전체 그리드 중앙 정렬 */
+  gap: 20px;                            /* 카드 간격 */
+  padding: 40px;
+  margin: 0 auto;
+}
+
+.category-card {
+  margin-top: 100px;
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #2E7D32; /* primary green */
+}
+
+.category-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.category-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2E7D32; /* primary green */
+  text-align: center;
+}
