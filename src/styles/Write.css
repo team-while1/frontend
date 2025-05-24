@@ -1,0 +1,156 @@
+/* 전체 레이아웃 */
+.write-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+}
+
+/* 좌측 사이드바 */
+.sidebar {
+  width: 220px;
+  background-color: #e5e7eb;
+  padding: 32px 20px;
+  border-right: 1px solid #ccc;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #1e3a8a;
+}
+
+.sidebar input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.sidebar-label {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* 메인 작성 영역 */
+.write-main {
+  flex: 1;
+  padding: 40px 80px;         /* ✅ 좌우 넓게 */
+  display: flex;
+  justify-content: flex-start; /* ✅ 가운데 아님 */
+  align-items: stretch;        /* ✅ 전체 세로 채우기 */
+}
+
+/* 메인 작성 박스 */
+.form-wrapper {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 48px;
+  border-radius: 8px;
+  width: 100%;               /* ✅ 전체 너비로 */
+  max-width: unset;          /* ✅ 최대 너비 제한 해제 */
+  box-sizing: border-box;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+  color: #1e3a8a;
+}
+
+.write-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.write-form label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.write-form input,
+.write-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  transition: 0.2s ease;
+}
+
+.write-form input:focus,
+.write-form textarea:focus {
+  outline: none;
+  border-color: #1e3a8a;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+}
+
+.write-form textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.preview {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  margin-top: 10px;
+}
+
+.no-image {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.button-box {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn.primary {
+  background-color: #1e3a8a;
+  color: white;
+}
+
+.btn.primary:hover {
+  background-color: #172554;
+  transform: translateY(-1px);
+}
+
+.btn.secondary {
+  background-color: #e2e8f0;
+  color: #374151;
+}
+
+.btn.secondary:hover {
+  background-color: #cbd5e1;
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: -6px;
+  margin-bottom: 8px;
+}
