@@ -6,8 +6,8 @@ import MeetingDetail from './pages/MeetingDetail';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import FindAccount from './pages/FindAccount';
-import NotFound from './pages/NotFound'; // 선택
-import CreateMeeting from './pages/CreateMeeting'; // ← import 추가
+import NotFound from './pages/NotFound'; 
+import Write from './pages/Write';
 import { UserProvider } from './contexts/UserContext';
 
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/competition" element={<CategoryPage title="공모전" />} />
         <Route path="/etc" element={<CategoryPage title="기타" />} />
 
-        <Route path="/create" element={<CreateMeeting />} />
+        <Route path="/create" element={<Write />} />
 
         {/* 모임 상세 */}
         <Route path="/:category/:id" element={<MeetingDetail />} />
