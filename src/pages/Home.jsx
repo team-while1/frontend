@@ -40,7 +40,7 @@ const categories = [
   return (
   <div className="home-container">
     {categories.map((cat)=> (
-     <div className="category-card" onClick={() => navigate(cat.path)}>
+     <div className="category-card-home" onClick={() => navigate(cat.path)}>
       <div className="card-inner">
         <div className="category-title">{cat.title}</div>
         <div className="category-content">{cat.content}</div>
