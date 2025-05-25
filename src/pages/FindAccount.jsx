@@ -1,5 +1,6 @@
+import React from "react";
+import "./FindAccount.css";
 import useFindAccountForm from "../hooks/useFindAccountForm";
-import styles from "./FindAccount.module.css";
 import TabSelector from "../components/TabSelector";
 import ResultMessage from "../components/ResultMessage";
 import FormInput from "../components/FormInput";
@@ -17,10 +18,10 @@ export default function FindAccount() {
   } = useFindAccountForm();
 
   return (
-    <div className={styles.page}>
+    <div className="page-findAccount">
       <TabSelector activeTab={activeTab} onChange={handleTabChange} />
 
-      <div className={styles.contentWrap}>
+      <div className="contentWrap">
         <FormInput
           placeholder="이름"
           value={name}
@@ -37,7 +38,7 @@ export default function FindAccount() {
         )}
       </div>
 
-      <button className={styles.bottomButton} onClick={handleSearch}>
+      <button className="bottomButton" onClick={handleSearch}>
         확인
       </button>
 
