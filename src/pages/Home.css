@@ -8,6 +8,7 @@
   margin-top: 100px;
 }
 
+
 .category-card-home  {
   width: 500px;
   height: 300px;
@@ -15,6 +16,7 @@
   background: linear-gradient(135deg, #3751D5 0%, #3A84FF 69%, #6ECFFF 100%);
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
   display: flex;
   align-items: center;
   justify-content: center;
