@@ -1,4 +1,4 @@
-export default function FormInput({ type = "text", value, onChange, placeholder }) {
+export default function FormInput({ type = "text", placeholder, value, onChange, autoFocus }) {
     return (
       <div className="inputWrap">
         <input
@@ -7,6 +7,7 @@ export default function FormInput({ type = "text", value, onChange, placeholder 
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          autoFocus={autoFocus}
         />
       </div>
     );
