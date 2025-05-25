@@ -62,6 +62,7 @@ export default function Login() {
             placeholder="이메일"
             value={email}
             onChange={handleEmail}
+            autoFocus
           />
         </div>
         <div className="errorMessageWrap">

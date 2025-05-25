@@ -63,6 +63,7 @@ export default function FindAccount() {
             placeholder="이름"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
         </div>
 
