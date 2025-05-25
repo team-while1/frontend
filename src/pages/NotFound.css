@@ -6,7 +6,7 @@
   
   .notfound-container h1 {
     font-size: 100px;
-    color: #722f37;
+    color: #3751D5;
     margin-bottom: 20px;
   }
   
@@ -18,7 +18,7 @@
   
   .home-link {
     display: inline-block;
-    background-color: #722f37;
+    background-color: #3751D5;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
@@ -28,5 +28,5 @@
   }
   
   .home-link:hover {
-    background-color: #a0464f;
+    background-color: #3751D5;
   }

@@ -55,12 +55,11 @@ export default function Login() {
       <div className="titleWrap">로그인</div>
 
       <div className="contentWrap">
-        <div className="inputTitle">이메일</div>
         <div className="inputWrap">
           <input
             className="input"
             type="text"
-            placeholder="email@example.com"
+            placeholder="이메일"
             value={email}
             onChange={handleEmail}
           />
@@ -71,13 +70,10 @@ export default function Login() {
           )}
         </div>
 
-        <div className="inputTitle" style={{ marginTop: "26px" }}>
-          비밀번호
-        </div>
         <div className="inputWrap">
           <input
             className="input"
-            type="password"
+            type="비밀번호"
             placeholder="영문, 숫자, 특수문자 포함 8자 이상"
             value={pw}
             onChange={handlePw}

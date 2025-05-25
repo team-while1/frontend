@@ -7,9 +7,19 @@
 /* 상단 카테고리 버튼 탭 */
 .category-nav {
   display: flex;
+  justify-content: space-between; /* 🔥 좌우에 정렬되게 함 */
+  flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 20px;
-  margin-top: 100px;
+  margin: 40px auto 20px auto;
+  max-width: 800px; /* 🔥 가운데 정렬과 양쪽 여백 */
+  padding: 0 20px;
+}
+
+.category-nav button {
+  flex: 1 1 180px; /* 유연하게 너비 조절되게 */
+  max-width: 200px;
+  min-width: 140px;
+  font-size: 15px;
 }
 
 .category-tab {
@@ -27,10 +37,10 @@
 }
 
 .category-tab.active {
-  background-color: #2E7D32;
+  background-color: #3751D5;
   color: white;
   font-weight: bold;
-  border-color: #2E7D32;
+  border-color: #3751D5;
 }
 
 /* 타이틀 + 모임 추가 버튼 */
@@ -49,7 +59,7 @@
 
 .create-button {
   padding: 8px 16px;
-  background-color: #2E7D32;
+  background-color: #3751D5;
   color: white;
   border: none;
   border-radius: 6px;
@@ -59,7 +69,7 @@
 }
 
 .create-button:hover {
-  background-color: #388e3c;
+  background-color: #3751D5;
 }
 
 /* 모임 리스트 (그리드) */
@@ -73,10 +83,14 @@
 
 /* 비어있을 때 안내 문구 */
 .empty-text {
-  text-align: center;
-  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
   color: #888;
-  margin-top: 40px;
+  display: inline-block;
+
 }
 
 /* 모임 카드 (애니메이션 포함) */
@@ -151,7 +165,7 @@
 
 .gauge-fill {
   height: 100%;
-  background-color: #2E7D32;
+  background-color: #3751D5;
   transition: width 1s ease-in-out;
 }
 
@@ -164,4 +178,11 @@
 
 .category-search {
   width: 1000px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-top: 16px;
 }
