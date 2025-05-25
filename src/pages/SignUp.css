@@ -85,6 +85,12 @@
   font-weight: bold;
 }
 
+.bottomButton:hover:enabled {
+  background-color: #3751D5;
+  color: white;
+  font-size: bold;
+}
+
 .line {
   border: none;
   border-top: 1px solid #cecece;
