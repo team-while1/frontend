@@ -74,7 +74,7 @@ export default function Login() {
           <input
             className="input"
             type="비밀번호"
-            placeholder="영문, 숫자, 특수문자 포함 8자 이상"
+            placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8자 이상)"
             value={pw}
             onChange={handlePw}
           />
@@ -92,7 +92,7 @@ export default function Login() {
           onClick={handleLogin}
           disabled={notAllow}
         >
-          로그인
+          확인
         </button>
       </div>
 

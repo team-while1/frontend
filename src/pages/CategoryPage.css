@@ -76,7 +76,7 @@
 .category-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  gap: 30px;
   justify-content: center;
   align-items: stretch;
 }
@@ -122,11 +122,12 @@
 
 /* 카드 이미지 */
 .card-image {
-  width: 100%;
+  width: 180px;
   height: 120px;
   object-fit: cover;
-  border-bottom: 1px solid #ddd;
-  background-color: #f0f0f0;
+  background-color: white;
+  padding: 10px;
+  margin-left: 40px;
 }
 
 /* 카드 내용 */

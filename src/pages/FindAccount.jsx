@@ -39,18 +39,28 @@ export default function FindAccount() {
 
   return (
     <div className="page-findAccount">
-      <div className="tabWrap">
-        <button onClick={() => handleTabChange("findId")}>아이디 찾기</button>
-        <button onClick={() => handleTabChange("findPw")}>비밀번호 찾기</button>
-      </div>
+<div className="tabWrap">
+  <button
+    className={`tab-button ${activeTab === "findId" ? "active" : ""}`}
+    onClick={() => handleTabChange("findId")}
+  >
+    아이디 찾기
+  </button>
+  <button
+    className={`tab-button ${activeTab === "findPw" ? "active" : ""}`}
+    onClick={() => handleTabChange("findPw")}
+  >
+    비밀번호 찾기
+  </button>
+</div>
 
       <div className="contentWrap">
-        <div className="inputTitle">이름</div>
+        <div className="inputTitle"></div>
         <div className="inputWrap">
           <input
             className="input"
             type="text"
-            placeholder="이름 입력"
+            placeholder="이름"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -58,12 +68,12 @@ export default function FindAccount() {
 
         {activeTab === "findPw" && (
           <>
-            <div className="inputTitle" style={{ marginTop: "26px" }}>이메일</div>
+            <div className="inputTitle" style={{ marginTop: "26px" }}></div>
             <div className="inputWrap">
               <input
                 className="input"
                 type="text"
-                placeholder="가입된 이메일 입력"
+                placeholder="이메일"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -73,7 +83,7 @@ export default function FindAccount() {
       </div>
 
       <button className="bottomButton" onClick={handleSearch}>
-        {activeTab === "findId" ? "아이디 찾기" : "비밀번호 찾기"}
+        {activeTab === "findId" ? "확인" : "확인"}
       </button>
 
       {foundInfo && (
@@ -82,3 +92,4 @@ export default function FindAccount() {
     </div>
   );
 }
+

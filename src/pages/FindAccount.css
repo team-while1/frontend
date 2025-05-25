@@ -4,16 +4,17 @@
     width: 100%;
     max-width: 500px;
     padding: 0 20px;
-    border-radius: 30px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-radius: 20px;
     left: 50%;
     transform: translate(-50%, 0);
-    background-color: #f7f7f7;
+    background-color: #ffffff;
+    border: 1px solid #cecece;
     display: flex;
     flex-direction: column;
     margin-bottom: 100px;
   }
-  
+
+
   .tabWrap {
     display: flex;
     justify-content: space-around;
@@ -22,17 +23,16 @@
   }
   
   .tabWrap button {
-    padding: 10px 20px;
+    width: 100%;
     border: none;
     font-weight: 700;
-    background-color: #f7f7f7;
-    border-radius: 20px;
+    background-color: #ffffff;
     color: #333;
     cursor: pointer;
   }
   
   .tabWrap button:hover {
-    background-color: #ddd;
+    background-color: #e0e0e0;
   }
   
   .contentWrap {
@@ -62,11 +62,16 @@
     height: 20px;
     font-size: 14px;
   }
+
+  .input::placeholder {
+  color: #7d7d7d; 
+  opacity: 1; 
+}
   
   .bottomButton {
     width: 100%;
     height: 48px;
-    border: 1px solid #3751D5;
+    border: 2px solid #3751D5;
     font-weight: 700;
     background-color: #ffffff;
     border-radius: 10px;
@@ -75,8 +80,59 @@
     margin-bottom: 20px;
   }
   
-  .resultMessageWrap {
-    text-align: center;
-    color: #222;
-    font-weight: bold;
-  }
+.resultMessageWrap {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #ef0000;
+  text-align: center;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.tabWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.tab-button.active {
+  background-color: #f0f0f0; /* 선택된 탭은 흰색 */
+  border: 2px solid #f0f0f0;
+  color: #111;
+  font-weight: 700;
+
+}
+
+
+.tab-button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 기본: 좌우 둥글게 */
+.tab-button:first-child {
+  border-radius: 10px 0 0 10px;
+}
+.tab-button:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+/* ✅ active인 경우: 반대쪽만 둥글게 */
+.tab-button.active:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.tab-button.active:last-child {
+  border-radius: 0 10px 10px 0;
+}

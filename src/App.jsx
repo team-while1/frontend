@@ -29,7 +29,8 @@ function App() {
         <Route path="/create" element={<Write />} />
 
         {/* 모임 상세 */}
-<Route path="/:category/:id" element={<ClubDetail />} />
+        <Route path="/:category/:id" element={<ClubDetail />} />
+
         {/* 인증 */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
