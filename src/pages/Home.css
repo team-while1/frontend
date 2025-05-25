@@ -5,10 +5,11 @@
   gap: 20px;                            /* 카드 간격 */
   padding: 40px;
   margin: 0 auto;
+  margin-top: 100px;
 }
 
 .category-card {
-  margin-top: 100px;
+  margin-top: 10px;
   width: 160px;
   height: 160px;
   border-radius: 16px;
