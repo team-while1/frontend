@@ -5,15 +5,17 @@
   gap: 100px;
   padding: 40px;
   margin: 0 auto;
+  margin-top: 100px;
 }
 
 .category-card {
-  width: 500px;
-  height: 300px;
-  border-radius: 24px !important;
-  background: linear-gradient(135deg, #3751D5 0%, #3A84FF 69%, #6ECFFF 100%);
-  border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
