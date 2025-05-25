@@ -1,96 +1,47 @@
-import React, { useState } from "react";
-import './FindAccount.css';
+import useFindAccountForm from "../hooks/useFindAccountForm";
+import styles from "./FindAccount.module.css";
+import TabSelector from "../components/TabSelector";
+import ResultMessage from "../components/ResultMessage";
+import FormInput from "../components/FormInput";
 
 export default function FindAccount() {
-  const [activeTab, setActiveTab] = useState("findId");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [foundInfo, setFoundInfo] = useState("");
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setEmail("");
-    setName("");
-    setFoundInfo("");
-  };
-
-  const handleSearch = () => {
-    const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
-
-    if (!storedUser) {
-      setFoundInfo("등록된 사용자 정보가 없습니다.");
-      return;
-    }
-
-    if (activeTab === "findId") {
-      if (storedUser.name === name) {
-        setFoundInfo(`가입된 이메일은: ${storedUser.email}`);
-      } else {
-        setFoundInfo("일치하는 사용자를 찾을 수 없습니다.");
-      }
-    } else {
-      if (storedUser.email === email && storedUser.name === name) {
-        setFoundInfo(`비밀번호는: ${storedUser.password}`);
-      } else {
-        setFoundInfo("입력하신 정보가 일치하지 않습니다.");
-      }
-    }
-  };
+  const {
+    activeTab,
+    email,
+    name,
+    foundInfo,
+    setEmail,
+    setName,
+    handleTabChange,
+    handleSearch
+  } = useFindAccountForm();
 
   return (
-    <div className="page-findAccount">
-<div className="tabWrap">
-  <button
-    className={`tab-button ${activeTab === "findId" ? "active" : ""}`}
-    onClick={() => handleTabChange("findId")}
-  >
-    아이디 찾기
-  </button>
-  <button
-    className={`tab-button ${activeTab === "findPw" ? "active" : ""}`}
-    onClick={() => handleTabChange("findPw")}
-  >
-    비밀번호 찾기
-  </button>
-</div>
+    <div className={styles.page}>
+      <TabSelector activeTab={activeTab} onChange={handleTabChange} />
 
-      <div className="contentWrap">
-        <div className="inputTitle"></div>
-        <div className="inputWrap">
-          <input
-            className="input"
-            type="text"
-            placeholder="이름"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-          />
-        </div>
+      <div className={styles.contentWrap}>
+        <FormInput
+          placeholder="이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoFocus
+        />
 
         {activeTab === "findPw" && (
-          <>
-            <div className="inputTitle" style={{ marginTop: "26px" }}></div>
-            <div className="inputWrap">
-              <input
-                className="input"
-                type="text"
-                placeholder="이메일"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </>
+          <FormInput
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         )}
       </div>
 
-      <button className="bottomButton" onClick={handleSearch}>
-        {activeTab === "findId" ? "확인" : "확인"}
+      <button className={styles.bottomButton} onClick={handleSearch}>
+        확인
       </button>
 
-      {foundInfo && (
-        <div className="resultMessageWrap">{foundInfo}</div>
-      )}
+      {foundInfo && <ResultMessage message={foundInfo} />}
     </div>
   );
 }
-

@@ -1,5 +1,9 @@
 /* CategoryPage.css */
 
+.category-card {
+  margin-top: 35px;
+}
+
 .category-page {
     padding: 20px;
     max-width: 1200px;
