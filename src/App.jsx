@@ -9,6 +9,7 @@ import FindAccount from './pages/FindAccount';
 import NotFound from './pages/NotFound'; 
 import Write from './pages/Write';
 import { UserProvider } from './contexts/UserContext';
+import Footer from './components/Footer'; // 추가
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         {/* 예외 */}
         <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
       </Routes>
+      <Footer /> {/* 항상 하단에 고정 */}
       </UserProvider>
     </>
   );
