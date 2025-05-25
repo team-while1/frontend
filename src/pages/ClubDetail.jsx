@@ -20,15 +20,6 @@ function ClubDetail() {
 
   return (
     <>
-      {/* ✅ 고정 상단 네비게이터 */}
-      <header className="club-navbar">
-        <div className="navbar-inner">
-          <span className="navbar-logo" onClick={() => navigate('/')}>KNUNNECT</span>
-          <span className="navbar-title">{title}</span>
-          <button className="navbar-button" onClick={() => navigate(-1)}>목록으로</button>
-        </div>
-      </header>
-
       <div className="club-detail-layout">
         <div className="club-main">
           <div className="club-content-area">

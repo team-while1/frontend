@@ -6,7 +6,7 @@
 }
 
 /* 좌측 사이드바 */
-.sidebar {
+/* .sidebar {
   width: 220px;
   background-color: #e2e8f0;
   padding: 32px 20px;
@@ -30,12 +30,12 @@
 .sidebar-label {
   font-size: 14px;
   color: #374151;
-}
+} */
 
 /* 메인 작성 영역 */
 .write-main {
   flex: 1;
-  padding: 40px 80px;         /* ✅ 좌우 넓게 */
+  padding: 100px 300px;         /* ✅ 좌우 넓게 */
   display: flex;
   justify-content: flex-start; /* ✅ 가운데 아님 */
   align-items: stretch;        /* ✅ 전체 세로 채우기 */
@@ -45,7 +45,7 @@
 .form-wrapper {
   background-color: #ffffff;
   border: 1px solid #cecece;
-  padding: 48px;
+  padding: 80px;
   border-radius: 8px;
   width: 100%;               /* ✅ 전체 너비로 */
   max-width: unset;          /* ✅ 최대 너비 제한 해제 */

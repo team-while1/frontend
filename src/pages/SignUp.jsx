@@ -147,7 +147,7 @@ export default function SignUp() {
 
       <div>
         <button onClick={handleSubmit} disabled={notAllow} className="bottomButton">
-          회원가입
+          확인
         </button>
       </div>
     </div>

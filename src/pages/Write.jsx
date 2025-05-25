@@ -57,11 +57,11 @@ function Write() {
   return (
     <div className="write-layout">
       {/* 사이드바 */}
-      <aside className="sidebar">
+      {/* <aside className="sidebar">
         <h2>KNUNNECT :</h2>
         <input placeholder="Search..." />
         <p className="sidebar-label">동아리 모집 게시판</p>
-      </aside>
+      </aside> */}
 
       {/* 메인 */}
       <main className="write-main">
@@ -101,7 +101,7 @@ function Write() {
               <button type="submit" className="btn primary" disabled={loading}>
                 {loading ? '등록 중...' : '글 등록하기'}
               </button>
-              <button type="button" className="btn secondary" onClick={() => navigate('/')}>
+              <button type="button" className="btn secondary" onClick={() => navigate('/club')}>
                 목록보기
               </button>
             </div>
