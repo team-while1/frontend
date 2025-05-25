@@ -9,7 +9,7 @@ export default function Header() {
     <header className="header">
       <h1 className="logo">
         <Link to="/" className="logo-link">
-          KNUNECT
+        <img src="/logo3.png" alt="KUNNECT Logo" width="120"/>       
         </Link>
       </h1>
 

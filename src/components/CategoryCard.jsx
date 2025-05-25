@@ -1,5 +1,5 @@
 import "./CategoryCard.css";
-import megaphoneImg from "../assets/확성기.jpg";
+import megaphoneImg from "../assets/empty_img.png";
 
 export default function CategoryCard({ meeting, onClick }) {
   const participantCount = meeting.participants?.length || 0;

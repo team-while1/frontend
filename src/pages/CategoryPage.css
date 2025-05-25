@@ -7,9 +7,19 @@
 /* 상단 카테고리 버튼 탭 */
 .category-nav {
   display: flex;
+  justify-content: space-between; /* 🔥 좌우에 정렬되게 함 */
+  flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 20px;
-  margin-top: 100px;
+  margin: 40px auto 20px auto;
+  max-width: 800px; /* 🔥 가운데 정렬과 양쪽 여백 */
+  padding: 0 20px;
+}
+
+.category-nav button {
+  flex: 1 1 180px; /* 유연하게 너비 조절되게 */
+  max-width: 200px;
+  min-width: 140px;
+  font-size: 15px;
 }
 
 .category-tab {
@@ -79,6 +89,8 @@
   transform: translate(-50%, -50%);
   font-size: 16px;
   color: #888;
+  display: inline-block;
+
 }
 
 /* 모임 카드 (애니메이션 포함) */
