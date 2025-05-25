@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
-import MeetingDetail from './pages/MeetingDetail';
+import ClubDetail from './pages/ClubDetail';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import FindAccount from './pages/FindAccount';
@@ -29,7 +29,7 @@ function App() {
         <Route path="/create" element={<Write />} />
 
         {/* 모임 상세 */}
-        <Route path="/:category/:id" element={<MeetingDetail />} />
+        <Route path="/:category/:id" element={<ClubDetail />} />
 
         {/* 인증 */}
         <Route path="/login" element={<Login />} />
