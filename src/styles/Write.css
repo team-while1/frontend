@@ -2,13 +2,13 @@
 .write-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f3f4f6;
+  background-color: #ffffff;
 }
 
 /* 좌측 사이드바 */
 .sidebar {
   width: 220px;
-  background-color: #e5e7eb;
+  background-color: #e2e8f0;
   padding: 32px 20px;
   border-right: 1px solid #ccc;
 }
@@ -16,7 +16,7 @@
 .sidebar h2 {
   font-size: 20px;
   margin-bottom: 24px;
-  color: #1e3a8a;
+  color: #000000;
 }
 
 .sidebar input {
@@ -44,7 +44,7 @@
 /* 메인 작성 박스 */
 .form-wrapper {
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #cecece;
   padding: 48px;
   border-radius: 8px;
   width: 100%;               /* ✅ 전체 너비로 */
@@ -56,9 +56,9 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 24px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #cecece;
   padding-bottom: 12px;
-  color: #1e3a8a;
+  color: #000000;
 }
 
 .write-form {
@@ -70,7 +70,7 @@
 .write-form label {
   font-weight: 600;
   font-size: 1rem;
-  color: #1f2937;
+  color: #000000;
 }
 
 .write-form input,
@@ -78,18 +78,17 @@
   width: 100%;
   padding: 14px 18px;
   font-size: 1rem;
-  border: 1px solid #cbd5e0;
+  border: 1px solid #e0e0e0;
   border-radius: 6px;
-  background-color: #f9fafb;
+  background-color: #ffffff;
   transition: 0.2s ease;
 }
 
 .write-form input:focus,
 .write-form textarea:focus {
   outline: none;
-  border-color: #1e3a8a;
+  border-color: #3751D5;
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
 }
 
 .write-form textarea {
@@ -130,12 +129,12 @@
 }
 
 .btn.primary {
-  background-color: #1e3a8a;
+  background-color: #3A84FF;
   color: white;
 }
 
 .btn.primary:hover {
-  background-color: #172554;
+  background-color: #3751D5;
   transform: translateY(-1px);
 }
 

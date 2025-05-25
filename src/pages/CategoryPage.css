@@ -27,10 +27,10 @@
 }
 
 .category-tab.active {
-  background-color: #2E7D32;
+  background-color: #3751D5;
   color: white;
   font-weight: bold;
-  border-color: #2E7D32;
+  border-color: #3751D5;
 }
 
 /* 타이틀 + 모임 추가 버튼 */
@@ -49,7 +49,7 @@
 
 .create-button {
   padding: 8px 16px;
-  background-color: #2E7D32;
+  background-color: #3751D5;
   color: white;
   border: none;
   border-radius: 6px;
@@ -59,7 +59,7 @@
 }
 
 .create-button:hover {
-  background-color: #388e3c;
+  background-color: #3751D5;
 }
 
 /* 모임 리스트 (그리드) */
@@ -73,10 +73,12 @@
 
 /* 비어있을 때 안내 문구 */
 .empty-text {
-  text-align: center;
-  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
   color: #888;
-  margin-top: 40px;
 }
 
 /* 모임 카드 (애니메이션 포함) */
@@ -151,7 +153,7 @@
 
 .gauge-fill {
   height: 100%;
-  background-color: #2E7D32;
+  background-color: #3751D5;
   transition: width 1s ease-in-out;
 }
 
@@ -164,4 +166,11 @@
 
 .category-search {
   width: 1000px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-top: 16px;
 }
