@@ -40,14 +40,12 @@ export default function CategoryPage({ title }) {
     <div className="category-page">
       <div className="category-nav">
         {categories.map((cat) => (
-          <CommonButton
-            key={cat.path}
-            type="tab"
-            className={cat.path === `/${category}` ? "active" : ""}
-            onClick={() => navigate(cat.path)}
-          >
+          <button
+          key={cat.path}
+          className={`common-button tab ${cat.path === `/${category}` ? 'active' : ''}`}
+          onClick={() => navigate(cat.path)}>
             {cat.label}
-          </CommonButton>
+          </button>
         ))}
       </div>
 
@@ -59,19 +57,23 @@ export default function CategoryPage({ title }) {
         </CommonButton>
       </div>
       <div className="line" />
+      {filteredMeetings.length === 0 ? (
+        <div className="empty-wrapper-inline">
+          <p className="empty-text">
+            아직 등록된 모임이 없습니다.
+          </p>
+        </div>
+) : (
       <div className="category-list">
-        {filteredMeetings.length === 0 ? (
-          <p className="empty-text">아직 등록된 모임이 없습니다.</p>
-        ) : (
-          filteredMeetings.map((meeting, index) => (
-            <CategoryCard
-              key={index}
-              meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`)}
-            />
-          ))
-        )}
+      {filteredMeetings.map((meeting, index) => (
+        <CategoryCard
+         key={index}
+         meeting={meeting}
+          onClick={() => navigate(`/${category}/${index}`)}
+        />
+      ))}
       </div>
+)}
     </div>
   );
 }
