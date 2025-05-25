@@ -2,53 +2,62 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 40px;
-  background-color: #2E7D32; /* primary green */
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 18px 20px;
+  background-color: #ffffff; 
+  color: #000000;
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid #bcd5f7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 800;
   letter-spacing: 1px;
+  align-items: center;
+}
+
+.logo img {
+  margin-right: 10px;
 }
 
 .logo-link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
 }
 
 .nav {
   display: flex;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-link,
 .nav-button {
-  font-size: 15px;
-  color: #ffffff;
+  font-size: 14px;
+  color: #000000;
   background: none;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  padding: 8px 16px;
+  padding: 8px 10px;
   border-radius: 6px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-link:hover,
 .nav-button:hover {
-  background-color: #388e3c; /* hover green */
-  color: #fffbe7;
+  background-color: #3A84FF; /* hover green */
+  color: #000000;
 }
 
 .welcome {
   font-size: 15px;
-  color: #e0ffe1;
-  margin-right: 8px;
+  color: #3A84FF;
+  margin-right: 6px;
 }

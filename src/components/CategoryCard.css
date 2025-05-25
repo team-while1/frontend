@@ -28,10 +28,10 @@
   }
   
   .category-tab.active {
-    background-color: #2E7D32;
+    background-color: #3751D5;
     color: white;
     font-weight: bold;
-    border-color: #2E7D32;
+    border-color: #3751D5;
   }
   
   /* 타이틀 + 모임 추가 버튼 */
@@ -50,7 +50,7 @@
   
   .create-button {
     padding: 8px 16px;
-    background-color: #2E7D32;
+    background-color: #3751D5;
     color: white;
     border: none;
     border-radius: 6px;
@@ -60,7 +60,7 @@
   }
   
   .create-button:hover {
-    background-color: #388e3c;
+    background-color: #3751D5;
   }
   
   /* 모임 리스트 (그리드) */

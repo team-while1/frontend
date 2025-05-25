@@ -21,7 +21,7 @@ export default function FilterPanel({ filters, setFilters }) {
           checked={filters.onlySupported}
           onChange={handleCheckbox}
         />
-        지원금 있는 모임만 보기
+        지원금 있는 모임
       </label>
 
       <label>
@@ -31,12 +31,13 @@ export default function FilterPanel({ filters, setFilters }) {
           checked={filters.onlyNotEnded}
           onChange={handleCheckbox}
         />
-        마감 전 모임만 보기
+        마감 전 모임
       </label>
 
       <label>
         최소 비교과 시간:
         <input
+          className="hour-input"
           type="number"
           min={0}
           value={filters.minHours}
