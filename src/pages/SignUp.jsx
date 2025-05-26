@@ -54,6 +54,8 @@ export default function SignUp() {
       school,
       studentId,
       major,
+      phone: '', // 직접 받는 입력 필드 추가 필요
+      joinDate: new Date().toISOString().slice(0, 10), 
     }));
 
     alert('회원가입이 완료되었습니다.');

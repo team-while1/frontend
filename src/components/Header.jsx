@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 import './Header.css';
 
 export default function Header() {
   const { user, logout } = useUser(); // ✅ 반드시 함수 내부에서 호출해야 함
-
+  const navigate = useNavigate();
   return (
     <header className="header">
       <h1 className="logo">
@@ -16,7 +16,8 @@ export default function Header() {
       <nav className="nav">
         {user ? (
           <>
-            <span className="welcome">{user.name}님</span>
+            {/* <span className="welcome">{user.name}님</span> */}
+            <button className='nav-button' onClick={()=>navigate("/mypage")}>{user.name}님</button>
             <button onClick={logout} className="nav-button">로그아웃</button>
           </>
         ) : (
