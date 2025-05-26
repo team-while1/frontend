@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function useSignUpHandler({ email, pw, name, school, studentId, major, notAllow }) {
+export default function useSignUpHandler({ email, pw, name, school, student_num, major, notAllow }) {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -11,7 +11,7 @@ export default function useSignUpHandler({ email, pw, name, school, studentId, m
       password: pw,
       name,
       school,
-      studentId,
+      student_num,
       major,
     }));
 

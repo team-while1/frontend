@@ -13,6 +13,7 @@ function Write() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [people, setPeople] = useState("");
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -37,6 +38,8 @@ function Write() {
       return;
     }
 
+    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
+
     setErrors({});
     setLoading(true);
 
@@ -47,6 +50,7 @@ function Write() {
           title,
           content,
           period,
+          people,
           imageUrl: preview,
         },
       });
@@ -90,6 +94,16 @@ function Write() {
               placeholder="예: 2025.06.01 ~ 2025.06.30"
             />
             {errors.period && <p className="error-msg">{errors.period}</p>}
+
+            <label>모집 인원</label>
+            <input
+              value={people}
+              onChange={(e) => setPeople(e.target.value)}
+              placeholder="예: 10명"
+            />
+            {errors.people && (
+              <p className="error-msg">{errors.people}</p>
+            )}
 
             <label>이미지 파일 첨부</label>
             <input type="file" accept="image/*" onChange={handleFileChange} />
