@@ -6,8 +6,8 @@ import '../styles/Write.css';
 
 function Write() {
   const navigate = useNavigate();
-  const { user } = useUser(); // 로그인된 사용자 정보
-  const [author, setAuthor] = useState(user?.name || ""); 
+
+  const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [period, setPeriod] = useState('');
@@ -18,8 +18,8 @@ function Write() {
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
-    if (selected && !selected.type.startsWith('image/')) {
-      alert('이미지 파일만 업로드할 수 있습니다.');
+    if (selected && !selected.type.startsWith("image/")) {
+      alert("이미지 파일만 업로드할 수 있습니다.");
       return;
     }
     setFile(selected);
@@ -29,10 +29,10 @@ function Write() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
-    if (!author.trim()) newErrors.author = '작성자를 입력해주세요.';
-    if (!title.trim()) newErrors.title = '제목을 입력해주세요.';
-    if (!content.trim()) newErrors.content = '내용을 입력해주세요.';
-    if (!period.trim()) newErrors.period = '모집 기간을 입력해주세요.';
+    if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
+    if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
+    if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
+    if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -43,14 +43,14 @@ function Write() {
     setLoading(true);
 
     setTimeout(() => {
-      navigate('/detail', {
+      navigate("/detail", {
         state: {
           author,
           title,
           content,
           period,
-          imageUrl: preview
-        }
+          imageUrl: preview,
+        },
       });
       setLoading(false);
     }, 1000);
@@ -79,7 +79,10 @@ function Write() {
             {errors.title && <p className="error-msg">{errors.title}</p>}
 
             <label>내용</label>
-            <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
             {errors.content && <p className="error-msg">{errors.content}</p>}
 
             <label>모집 기간</label>
@@ -101,9 +104,13 @@ function Write() {
 
             <div className="button-box">
               <button type="submit" className="btn primary" disabled={loading}>
-                {loading ? '등록 중...' : '글 등록하기'}
+                {loading ? "등록 중..." : "글 등록하기"}
               </button>
-              <button type="button" className="btn secondary" onClick={() => navigate('/club')}>
+              <button
+                type="button"
+                className="btn secondary"
+                onClick={() => navigate("/club")}
+              >
                 목록보기
               </button>
             </div>

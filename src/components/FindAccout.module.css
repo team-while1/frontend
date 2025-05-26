@@ -1,0 +1,32 @@
+/* FindAccount.module.css */
+.page {
+    position: relative;
+    top: 100px;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+    border-radius: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #ffffff;
+    border: 1px solid #cecece;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  
+  .contentWrap {
+    margin-bottom: 30px;
+  }
+  
+  .bottomButton {
+    width: 100%;
+    height: 48px;
+    border: 2px solid #3751D5;
+    font-weight: 700;
+    background-color: #ffffff;
+    border-radius: 10px;
+    color: #3751D5;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
