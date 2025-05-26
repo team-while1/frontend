@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
+
 import '../styles/Write.css';
 
 function Write() {
   const navigate = useNavigate();
-
-  const [author, setAuthor] = useState('');
+  const { user } = useUser(); // 로그인된 사용자 정보
+  const [author, setAuthor] = useState(user?.name || ""); 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [period, setPeriod] = useState('');
@@ -69,7 +71,7 @@ function Write() {
           <h3 className="form-title">글 작성하기</h3>
           <form onSubmit={handleSubmit} className="write-form">
             <label>작성자</label>
-            <input value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="작성자 이름"/>
             {errors.author && <p className="error-msg">{errors.author}</p>}
 
             <label>제목</label>
