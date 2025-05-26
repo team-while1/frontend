@@ -12,7 +12,6 @@ import EditProfile from './pages/EditProfile';
 import { UserProvider } from './contexts/UserContext'; // ✅ 정확한 경로 확인
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
 function App() {
   return (
     <>
@@ -45,6 +44,7 @@ function App() {
         {/* 예외 */}
         <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
       </Routes>
+      <Footer /> {/* 항상 하단에 고정 */}
       </UserProvider>
     </>
   );
