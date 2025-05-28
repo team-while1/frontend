@@ -9,8 +9,9 @@ import NotFound from './pages/NotFound';
 import Write from './pages/Write';
 import MyPage from './pages/myPage';
 import EditProfile from './pages/EditProfile'; 
-import { UserProvider } from './contexts/UserContext'; // ✅ 정확한 경로 확인
+import { UserProvider } from './contexts/UserContext'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
         {/* 예외 */}
         <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
       </Routes>
-      <Footer /> {/* 항상 하단에 고정 */}
+      {/* <Footer /> 항상 하단에 고정 */}
       </UserProvider>
     </>
   );

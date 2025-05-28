@@ -1,20 +1,36 @@
-import React from 'react';
-import { useUser } from '../contexts/UserContext';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getMember } from '../api/auth';
 import './MyPage.css';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
-
+import axios from '../api/axiosInstance'; 
 
 export default function MyPage() {
-  const { user, logout } = useUser();
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  if (!user) {
-    return <p>로그인이 필요합니다.</p>;
-  }
+  useEffect(() => {
+    const fetchUser = async () => {
+      console.log("MyPage 진입됨"); // 진입 여부 확인
+      try {
+        console.log('MyPage: /member API 호출 시도...'); // 이 로그가 찍히는지 확인
+        const res = await axios.get('/member');
+        console.log('MyPage: /member API 응답 성공:', res); // 이 로그가 찍히면 성공
+        setUser(res.data);
+      } catch (err) {
+        console.error('회원 정보 불러오기 실패:', err);
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
+
+  if (!user) return <p>회원 정보를 불러오는 중...</p>;
 
   return (
     <div className="mypage-container">
-      <p className='mypage-title'>{user.name}<span>님</span></p>
+      <p className="mypage-title">{user.name}<span>님</span></p>
       
       <table className="info-table">
         <tbody>
@@ -24,7 +40,7 @@ export default function MyPage() {
           </tr>
           <tr>
             <th>대학교</th>
-            <td>{user.school}</td>
+            <td>{user.college}</td> 
           </tr>
           <tr>
             <th>학과</th>
@@ -32,7 +48,7 @@ export default function MyPage() {
           </tr>
           <tr>
             <th>학번</th>
-            <td>{user.studentId}</td>
+            <td>{user.student_num}</td>
           </tr>
           <tr>
             <th>전화번호</th>
@@ -44,10 +60,20 @@ export default function MyPage() {
           </tr>
         </tbody>
       </table>
+
       <div className="mypage-buttons">
         <button onClick={() => navigate("/edit")}>정보 수정</button>
         <button onClick={() => navigate("/find")}>비밀번호 변경</button>
-        <button onClick={logout} className="nav-button">로그아웃</button>
+        <button
+          onClick={() => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            navigate('/login');
+          }}
+          className="nav-button"
+        >
+          로그아웃
+        </button>
       </div>
     </div>
   );

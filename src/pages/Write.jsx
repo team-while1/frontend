@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
-
+import {createPost} from '../api/post';
+import axios from '../api/axiosInstance';
 import '../styles/Write.css';
 
 function Write() {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
@@ -15,6 +17,8 @@ function Write() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [category, setCategory] = useState('');
+  const [totalSlots, setTotalSlots] = useState(''); 
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -26,35 +30,47 @@ function Write() {
     setPreview(URL.createObjectURL(selected));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = {};
-    if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
-    if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
-    if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
-    if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const newErrors = {};
+  if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
+  if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
+  if (!category.trim()) newErrors.category = "카테고리를 입력해주세요.";
+  if (!totalSlots || isNaN(totalSlots)) newErrors.totalSlots = "모집 인원을 숫자로 입력해주세요.";
+  if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
+  if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
 
-    setErrors({});
-    setLoading(true);
+  setErrors({});
+  setLoading(true);
 
-    setTimeout(() => {
-      navigate("/detail", {
-        state: {
-          author,
-          title,
-          content,
-          period,
-          imageUrl: preview,
-        },
-      });
-      setLoading(false);
-    }, 1000);
-  };
+  try {
+    const [start_date, end_date] = period.split('~').map((d) => d.trim());
+
+    const payload = {
+      member_id: user?.id,
+      title,
+      content,
+      category,
+      start_date: new Date(start_date).toISOString(),
+      end_date: new Date(end_date).toISOString(),
+      total_slots: parseInt(totalSlots),
+    };
+
+    const res = await axios.post('/posts', payload);
+    alert("글이 등록되었습니다.");
+    navigate(`/detail/${res.data.post_id}`);
+  } catch (err) {
+    console.error(err);
+    alert("등록 중 오류가 발생했습니다.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="write-layout">
@@ -77,6 +93,22 @@ function Write() {
             <label>제목</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} />
             {errors.title && <p className="error-msg">{errors.title}</p>}
+
+            <label>카테고리</label>
+            <input
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="예: 동아리, 스터디, 공모전 등"
+            />
+            {errors.category && <p className="error-msg">{errors.category}</p>}
+
+            <label>모집 인원 (숫자)</label>
+            <input
+              type="number"
+              value={totalSlots}
+              onChange={(e) => setTotalSlots(e.target.value)}
+            />
+            {errors.totalSlots && <p className="error-msg">{errors.totalSlots}</p>}
 
             <label>내용</label>
             <textarea

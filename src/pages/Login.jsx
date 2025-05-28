@@ -1,6 +1,6 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { login } from '../api/auth';
 
 import useLoginForm from "../hooks/useLoginForm";
 import useLoginHandler from "../hooks/useLoginHandler";
