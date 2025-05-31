@@ -6,7 +6,7 @@ export default function useSignUpForm() {
   const [confirmPw, setConfirmPw] = useState('');
   const [name, setName] = useState('');
   const [school, setSchool] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [student_num, setStudent_num] = useState('');
   const [major, setMajor] = useState('');
 
   const [emailValid, setEmailValid] = useState(false);
@@ -42,9 +42,9 @@ export default function useSignUpForm() {
 
   return {
     email, pw, confirmPw,
-    name, school, studentId, major,
+    name, school, student_num, major,
     handleEmail, handlePw, handleConfirmPw,
-    setName, setSchool, setStudentId, setMajor,
+    setName, setSchool, setStudent_num, setMajor,
     emailValid, pwValid, pwMatch,
     notAllow
   };
