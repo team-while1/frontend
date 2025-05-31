@@ -1,19 +1,24 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/Write.css";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
+import {createPost} from '../api/post';
+import axios from '../api/axiosInstance';
+import '../styles/Write.css';
 
 function Write() {
   const navigate = useNavigate();
+  const { user } = useUser();
 
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [period, setPeriod] = useState("");
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [period, setPeriod] = useState('');
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [people, setPeople] = useState("");
+
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -24,6 +29,7 @@ function Write() {
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,12 +79,28 @@ function Write() {
           <h3 className="form-title">글 작성하기</h3>
           <form onSubmit={handleSubmit} className="write-form">
             <label>작성자</label>
-            <input value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="작성자 이름"/>
             {errors.author && <p className="error-msg">{errors.author}</p>}
 
             <label>제목</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} />
             {errors.title && <p className="error-msg">{errors.title}</p>}
+
+            <label>카테고리</label>
+            <input
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="예: 동아리, 스터디, 공모전 등"
+            />
+            {errors.category && <p className="error-msg">{errors.category}</p>}
+
+            <label>모집 인원 (숫자)</label>
+            <input
+              type="number"
+              value={totalSlots}
+              onChange={(e) => setTotalSlots(e.target.value)}
+            />
+            {errors.totalSlots && <p className="error-msg">{errors.totalSlots}</p>}
 
             <label>내용</label>
             <textarea

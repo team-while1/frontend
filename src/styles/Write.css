@@ -2,7 +2,6 @@
 .write-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
 }
 
 /* 좌측 사이드바 */

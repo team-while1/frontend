@@ -4,39 +4,11 @@ import ErrorMessage from "../components/ErrorMessage";
 import SubmitButton from "../components/SubmitButton";
 import useSignUpForm from "../hooks/useSignUpForm";
 import useSignUpHandler from "../hooks/useSignUpHandler";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { signUp } from "../api/auth"; // signUp 함수 추가로 가정
 
 export default function SignUp() {
-
-  const {
-    email,
-    password: pw,
-    confirmPw,
-    name,
-    college: school,
-    student_num,
-    major,
-    handleEmail,
-    handlePw,
-    handleConfirmPw,
-    setName,
-    setSchool,
-    setStudent_num,
-    setMajor,
-    emailValid,
-    pwValid,
-    pwMatch,
-    notAllow,
-  } = useSignUpForm();
-
-  const handleSubmit = useSignUpHandler({
-    email,
-    pw,
-    name,
-    school,
-    student_num,
-    major,
-    notAllow,
-  });
 //   const navigate = useNavigate();
 
 //   const [email, setEmail] = useState('');
@@ -78,23 +50,58 @@ export default function SignUp() {
 //     setNotAllow(!(emailValid && pwValid && pwMatch && allFilled));
 //   }, [emailValid, pwValid, pw, confirmPw, name, school, studentId, major]);
 
-//   const handleSubmit = () => {
-//     if (notAllow) return;
-
-//     localStorage.setItem('registeredUser', JSON.stringify({
+// const handleSubmit = async () => {
+//   if (notAllow) return;
+//   console.log('너냐?');
+//   try {
+//     await signUp({
 //       email,
 //       password: pw,
 //       name,
-//       school,
-//       studentId,
-//       major,
-//       phone: '', // 직접 받는 입력 필드 추가 필요
-//       joinDate: new Date().toISOString().slice(0, 10), 
-//     }));
+//       student_num: studentId, // ✅ 여긴 반드시 "student_num"
+//       college: school,         // ✅ 여긴 반드시 "college"
+//       major                   // ✅ major는 그대로
+//     });
 
 //     alert('회원가입이 완료되었습니다.');
 //     navigate('/login');
-//   };
+//   } catch (error) {
+//     console.error('회원가입 실패:', error);
+//     alert('회원가입 중 오류가 발생했습니다.');
+//   }
+// };
+
+
+  const {
+    email,
+    password: pw,
+    confirmPw,
+    name,
+    college: school,
+    student_num,
+    major,
+    handleEmail,
+    handlePw,
+    handleConfirmPw,
+    setName,
+    setSchool,
+    setStudent_num,
+    setMajor,
+    emailValid,
+    pwValid,
+    pwMatch,
+    notAllow,
+  } = useSignUpForm();
+
+  const handleSubmit = useSignUpHandler({
+    email,
+    pw,
+    name,
+    school,
+    student_num,
+    major,
+    notAllow,
+  });
 
 
   return (
@@ -102,6 +109,18 @@ export default function SignUp() {
       <div className="titleWrap">회원가입</div>
 
       <div className="contentWrap">
+//         <div className="inputWrap">
+//           <select
+//             className={`input ${school === "" ? "placeholder" : ""}`}
+//             value={school}
+//             onChange={(e) => setSchool(e.target.value)}
+//           >
+//             <option value="">단과대</option>
+//             <option value="융합기술대학">융합기술대학</option>
+//             <option value="공과대학">공과대학</option>
+//             <option value="인문대학">인문대학</option>
+//           </select>
+//         </div>
         <FormInput
           placeholder="이름"
           value={name}
