@@ -59,6 +59,10 @@
   color: #dadada;
 }
 
+.placeholder {
+  color: #dadada !important; /* placeholder처럼 보이게 */
+}
+
 .errorMessageWrap {
   margin-top: 8px;
   color: #ef0000;

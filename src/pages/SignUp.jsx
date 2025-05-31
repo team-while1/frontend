@@ -78,7 +78,19 @@ const handleSubmit = async () => {
 
       <div className="contentWrap">
         <FormInput placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
-        <FormInput placeholder="대학교" value={school} onChange={(e) => setSchool(e.target.value)} />
+        {/* <FormInput placeholder="대학교" value={school} onChange={(e) => setSchool(e.target.value)} /> */}
+        <div className="inputWrap">
+          <select
+            className={`input ${school === "" ? "placeholder" : ""}`}
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
+          >
+            <option value="">단과대</option>
+            <option value="융합기술대학">융합기술대학</option>
+            <option value="공과대학">공과대학</option>
+            <option value="인문대학">인문대학</option>
+          </select>
+        </div>
         <FormInput placeholder="학번" value={studentId} onChange={(e) => setStudentId(e.target.value)} />
         <FormInput placeholder="학과" value={major} onChange={(e) => setMajor(e.target.value)} />
 
