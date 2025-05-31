@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
@@ -8,9 +7,10 @@ import SignUp from './pages/SignUp';
 import FindAccount from './pages/FindAccount';
 import NotFound from './pages/NotFound'; 
 import Write from './pages/Write';
-import { UserProvider } from './contexts/UserContext';
-import Footer from './components/Footer'; // 추가
-
+import MyPage from './pages/myPage';
+import EditProfile from './pages/EditProfile'; 
+import { UserProvider } from './contexts/UserContext'; // ✅ 정확한 경로 확인
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -29,6 +29,10 @@ function App() {
 
         <Route path="/create" element={<Write />} />
 
+        {/*마이 페이지*/}
+        <Route path="/mypage" element={<MyPage />} />
+        {/*정보 수정*/}
+        <Route path="/edit" element={<EditProfile />} />
         {/* 모임 상세 */}
         <Route path="/:category/:id" element={<ClubDetail />} />
 
