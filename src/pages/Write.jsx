@@ -17,8 +17,8 @@ function Write() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [category, setCategory] = useState('');
-  const [totalSlots, setTotalSlots] = useState(''); 
+  const [people, setPeople] = useState("");
+
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -30,47 +30,39 @@ function Write() {
     setPreview(URL.createObjectURL(selected));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const newErrors = {};
-  if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
-  if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
-  if (!category.trim()) newErrors.category = "카테고리를 입력해주세요.";
-  if (!totalSlots || isNaN(totalSlots)) newErrors.totalSlots = "모집 인원을 숫자로 입력해주세요.";
-  if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
-  if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
 
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    return;
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+    if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
+    if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
+    if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
+    if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
 
-  setErrors({});
-  setLoading(true);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
-  try {
-    const [start_date, end_date] = period.split('~').map((d) => d.trim());
+    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
 
-    const payload = {
-      member_id: user?.id,
-      title,
-      content,
-      category,
-      start_date: new Date(start_date).toISOString(),
-      end_date: new Date(end_date).toISOString(),
-      total_slots: parseInt(totalSlots),
-    };
+    setErrors({});
+    setLoading(true);
 
-    const res = await axios.post('/posts', payload);
-    alert("글이 등록되었습니다.");
-    navigate(`/detail/${res.data.post_id}`);
-  } catch (err) {
-    console.error(err);
-    alert("등록 중 오류가 발생했습니다.");
-  } finally {
-    setLoading(false);
-  }
-};
+    setTimeout(() => {
+      navigate("/detail", {
+        state: {
+          author,
+          title,
+          content,
+          period,
+          people,
+          imageUrl: preview,
+        },
+      });
+      setLoading(false);
+    }, 1000);
+  };
 
   return (
     <div className="write-layout">
@@ -124,6 +116,16 @@ const handleSubmit = async (e) => {
               placeholder="예: 2025.06.01 ~ 2025.06.30"
             />
             {errors.period && <p className="error-msg">{errors.period}</p>}
+
+            <label>모집 인원</label>
+            <input
+              value={people}
+              onChange={(e) => setPeople(e.target.value)}
+              placeholder="예: 10명"
+            />
+            {errors.people && (
+              <p className="error-msg">{errors.people}</p>
+            )}
 
             <label>이미지 파일 첨부</label>
             <input type="file" accept="image/*" onChange={handleFileChange} />
