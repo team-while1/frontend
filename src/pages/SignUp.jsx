@@ -1,76 +1,13 @@
-import "./SignUp.css";
+import "../styles/SignUp.css";
 import FormInput from "../components/FormInput";
 import ErrorMessage from "../components/ErrorMessage";
 import SubmitButton from "../components/SubmitButton";
 import useSignUpForm from "../hooks/useSignUpForm";
 import useSignUpHandler from "../hooks/useSignUpHandler";
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { signUp } from "../api/auth"; // signUp 함수 추가로 가정
 
 export default function SignUp() {
-//   const navigate = useNavigate();
-
-//   const [email, setEmail] = useState('');
-//   const [pw, setPw] = useState('');
-//   const [confirmPw, setConfirmPw] = useState('');
-//   const [name, setName] = useState('');
-//   const [school, setSchool] = useState('');
-//   const [studentId, setStudentId] = useState('');
-//   const [major, setMajor] = useState('');
-
-//   const [emailValid, setEmailValid] = useState(false);
-//   const [pwValid, setPwValid] = useState(false);
-//   const [pwMatch, setPwMatch] = useState(false);
-//   const [notAllow, setNotAllow] = useState(true);
-
-//   const handleEmail = (e) => {
-//     const input = e.target.value;
-//     setEmail(input);
-//     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     setEmailValid(regex.test(input));
-//   };
-
-//   const handlePw = (e) => {
-//     const input = e.target.value;
-//     setPw(input);
-//     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-//     setPwValid(regex.test(input));
-//   };
-
-//   const handleConfirmPw = (e) => {
-//     const input = e.target.value;
-//     setConfirmPw(input);
-//     setPwMatch(pw === input);
-//   };
-
-//   useEffect(() => {
-//     const allFilled = name && school && studentId && major;
-//     setPwMatch(pw === confirmPw);
-//     setNotAllow(!(emailValid && pwValid && pwMatch && allFilled));
-//   }, [emailValid, pwValid, pw, confirmPw, name, school, studentId, major]);
-
-// const handleSubmit = async () => {
-//   if (notAllow) return;
-//   console.log('너냐?');
-//   try {
-//     await signUp({
-//       email,
-//       password: pw,
-//       name,
-//       student_num: studentId, // ✅ 여긴 반드시 "student_num"
-//       college: school,         // ✅ 여긴 반드시 "college"
-//       major                   // ✅ major는 그대로
-//     });
-
-//     alert('회원가입이 완료되었습니다.');
-//     navigate('/login');
-//   } catch (error) {
-//     console.error('회원가입 실패:', error);
-//     alert('회원가입 중 오류가 발생했습니다.');
-//   }
-// };
-
+  const navigate = useNavigate();
 
   const {
     email,
@@ -101,26 +38,14 @@ export default function SignUp() {
     student_num,
     major,
     notAllow,
+    navigate, // navigate 넘겨서 내부에서 리다이렉트 가능
   });
-
 
   return (
     <div className="page page-signup">
       <div className="titleWrap">회원가입</div>
 
       <div className="contentWrap">
-//         <div className="inputWrap">
-//           <select
-//             className={`input ${school === "" ? "placeholder" : ""}`}
-//             value={school}
-//             onChange={(e) => setSchool(e.target.value)}
-//           >
-//             <option value="">단과대</option>
-//             <option value="융합기술대학">융합기술대학</option>
-//             <option value="공과대학">공과대학</option>
-//             <option value="인문대학">인문대학</option>
-//           </select>
-//         </div>
         <FormInput
           placeholder="이름"
           value={name}
@@ -134,7 +59,7 @@ export default function SignUp() {
         <FormInput
           placeholder="학번"
           value={student_num}
-          onChange={(e) => setStudentId(e.target.value)}
+          onChange={(e) => setStudent_num(e.target.value)}
         />
         <FormInput
           placeholder="학과"

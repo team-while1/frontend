@@ -18,6 +18,8 @@ function Write() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [people, setPeople] = useState("");
+  const [category, setCategory] = useState('');
+  const [totalSlots, setTotalSlots] = useState('');
 
 
   const handleFileChange = (e) => {

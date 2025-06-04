@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useUser } from '../contexts/UserContext';
-import './MeetingDetail.css';
+import '../styles/MeetingDetail.css';
 
 export default function MeetingDetail() {
   const { category, id } = useParams();
