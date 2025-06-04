@@ -1,5 +1,5 @@
 import React from "react";
-import "./FindAccount.css";
+import "../styles/FindAccount.css";
 import useFindAccountForm from "../hooks/useFindAccountForm";
 import TabSelector from "../components/TabSelector";
 import ResultMessage from "../components/ResultMessage";

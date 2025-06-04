@@ -5,7 +5,7 @@ import SearchBar from "../components/SearchBar";
 import CategoryCard from "../components/CategoryCard";
 import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
-import "./CategoryPage.css";
+import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
 
 

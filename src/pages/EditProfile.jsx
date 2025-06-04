@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { updateUserInfo, updateProfileImage } from "../api/user";
-import "./EditProfile.css";
+import "../styles/EditProfile.css";
 
 export default function EditProfile() {
   const { user, login } = useUser();
