@@ -154,3 +154,30 @@
   margin-top: -6px;
   margin-bottom: 8px;
 }
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.date-input {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #ffffff;
+  transition: 0.2s ease;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #3751D5;
+  background-color: #ffffff;
+}
+
+.tilde {
+  font-size: 1rem;
+  color: #374151;
+}
