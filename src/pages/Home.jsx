@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import './Home.css'; // 👈 CSS 분리
+import '../styles/Home.css'; // 👈 CSS 분리
 import emptyImg from '../assets/empty_img.png';
 
 export default function Home() {
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="main-content-section-wrapper">
+      {/* <section className="main-content-section-wrapper">
         <h2 className="section-title">최신 소식 및 추천 활동</h2>
         <div className="sub-container">
           {contentCardsData.map((item) => (
@@ -57,9 +57,9 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
-      {/* 푸터 */}
+      {/* 푸터
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-left">
@@ -80,7 +80,7 @@ export default function Home() {
             <p>표어: CONNECT THE WORLD</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </>
 
 //   <>
