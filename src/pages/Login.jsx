@@ -15,7 +15,7 @@ export default function Login() {
 
   const {
     email,
-    pw,
+    password,
     handleEmail,
     handlePw,
     emailValid,
@@ -23,7 +23,7 @@ export default function Login() {
     notAllow,
   } = useLoginForm();
 
-  const handleLogin = useLoginHandler(email, pw);
+  const handleLogin = useLoginHandler(email, password);
 
   return (
     <div className="page">
@@ -36,18 +36,18 @@ export default function Login() {
           onChange={handleEmail}
         />
         <ErrorMessage
-          condition={!emailValid && email.length > 0}
+          condition={!emailValid && email?.length > 0} // email이 undefined나 null이 아니면 length를 읽음
           message="올바른 이메일 형식이 아닙니다."
         />
 
         <FormInput
           type="password"
           placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8자 이상)"
-          value={pw}
+          value={password}
           onChange={handlePw}
         />
         <ErrorMessage
-          condition={!pwValid && pw.length > 0}
+          condition={!pwValid && password?.length > 0}
           message="비밀번호 조건을 확인해주세요."
         />
       </div>

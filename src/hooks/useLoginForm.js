@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function useLoginForm() {
   const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
+  const [password, setPw] = useState("");
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
@@ -27,7 +27,7 @@ export default function useLoginForm() {
 
   return {
     email,
-    pw,
+    password,
     handleEmail,
     handlePw,
     emailValid,

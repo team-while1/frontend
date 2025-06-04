@@ -89,7 +89,7 @@
 
 
 import { useNavigate } from 'react-router-dom';
-import './Home.css'; // 👈 CSS 분리
+import './Home.css'; 
 import emptyImg from '../assets/empty_img.png';
 
 export default function Home() {
@@ -128,7 +128,6 @@ export default function Home() {
     },
   ];
 
-  // 하얀 카드에 들어갈 임시 데이터 (실제 데이터로 교체 필요)
 
 const contentCardsData = [
   {
@@ -260,21 +259,6 @@ const contentCardsData = [
       </footer>
     </>
 
-//   <>
-//   <div className="home-container">
-//     {categories.map((cat)=> (
-//      <div
-//        key={cat.path} 
-//        className="category-card-home" 
-//        onClick={() => navigate(cat.path)}>
-//       <div className="card-inner">
-//         <div className="category-title">{cat.title}</div>
-//         <div className="category-content">{cat.content}</div>
-//       </div>
-//     </div>
-//     ))}
-//   </div>
-// </>
 
   );
 }
