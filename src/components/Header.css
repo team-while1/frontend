@@ -23,6 +23,10 @@
   margin-right: 10px;
 }
 
+.logo img {
+  margin-right: 10px;
+}
+
 
 .logo-link {
   display: flex;
@@ -57,3 +61,4 @@
   font-weight: bold; 
   color: #ffffff;
 }
+

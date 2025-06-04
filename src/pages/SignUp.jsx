@@ -63,6 +63,16 @@ import { signUp } from "../api/auth";
           </select>
           {/* 🚨 추가: 사용자가 단과대를 선택하지 않았을 때의 에러 메시지 (선택 사항) */}
           {college === "" && !notAllow && <ErrorMessage message="단과대를 선택해주세요." />}
+{/* =======
+        <div className="inputWrap">
+          <input
+            type="text"
+            className="input"
+            placeholder="이름"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+>>>>>>> main */}
         </div>
         <FormInput
           placeholder="학번"
@@ -105,6 +115,76 @@ import { signUp } from "../api/auth";
           condition={!pwMatch && confirmPw.length > 0}
           message="비밀번호가 일치하지 않습니다."
         />
+{/* =======
+        <div className="inputWrap">
+          <input
+            type="text"
+            className="input"
+            placeholder="대학교"
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
+          />
+        </div>
+
+        <div className="inputWrap">
+          <input
+            type="text"
+            className="input"
+            placeholder="학번"
+            value={studentId}
+            onChange={(e) => setStudentId(e.target.value)}
+          />
+        </div>
+
+        <div className="inputWrap">
+          <input
+            type="text"
+            className="input"
+            placeholder="학과"
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+          />
+        </div>
+        <hr className="line" />
+        <div className="inputWrap">
+          <input
+            type="text"
+            className="input"
+            placeholder="이메일"
+            value={email}
+            onChange={handleEmail}
+          />
+        </div>
+        <div className="errorMessageWrap">
+          {!emailValid && email.length > 0 && <div>올바른 이메일 형식을 입력하세요.</div>}
+        </div>
+
+        <div className="inputWrap">
+          <input
+            type="password"
+            className="input"
+            placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8자 이상)"
+            value={pw}
+            onChange={handlePw}
+          />
+        </div>
+        <div className="errorMessageWrap">
+          {!pwValid && pw.length > 0 && <div>비밀번호 조건을 확인해주세요.</div>}
+        </div>
+
+        <div className="inputWrap">
+          <input
+            type="password"
+            className="input"
+            placeholder="비밀번호 확인"
+            value={confirmPw}
+            onChange={handleConfirmPw}
+          />
+        </div>
+        <div className="errorMessageWrap">
+          {!pwMatch && confirmPw.length > 0 && <div>비밀번호가 일치하지 않습니다.</div>}
+        </div>
+>>>>>>> main */}
       </div>
 
       <SubmitButton onClick={handleSubmit} disabled={notAllow} />
