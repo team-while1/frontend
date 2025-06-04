@@ -9,6 +9,7 @@ import FormInput from "../components/FormInput";
 import ErrorMessage from "../components/ErrorMessage";
 import SubmitButton from "../components/SubmitButton";
 import BottomLinkButtons from "../components/BottomLinkButtons";
+import PageLayout from "../components/PageLayout";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Login() {
   const handleLogin = useLoginHandler(email, password);
 
   return (
-    <div className="page">
+    <div className="login-page">
       <div className="titleWrap">로그인</div>
 
       <div className="contentWrap">
@@ -50,6 +51,20 @@ export default function Login() {
           condition={!pwValid && password?.length > 0}
           message="비밀번호 조건을 확인해주세요."
         />
+
+      </div>
+
+      <SubmitButton onClick={handleLogin} disabled={notAllow} />
+
+      <BottomLinkButtons
+        onSignUp={() => navigate("/signup")}
+        onFind={() => navigate("/find")}
+      />
+    </div>
+  );
+}
+
+
 {/* =======
         <div className="inputWrap">
           <input
@@ -81,14 +96,3 @@ export default function Login() {
           )}
         </div>
 >>>>>>> main */}
-      </div>
-
-      <SubmitButton onClick={handleLogin} disabled={notAllow} />
-
-      <BottomLinkButtons
-        onSignUp={() => navigate("/signup")}
-        onFind={() => navigate("/find")}
-      />
-    </div>
-  );
-}

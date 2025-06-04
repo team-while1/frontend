@@ -7,6 +7,7 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
+import PageLayout from "../components/PageLayout";
 
 export default function CategoryPage({ title }) {
   const navigate = useNavigate();
@@ -36,12 +37,13 @@ export default function CategoryPage({ title }) {
   const filteredMeetings = useSearch(meetings, search);
 
   return (
+    <PageLayout>
     <div className="category-page">
-      <div className="category-nav">
+      <div className="category-nav tab-group">
         {categories.map((cat) => (
           <button
             key={cat.path}
-            className={`common-button tab ${
+            className={`tab-button ${
               cat.path === `/${category}` ? "active" : ""
             }`}
             onClick={() => navigate(cat.path)}
@@ -80,5 +82,7 @@ export default function CategoryPage({ title }) {
         </div>
       )}
     </div>
+    </PageLayout>
+
   );
 }

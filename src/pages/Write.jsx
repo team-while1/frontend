@@ -12,7 +12,9 @@ function Write() {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [period, setPeriod] = useState('');
+  // const [period, setPeriod] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -36,6 +38,8 @@ function Write() {
 
 
   const handleSubmit = (e) => {
+    const period = `${startDate} ~ ${endDate}`;
+
     e.preventDefault();
     const newErrors = {};
     if (!author.trim()) newErrors.author = "작성자를 입력해주세요.";
@@ -122,14 +126,31 @@ function Write() {
             />
             {errors.content && <p className="error-msg">{errors.content}</p>}
 
-            <label>모집 기간</label>
+            {/* <label>모집 기간</label>
             <input
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
               placeholder="예: 2025.06.01 ~ 2025.06.30"
             />
-            {errors.period && <p className="error-msg">{errors.period}</p>}
-
+            {errors.period && <p className="error-msg">{errors.period}</p>} */}
+            <label>모집 기간</label>
+            <div className="date-range">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="date-input"
+              />
+              <span className="tilde">~</span>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="date-input"
+              />
+            </div>
+            {errors.startDate && <p className="error-msg">{errors.startDate}</p>}
+            {errors.endDate && <p className="error-msg">{errors.endDate}</p>}
             {/* <label>모집 인원</label>
             <input
               value={people}

@@ -1,36 +1,48 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://kunnect.co.kr/api', // ✅ 실제 서버 주소로 직접 접근
   headers: {
     'Content-Type': 'application/json'
   },
-  withCredentials: true
+  withCredentials: false
 });
 
-instance.interceptors.request.use((config)=>{
+instance.interceptors.request.use(
+  (config) => {
     const token = localStorage.getItem('accessToken');
-    if(token){
-        config.headers['Authorization'] = `Bearer ${token}`;
-        console.log(config.headers);
-      }
+
+    // ✅ baseURL('/api') 제외하고 경로 비교
+    const strippedUrl = config.url.replace(/^\/api/, '');
+    const isPublicRequest = [
+      '/find/id',
+      '/find/pw-change',
+      '/check-email',
+      '/check-name'
+    ].some((url) => strippedUrl.includes(url));
+
+    if (token && !isPublicRequest) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+      console.log('🔐 토큰 포함 요청:', config.headers);
+    } else {
+      console.log('🔓 공개 요청:', config.url);
+    }
+
     return config;
-},
-(error) => {
-    return Promise.reject(error);
-  }
-);
-instance.interceptors.response.use(
-  (response) => {
-    return response;
   },
+  (error) => Promise.reject(error)
+);
+
+// ✅ 응답 인터셉터 설정
+instance.interceptors.response.use(
+  (response) => response,
   (error) => {
-    // 401 Unauthorized 에러 발생 시 토큰 만료로 간주하고 로그인 페이지로 리다이렉트
+    // 401 Unauthorized → 세션 만료 처리
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-      window.location.href = '/login'; // navigate 대신 window.location.href 사용 (React Router 밖에서)
+      window.location.href = '/login'; // 로그인 페이지로 이동
     }
     return Promise.reject(error);
   }

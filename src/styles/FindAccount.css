@@ -80,3 +80,9 @@
     color: #222;
     font-weight: bold;
   }
+
+.result-message {
+  color: #333;
+  font-size: 16px;
+  margin-top: 12px;
+}

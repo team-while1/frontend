@@ -1,0 +1,28 @@
+
+.footer {
+  background-color: #f5f7fa;
+  border-top: 1px solid #ddd;
+  padding: 40px 20px;
+  font-size: 14px;
+  color: #555;
+  width: 100% !important;
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-left h4 {
+  margin-bottom: 8px;
+  color: #3751D5;
+}
+
+.footer-right p {
+  margin: 4px 0;
+}
