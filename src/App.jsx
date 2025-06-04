@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import ClubDetail from './pages/ClubDetail';
@@ -45,9 +46,9 @@ function App() {
         {/* 예외 */}
         <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
       </Routes>
-      {/* <Footer /> 항상 하단에 고정 */}
+      <Footer /> 
       </UserProvider>
-    </>
+      </>
   );
 }
 

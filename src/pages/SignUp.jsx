@@ -1,4 +1,4 @@
-import "./SignUp.css";
+import "../styles/SignUp.css";
 import FormInput from "../components/FormInput";
 import ErrorMessage from "../components/ErrorMessage";
 import SubmitButton from "../components/SubmitButton";
@@ -7,6 +7,9 @@ import useSignUpHandler from "../hooks/useSignUpHandler";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { signUp } from "../api/auth";
+
+// export default function SignUp() {
+//   const navigate = useNavigate();
 
   export default function SignUp() {
   const {
@@ -38,9 +41,11 @@ import { signUp } from "../api/auth";
     student_num,
     major,
     notAllow,
+    navigate, // navigate 넘겨서 내부에서 리다이렉트 가능
   });
 
-  return ( 
+
+  return (
     <div className="page page-signup">
       <div className="titleWrap">회원가입</div>
       <div className="contentWrap">

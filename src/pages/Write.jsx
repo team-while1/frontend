@@ -20,7 +20,7 @@ function Write() {
   const [people, setPeople] = useState("");
   // 🚨 추가: category 상태와 setCategory 함수 선언
   const [category, setCategory] = useState('');
-  // 🚨 추가: totalSlots 상태와 setTotalSlots 함수 선언
+
   const [totalSlots, setTotalSlots] = useState('');
 
 
