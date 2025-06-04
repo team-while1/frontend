@@ -5,7 +5,7 @@
 
 .category-nav {
   display: flex;
-  justify-content: center;     /* 가운데 정렬 */
+  /* justify-content: center;     /* 가운데 정렬 */
   gap: 0;                      /* 버튼 사이 빈 공간 없애기 */
   margin: 40px auto 20px auto;
   max-width: 800px;
@@ -17,7 +17,7 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; 
 }
 
 .category-tab {

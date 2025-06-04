@@ -2,6 +2,7 @@
 .write-layout {
   display: flex;
   min-height: 100vh;
+
 }
 
 /* 좌측 사이드바 */
@@ -45,6 +46,7 @@
   background-color: #ffffff;
   border: 1px solid #cecece;
   padding: 80px;
+
   border-radius: 8px;
   width: 100%;               /* ✅ 전체 너비로 */
   max-width: unset;          /* ✅ 최대 너비 제한 해제 */

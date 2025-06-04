@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 
 export default function useSignUpForm() {
   const [email, setEmail] = useState('');
-  const [pw, setPw] = useState('');
+  const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
   const [name, setName] = useState('');
-  const [school, setSchool] = useState('');
+  const [college, setCollege] = useState('');
   const [student_num, setStudent_num] = useState('');
   const [major, setMajor] = useState('');
 
@@ -23,7 +23,7 @@ export default function useSignUpForm() {
 
   const handlePw = (e) => {
     const input = e.target.value;
-    setPw(input);
+    setPassword(input);
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
     setPwValid(regex.test(input));
   };
@@ -31,20 +31,21 @@ export default function useSignUpForm() {
   const handleConfirmPw = (e) => {
     const input = e.target.value;
     setConfirmPw(input);
-    setPwMatch(pw === input);
+    setPwMatch(password === input);
   };
 
+
   useEffect(() => {
-    const allFilled = name && school && studentId && major;
-    setPwMatch(pw === confirmPw);
+    const allFilled = name && college && student_num && major;
+    setPwMatch(password === confirmPw);
     setNotAllow(!(emailValid && pwValid && pwMatch && allFilled));
-  }, [emailValid, pwValid, pw, confirmPw, name, school, studentId, major]);
+  }, [emailValid, pwValid, password, confirmPw, name, college, student_num, major]);
 
   return {
-    email, pw, confirmPw,
-    name, school, student_num, major,
+    email, password, confirmPw,
+    name, college, student_num, major,
     handleEmail, handlePw, handleConfirmPw,
-    setName, setSchool, setStudent_num, setMajor,
+    setName, setCollege, setStudent_num, setMajor,
     emailValid, pwValid, pwMatch,
     notAllow
   };

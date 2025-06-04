@@ -18,7 +18,9 @@ function Write() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [people, setPeople] = useState("");
+  // 🚨 추가: category 상태와 setCategory 함수 선언
   const [category, setCategory] = useState('');
+
   const [totalSlots, setTotalSlots] = useState('');
 
 
@@ -40,6 +42,13 @@ function Write() {
     if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
     if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
     if (!period.trim()) newErrors.period = "모집 기간을 입력해주세요.";
+    // 🚨 추가: category 유효성 검사
+    if (!category.trim()) newErrors.category = "카테고리를 입력해주세요.";
+    // 🚨 추가: totalSlots 유효성 검사
+    if (!totalSlots || isNaN(totalSlots) || parseInt(totalSlots) <= 0) {
+      newErrors.totalSlots = "유효한 모집 인원 (숫자)을 입력해주세요.";
+    }
+
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -59,6 +68,8 @@ function Write() {
           content,
           period,
           people,
+          category, // 🚨 추가: category 값도 state에 포함
+          totalSlots, // 🚨 추가: totalSlots 값도 state에 포함
           imageUrl: preview,
         },
       });
@@ -90,8 +101,8 @@ function Write() {
 
             <label>카테고리</label>
             <input
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={category} // 🚨 이제 category가 정의됨
+              onChange={(e) => setCategory(e.target.value)} // 🚨 이제 setCategory가 정의됨
               placeholder="예: 동아리, 스터디, 공모전 등"
             />
             {errors.category && <p className="error-msg">{errors.category}</p>}
@@ -99,8 +110,8 @@ function Write() {
             <label>모집 인원 (숫자)</label>
             <input
               type="number"
-              value={totalSlots}
-              onChange={(e) => setTotalSlots(e.target.value)}
+              value={totalSlots} // 🚨 이제 totalSlots가 정의됨
+              onChange={(e) => setTotalSlots(e.target.value)} // 🚨 이제 setTotalSlots가 정의됨
             />
             {errors.totalSlots && <p className="error-msg">{errors.totalSlots}</p>}
 
@@ -119,7 +130,7 @@ function Write() {
             />
             {errors.period && <p className="error-msg">{errors.period}</p>}
 
-            <label>모집 인원</label>
+            {/* <label>모집 인원</label>
             <input
               value={people}
               onChange={(e) => setPeople(e.target.value)}
@@ -127,7 +138,7 @@ function Write() {
             />
             {errors.people && (
               <p className="error-msg">{errors.people}</p>
-            )}
+            )} */}
 
             <label>이미지 파일 첨부</label>
             <input type="file" accept="image/*" onChange={handleFileChange} />
