@@ -95,15 +95,7 @@ function Write() {
               placeholder="예: 동아리, 스터디, 공모전 등"
             />
             {errors.category && <p className="error-msg">{errors.category}</p>}
-
-            <label>모집 인원 (숫자)</label>
-            <input
-              type="number"
-              value={totalSlots}
-              onChange={(e) => setTotalSlots(e.target.value)}
-            />
-            {errors.totalSlots && <p className="error-msg">{errors.totalSlots}</p>}
-
+            
             <label>내용</label>
             <textarea
               value={content}
@@ -121,6 +113,7 @@ function Write() {
 
             <label>모집 인원</label>
             <input
+              type="number"
               value={people}
               onChange={(e) => setPeople(e.target.value)}
               placeholder="예: 10명"

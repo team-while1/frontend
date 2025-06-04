@@ -37,7 +37,7 @@ function App() {
         <Route path="/edit" element={<EditProfile />} />
         {/* 모임 상세 */}
         <Route path="/:category/:id" element={<ClubDetail />} />
-
+ㅂ
         {/* 인증 */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
