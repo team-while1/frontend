@@ -14,7 +14,6 @@ export default function Home() {
   ];
 
   return (
-    <PageLayout>
 
       <section className="main-category-section-wrapper">
         <div className="logo-container">
@@ -35,6 +34,5 @@ export default function Home() {
           ))}
         </div>
       </section>
-      </PageLayout>
   );
 }
