@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://kunnect.co.kr/api', // ✅ 실제 서버 주소로 직접 접근
+  baseURL: '', // ✅ 실제 서버 주소로 직접 접근 // 가상 서버로 프론트 테스트 중 https://kunnect.co.kr/api
   headers: {
     'Content-Type': 'application/json'
   },

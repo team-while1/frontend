@@ -7,7 +7,7 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
-import PageLayout from "../components/PageLayout";
+
 
 export default function CategoryPage({ title }) {
   const navigate = useNavigate();
