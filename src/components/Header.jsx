@@ -12,7 +12,7 @@ export default function Header() {
     <header className="header">
       <h1 className="logo">
         <Link to="/" className="logo-link">
-        <img src="/icon2.png" alt="KUNNECT Logo" width="60"/>       
+        <img src="/icon4.png" alt="KUNNECT Logo" width="50"/>       
         </Link>
       </h1>
 

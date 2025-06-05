@@ -37,7 +37,6 @@ export default function CategoryPage({ title }) {
   const filteredMeetings = useSearch(meetings, search);
 
   return (
-    <PageLayout>
     <div className="category-page">
       <div className="category-nav tab-group">
         {categories.map((cat) => (
@@ -82,7 +81,5 @@ export default function CategoryPage({ title }) {
         </div>
       )}
     </div>
-    </PageLayout>
-
   );
 }
