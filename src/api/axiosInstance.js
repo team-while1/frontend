@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://kunnect.co.kr/api', // ✅ 실제 서버 주소로 직접 접근
+  baseURL: '/api', // ✅ 실제 서버 주소로 직접 접근
   headers: {
     'Content-Type': 'application/json'
   },
@@ -15,7 +15,7 @@ instance.interceptors.request.use(
     // ✅ baseURL('/api') 제외하고 경로 비교
     const strippedUrl = config.url.replace(/^\/api/, '');
     const isPublicRequest = [
-      '/find/id',
+      // '/find/id',
       '/find/pw-change',
       '/check-email',
       '/check-name'
