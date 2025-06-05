@@ -1,9 +1,22 @@
+/* PageLayout.css 또는 App.css */
+.page-layout-wrapper {
+  padding-bottom: 100px; /* 푸터 겹침만 방지 */
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+body, html {
+  height: 100%;
+}
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 .header {
   padding: 20px;
   background-color: #4CAF50;
@@ -21,7 +34,7 @@ body {
   padding: 20px;
   background-color: #f1f1f1;
   text-align: center;
-  margin-top: 30px;
+  margin-top: auto;
 }
 
 .home-buttons {

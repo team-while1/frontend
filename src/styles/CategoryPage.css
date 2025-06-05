@@ -1,31 +1,72 @@
 .category-page {
-  padding: 20px;
+  width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .category-nav {
   display: flex;
-  justify-content: center;     /* 가운데 정렬 */
-  gap: 0;                      /* 버튼 사이 빈 공간 없애기 */
+  justify-content: center;    
+  gap: 0;                
   margin: 40px auto 20px auto;
-  max-width: 800px;
+  /* max-width: 800px; */
 }
 
-.category-nav button {
-  flex: 1;                     /* ⚡ 버튼이 동일 비율로 꽉 차도록 */
-  height: 42px;
+/* .category-nav button {
+  flex: 1;                   
+  width: 10px;
+  height: 60px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; 
+  border: 1px solid #ccc;
+  border-right: none;
+} */
+
+/* 전체 탭 그룹 외곽 */
+.tab-group {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+/* 각 탭 버튼 */
+.tab-button {
+  padding: 10px 20px;
+  background: white;
+  border: none;
+  border-right: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tab-button:last-child {
+  border-right: none;
+}
+
+/* 선택된 탭 */
+.tab-button.active {
+  background-color: #3A84FF;
+  color: white;
+  font-weight: bold;
+}
+
+/* 호버 효과 */
+.tab-button:hover {
+  background-color: #f5f5f5;
 }
 
 .category-tab {
   padding: 8px 14px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   background-color: white;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }

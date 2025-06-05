@@ -1,30 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import {signUp} from "../api/auth";
 
-export default function useSignUpHandler({ email, pw, name, school, student_num, major, notAllow }) {
+export default function useSignUpHandler({ email, password, name, college, student_num, major, notAllow }) {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (notAllow) return;
+    const dataToSend = { // 전송할 데이터를 명시적인 객체로 생성
+      email,
+      password,
+      name,
+      student_num,
+      college, 
+      major,
+    };
+
+    console.log("🛠 최종 전송될 데이터:", dataToSend); // 🚨 이 로그를 통해 확인!
 
     try{
       await signUp({
         email,
-        password: pw,
+        password,
         name,
-        student_num: studentId,
-        college: school,
+        student_num,
+        college,
         major
       });
-
-//     localStorage.setItem('registeredUser', JSON.stringify({
-//       email,
-//       password: pw,
-//       name,
-//       school,
-//       student_num,
-//       major,
-//     }));
 
       alert('회원가입이 완료되었습니다.');
       navigate('/login');
@@ -36,18 +37,3 @@ export default function useSignUpHandler({ email, pw, name, school, student_num,
 
   return handleSubmit;
 }
-//     localStorage.setItem('registeredUser', JSON.stringify({
-//       email,
-//       password: pw,
-//       name,
-//       school,
-//       studentId,
-//       major,
-//     }));
-
-//     alert('회원가입이 완료되었습니다.');
-//     navigate('/login');
-//   };
-
-//   return handleSubmit;
-// }

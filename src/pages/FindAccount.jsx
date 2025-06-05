@@ -1,3 +1,4 @@
+// src/pages/FindAccount.jsx
 import React from "react";
 import "../styles/FindAccount.css";
 import useFindAccountForm from "../hooks/useFindAccountForm";
@@ -8,11 +9,15 @@ import FormInput from "../components/FormInput";
 export default function FindAccount() {
   const {
     activeTab,
-    email,
+    studentNum,
     name,
+    email,
+    newPw,
     foundInfo,
-    setEmail,
+    setStudentNum,
     setName,
+    setEmail,
+    setNewPw,
     handleTabChange,
     handleSearch
   } = useFindAccountForm();
@@ -23,18 +28,31 @@ export default function FindAccount() {
 
       <div className="contentWrap">
         <FormInput
-          placeholder="이름"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="학번"
+          value={studentNum}
+          onChange={(e) => setStudentNum(e.target.value)}
           autoFocus
         />
 
         {activeTab === "findPw" && (
-          <FormInput
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <>
+            <FormInput
+              placeholder="이름"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <FormInput
+              placeholder="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FormInput
+              placeholder="새 비밀번호"
+              type="password"
+              value={newPw}
+              onChange={(e) => setNewPw(e.target.value)}
+            />
+          </>
         )}
       </div>
 

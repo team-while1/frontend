@@ -8,7 +8,8 @@ export default defineConfig({
       '/api': {
         target: 'https://kunnect.co.kr',
         changeOrigin: true,
-        secure: false, // HTTPS 인증서 이슈 있을 경우 필요
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '') // ✅ 이 부분 추가
       }
     }
   }
