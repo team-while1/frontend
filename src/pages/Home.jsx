@@ -13,7 +13,6 @@ export default function Home() {
   ];
 
   return (
-
       <section className="main-category-section-wrapper">
         <div className="logo-container">
           <img src="logo3.png" alt="KUNNECT Logo" width="150"/> 
