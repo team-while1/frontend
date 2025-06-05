@@ -46,6 +46,7 @@ function App() {
         {/* 예외 */}
         <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
       </Routes>
+      <Footer />
       </UserProvider>
     </>
   );
