@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css'; // 👈 CSS 분리
 import emptyImg from '../assets/empty_img.png';
-import PageLayout from '../components/PageLayout';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ export default function Home() {
   ];
 
   return (
-    <PageLayout>
 
       <section className="main-category-section-wrapper">
         <div className="logo-container">
@@ -35,6 +33,5 @@ export default function Home() {
           ))}
         </div>
       </section>
-      </PageLayout>
   );
 }
