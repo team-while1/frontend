@@ -8,6 +8,7 @@ import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
 
+
 export default function CategoryPage({ title }) {
   const navigate = useNavigate();
   const category = useCategoryFromPath();
