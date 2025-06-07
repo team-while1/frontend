@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-import { getCommentByPostId } from "../api/comment";
+import { getCommentByPostId } from "../api/comments";
 
 export default function CommentList({postId}){
     const [comments, setComments] = useState([]);
@@ -24,6 +24,7 @@ export default function CommentList({postId}){
                 {comments.map((comments)=> (
                     <li key={comment.comment_id}>
                         <b>{comment.is_anonymous ? '익명' : `유저 ${comment.member_id}`}</b>
+                        : {comment.content}
                     </li>
                 ))}
             </ul>
