@@ -61,26 +61,36 @@ function Write() {
 
     if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
 
+    
     setErrors({});
     setLoading(true);
 
+    const categoryMap = {
+      "동아리": "club",
+      "스터디": "study",
+      "공모전": "competition",
+      "기타": "etc",
+    };
+
+    const routeCategory = categoryMap[category] || "etc";
+    
+
     setTimeout(() => {
-      navigate("/detail", {
+      navigate(`/${routeCategory}`, {
         state: {
           author,
           title,
           content,
           period,
           people,
-          category, // 🚨 추가: category 값도 state에 포함
-          totalSlots, // 🚨 추가: totalSlots 값도 state에 포함
+          category,
+          totalSlots,
           imageUrl: preview,
         },
       });
       setLoading(false);
     }, 1000);
-  };
-
+  }
   return (
     <div className="write-layout">
       {/* 사이드바 */}
