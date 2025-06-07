@@ -52,28 +52,61 @@ function Write() {
       return;
     }
 
-    const postData = {
-      member_id: user?.id || 1, // 로그인 사용자 ID로 대체
-      title,
-      content,
-      category,
-      start_date: startDate,
-      end_date: endDate,
-      total_slots: Number(totalSlots),
+
+    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
+
+    
+    setErrors({});
+    setLoading(true);
+
+    const categoryMap = {
+      "동아리": "club",
+      "스터디": "study",
+      "공모전": "competition",
+      "기타": "etc",
     };
 
-    try {
-      setLoading(true);
-      await axios.post("/api/posts", postData);
-      alert("모집 글이 등록되었습니다.");
-      navigate(`/${category}`);
-    } catch (err) {
-      console.error("등록 실패:", err);
-      alert("등록 중 오류가 발생했습니다.");
-    } finally {
+    const routeCategory = categoryMap[category] || "etc";
+    
+
+    setTimeout(() => {
+      navigate(`/${routeCategory}`, {
+        state: {
+          author,
+          title,
+          content,
+          period,
+          people,
+          category,
+          totalSlots,
+          imageUrl: preview,
+        },
+      });
       setLoading(false);
-    }
-  };
+    }, 1000);
+  }
+//     const postData = {
+//       member_id: user?.id || 1, // 로그인 사용자 ID로 대체
+//       title,
+//       content,
+//       category,
+//       start_date: startDate,
+//       end_date: endDate,
+//       total_slots: Number(totalSlots),
+//     };
+
+//     try {
+//       setLoading(true);
+//       await axios.post("/api/posts", postData);
+//       alert("모집 글이 등록되었습니다.");
+//       navigate(`/${category}`);
+//     } catch (err) {
+//       console.error("등록 실패:", err);
+//       alert("등록 중 오류가 발생했습니다.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
   return (
     <div className="write-layout">
       {/* 사이드바 */}
