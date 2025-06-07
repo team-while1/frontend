@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
 
-  baseURL: '', // ✅ 실제 서버 주소로 직접 접근 https://kunnect.co.kr/api
+  baseURL: 'https://kunnect.co.kr',
 
   headers: {
     'Content-Type': 'application/json'
@@ -25,7 +25,10 @@ instance.interceptors.request.use(
 
     if (token && !isPublicRequest) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('🔐 토큰 포함 요청:', config.headers);
+      console.log("전체 토큰 복사:", token);
+      navigator.clipboard.writeText(token).then(() => {
+});
+
     } else {
       console.log('🔓 공개 요청:', config.url);
     }

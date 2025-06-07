@@ -2,7 +2,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
-import ClubDetail from './pages/ClubDetail';
+import PostDetail from './pages/PostDetail';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import FindAccount from './pages/FindAccount';
@@ -36,7 +36,7 @@ function App() {
         {/*정보 수정*/}
         <Route path="/edit" element={<EditProfile />} />
         {/* 모임 상세 */}
-        <Route path="/:category/:id" element={<ClubDetail />} />
+        <Route path="/:category/:id" element={<PostDetail />} />
 
         {/* 인증 */}
         <Route path="/login" element={<Login />} />

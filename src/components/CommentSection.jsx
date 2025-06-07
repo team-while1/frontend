@@ -1,5 +1,6 @@
 import CommentInput from "./CommentInput";
 import CommentList from "./CommentList";
+import { useState } from "react";
 
 export default function CommentSection({postId, memberId}){
     const [refresh, setRefresh] = useState(0);
