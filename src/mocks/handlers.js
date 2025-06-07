@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { rest } from 'msw'; // ✅ 이 방식만 쓰세요
 
 const mockPosts = [
   {
