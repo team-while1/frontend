@@ -1,5 +1,5 @@
 /* 전체 화면 중심 정렬 */
-.club-detail-layout {
+.post-detail-layout {
   width: 100%;
   min-height: 100vh;
   background-color: #f3f4f6;
@@ -8,13 +8,13 @@
 }
 
 /* 콘텐츠 최대 1200px, 좌우 여유 공간 */
-.club-main {
+.post-main {
   max-width: 1200px;
   margin: 0 auto;
 }
 
 /* 콘텐츠 블록 */
-.club-content-area {
+.post-content-area {
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -26,7 +26,7 @@
 }
 
 /* 라벨 */
-.club-label {
+.post-label {
   font-size: 0.9rem;
   background-color: #e0e7ff;
   color: #1e3a8a;
@@ -37,27 +37,27 @@
 }
 
 /* 제목 */
-.club-title {
+.post-title {
   font-size: 2rem;
   font-weight: 800;
   color: #1e3a8a;
   margin: 0;
 }
 
-.club-meta {
+.post-meta {
   font-size: 0.95rem;
   color: #4b5563;
 }
 
 /* 본문 */
-.club-content h3 {
+.post-content h3 {
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 12px;
   color: #1e3a8a;
 }
 
-.club-body {
+.post-body {
   font-size: 1rem;
   line-height: 1.7;
   color: #1f2937;
@@ -65,7 +65,7 @@
 }
 
 /* 인라인 포스터 이미지 */
-.club-inline-image {
+.post-inline-image {
   display: block;
   margin: 32px auto 16px;
   max-width: 100%;
@@ -76,13 +76,13 @@
 }
 
 /* 댓글 입력 */
-.club-comment-box {
+.post-comment-box {
   display: flex;
   gap: 12px;
   margin-top: 32px;
 }
 
-.club-comment-box textarea {
+.post-comment-box textarea {
   flex: 1;
   resize: vertical;
   height: 80px;
@@ -92,7 +92,7 @@
   border-radius: 6px;
 }
 
-.club-comment-box button {
+.post-comment-box button {
   background-color: #1e3a8a;
   color: white;
   font-weight: 600;
@@ -103,23 +103,23 @@
 }
 
 /* 댓글 목록 */
-.club-comment-list {
+.post-comment-list {
   margin-top: 20px;
 }
 
-.club-comment-list ul {
+.post-comment-list ul {
   margin-top: 8px;
   padding-left: 16px;
 }
 
-.club-comment-list li {
+.post-comment-list li {
   margin-bottom: 6px;
   font-size: 0.95rem;
   color: #374151;
 }
 
 /* ✅ 상단 고정 네비게이터 */
-.club-navbar {
+.post-navbar {
   position: sticky;
   top: 0;
   background-color: white;

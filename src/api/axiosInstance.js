@@ -25,7 +25,10 @@ instance.interceptors.request.use(
 
     if (token && !isPublicRequest) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('🔐 토큰 포함 요청:', config.headers);
+      console.log("전체 토큰 복사:", token);
+      navigator.clipboard.writeText(token).then(() => {
+});
+
     } else {
       console.log('🔓 공개 요청:', config.url);
     }
