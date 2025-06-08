@@ -26,9 +26,15 @@ export default function CategoryPage({ title }) {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-        const response = await axios.get(`/api/posts?category=${category}`);
-        console.log("✅ 불러온 모임 데이터:", response.data);
-        setMeetings(response.data); // 서버 응답 데이터를 세팅
+        const response = await axios.get("/api/posts");
+        const allPosts = response.data;
+        
+        const filtered = allPosts.filter(
+          (post) => post.category === category || post.categoryId === category
+        );
+  
+        console.log("🎯 필터링된 글:", filtered);
+        setMeetings(filtered);
       } catch (err) {
         console.error("❌ 모임 데이터를 불러오는 데 실패했습니다:", err);
       }

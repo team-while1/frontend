@@ -17,12 +17,12 @@ function Write() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  // 🚨 추가: category 상태와 setCategory 함수 선언
   const [category, setCategory] = useState("");
 
   const [totalSlots, setTotalSlots] = useState("");
 
   const handleFileChange = (e) => {
+    console.log(postData)
     const selected = e.target.files[0];
     if (selected && !selected.type.startsWith("image/")) {
       alert("이미지 파일만 업로드할 수 있습니다.");
@@ -48,18 +48,17 @@ function Write() {
       setErrors(newErrors);
       return;
     }
-
     
     setErrors({});
     setLoading(true);
 
     const postData = {
-      member_id: user?.id || 1, // 로그인 사용자 ID로 대체
+      member_id: user?.id || 1,
       title,
       content,
-      category,
-      start_date: (startDate),
-      end_date: (endDate),
+      category,                 // ✅ 올바른 키 이름
+      start_date: startDate,    // ✅ snake_case
+      end_date: endDate,
       total_slots: Number(totalSlots),
     };
 
