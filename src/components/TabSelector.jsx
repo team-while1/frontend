@@ -11,7 +11,7 @@ export default function TabSelector({ activeTab, onChange }) {
           className={`tab-button ${activeTab === "findPw" ? "active" : ""}`}
           onClick={() => onChange("findPw")}
         >
-          비밀번호 찾기
+          비밀번호 변경
         </button>
       </div>
     );

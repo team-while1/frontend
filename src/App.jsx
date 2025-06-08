@@ -37,7 +37,8 @@ function App() {
         <Route path="/edit" element={<EditProfile />} />
         {/* 모임 상세 */}
         <Route path="/:category/:id" element={<PostDetail />} />
-
+        {/*게시글 페이지*/}
+        <Route path="/post/:id" element={<PostDetail />} />
         {/* 인증 */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

@@ -1,4 +1,3 @@
-// src/pages/FindAccount.jsx
 import React from "react";
 import "../styles/FindAccount.css";
 import useFindAccountForm from "../hooks/useFindAccountForm";
@@ -22,8 +21,15 @@ export default function FindAccount() {
     handleSearch
   } = useFindAccountForm();
 
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
   return (
-    <div className="page-findAccount">
+    <div className="page-findAccount" onKeyDown={handleKeyDown}>
       <TabSelector activeTab={activeTab} onChange={handleTabChange} />
 
       <div className="contentWrap">

@@ -25,8 +25,14 @@ export default function Login() {
 
   const handleLogin = useLoginHandler(email, password);
 
+  const handleKeyDown = (e) => {
+    if(e,key === 'Enter'){
+      e.preventDefault();
+      if(!notAllow) handleLogin();
+    }
+  };
   return (
-    <div className="login-page">
+    <div className="login-page" onKeyDown={handleKeyDown}>
       <div className="titleWrap">로그인</div>
 
       <div className="contentWrap">
