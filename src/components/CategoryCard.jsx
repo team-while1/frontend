@@ -3,8 +3,8 @@ import megaphoneImg from "../assets/empty_img.png";
 
 export default function CategoryCard({ meeting, onClick }) {
   const participantCount = meeting.participants?.length || 0;
-  const targetCount = meeting.target || 10;
-  const percentage = Math.min((participantCount / targetCount) * 100, 100);
+  const totalCount = meeting.total_slots || 10;
+  const percentage = Math.min((participantCount / totalCount) * 100, 100);
 
   return (
     <div className="category-card" onClick={onClick}>
@@ -15,8 +15,9 @@ export default function CategoryCard({ meeting, onClick }) {
       />
       <div className="card-content">
         <strong>{meeting.title}</strong>
-        <p>{meeting.description}</p>
-        <small>개설자: {meeting.creator}</small>
+        <p>{meeting.content}</p> {/* ✅ description → content로 변경 */}
+        <small>모집 기간: {meeting.start_date} ~ {meeting.end_date}</small> {/* ✅ 모집 기간 추가 */}
+        <small>모집 인원: {totalCount}명</small> {/* ✅ 모집 인원 명시 */}
       </div>
       <div className="gauge-container">
         <div
@@ -25,7 +26,7 @@ export default function CategoryCard({ meeting, onClick }) {
         />
       </div>
       <div className="gauge-label">
-        {participantCount} / {targetCount} 명 모집
+        {participantCount} / {totalCount} 명 모집
       </div>
     </div>
   );

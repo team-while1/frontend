@@ -8,8 +8,6 @@ import "../styles/Write.css";
 function Write() {
   const navigate = useNavigate();
   const { user } = useUser();
-
-  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [period, setPeriod] = useState('');
@@ -19,7 +17,6 @@ function Write() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [people, setPeople] = useState("");
   // 🚨 추가: category 상태와 setCategory 함수 선언
   const [category, setCategory] = useState("");
 
@@ -52,85 +49,47 @@ function Write() {
       return;
     }
 
-
-    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
-
     
     setErrors({});
     setLoading(true);
 
-    const period = `${startDate} ~ ${endDate}`;
+    const postData = {
+      member_id: user?.id || 1, // 로그인 사용자 ID로 대체
+      title,
+      content,
+      category,
+      start_date: (startDate),
+      end_date: (endDate),
+      total_slots: Number(totalSlots),
+    };
 
-    // const categoryMap = { 
-    //   "동아리": "club",
-    //   "스터디": "study",
-    //   "공모전": "competition",
-    //   "기타": "etc",
-    // }; 
-    // 불필요해짐 
-
-    // const routeCategory = categoryMap[category] || "etc";
-    
-
-    setTimeout(() => {
-      navigate(`/${category}`, {
-        state: {
-          author,
-          title,
-          content,
-          period,
-          people,
-          category,
-          totalSlots,
-          imageUrl: preview,
-        },
-      });
+    try {
+      setLoading(true);
+      await axios.post("/api/posts", postData);
+      alert("모집 글이 등록되었습니다.");
+      navigate(`/${category}`);
+    } catch (err) {
+      console.error("등록 실패:", err);
+      alert("등록 중 오류가 발생했습니다.");
+    } finally {
       setLoading(false);
-    }, 1000);
-  }
-//     const postData = {
-//       member_id: user?.id || 1, // 로그인 사용자 ID로 대체
-//       title,
-//       content,
-//       category,
-//       start_date: startDate,
-//       end_date: endDate,
-//       total_slots: Number(totalSlots),
-//     };
+    }
+  };
 
-//     try {
-//       setLoading(true);
-//       await axios.post("/api/posts", postData);
-//       alert("모집 글이 등록되었습니다.");
-//       navigate(`/${category}`);
-//     } catch (err) {
-//       console.error("등록 실패:", err);
-//       alert("등록 중 오류가 발생했습니다.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
   return (
     <div className="write-layout">
-      {/* 사이드바 */}
-      {/* <aside className="sidebar">
-        <h2>KNUNNECT :</h2>
-        <input placeholder="Search..." />
-        <p className="sidebar-label">동아리 모집 게시판</p>
-      </aside> */}
 
-      {/* 메인 */}
       <main className="write-main">
         <div className="form-wrapper">
           <h3 className="form-title">글 작성하기</h3>
           <form onSubmit={handleSubmit} className="write-form">
-            <label>작성자</label>
+            {/* <label>작성자</label>
             <input
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="작성자 이름"
-            />
-            {errors.author && <p className="error-msg">{errors.author}</p>}
+            /> */}
+            {/* {errors.author && <p className="error-msg">{errors.author}</p>} */}
 
             <label>제목</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -215,3 +174,45 @@ function Write() {
 }
 
 export default Write;
+
+
+      {/* 사이드바 */}
+      {/* <aside className="sidebar">
+        <h2>KNUNNECT :</h2>
+        <input placeholder="Search..." />
+        <p className="sidebar-label">동아리 모집 게시판</p>
+      </aside> */}
+
+      {/* 메인 */}
+
+
+
+    // const period = `${startDate} ~ ${endDate}`;
+
+    // const categoryMap = { 
+    //   "동아리": "club",
+    //   "스터디": "study",
+    //   "공모전": "competition",
+    //   "기타": "etc",
+    // }; 
+    // 불필요해짐 
+
+    // const routeCategory = categoryMap[category] || "etc";
+    
+
+  //   setTimeout(() => {
+  //     navigate(`/${category}`, {
+  //       state: {
+  //         author,
+  //         title,
+  //         content,
+  //         period,
+  //         people,
+  //         category,
+  //         totalSlots,
+  //         imageUrl: preview,
+  //       },
+  //     });
+  //     setLoading(false);
+  //   }, 1000);
+  // }
