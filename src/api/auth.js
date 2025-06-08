@@ -12,3 +12,9 @@ export const signUp = (data) =>
 
 export const getMember = () => 
   axios.get('/api/member');
+
+export const findId = (student_num) =>
+  axios.post('/find/id', { student_num });
+
+export const changePassword = (data) =>
+  axios.post('/find/pw-change', data);

@@ -1,4 +1,3 @@
-// src/api/axiosInstance.js
 import axios from 'axios';
 
 const instance = axios.create({
@@ -6,7 +5,7 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  withCredentials: true // 토큰으로 인증하므로 쿠키 사용 안 함
+  withCredentials: false,
 });
 
 instance.interceptors.request.use(
@@ -17,17 +16,22 @@ instance.interceptors.request.use(
       ? config.url.slice(4)
       : config.url;
 
-    const isPublicRequest = [
+    const publicPaths = [
       '/find/id',
       '/find/pw-change',
       '/check-email',
-      '/check-name'
-    ].some((url) => strippedUrl.includes(url));
+      '/check-name',
+      '/auth/login',
+      '/auth/signup',
+    ];
+
+    const isPublicRequest = publicPaths.some((url) =>
+      strippedUrl.startsWith(url)
+    );
 
     if (token && !isPublicRequest) {
       config.headers['Authorization'] = `Bearer ${token}`;
 
-      // 🔐 개발 중에만 클립보드 복사
       if (process.env.NODE_ENV === 'development') {
         console.log("🔑 전체 토큰:", token);
         navigator.clipboard.writeText(token).then(() => {});
@@ -44,9 +48,10 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response?.status === 401) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('loginUser');
       alert('세션이 만료되었습니다. 다시 로그인해주세요.');
       window.location.href = '/login';
     }
