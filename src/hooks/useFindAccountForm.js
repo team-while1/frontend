@@ -28,13 +28,13 @@ export default function useFindAccountForm() {
     try {
       if (activeTab === "findId") {
         // 아이디 찾기 요청
-        const res = await axios.post("/find/id", {
+        const res = await axios.post("/api/find/id", {
           student_num: studentNum,
         });
         setFoundInfo(`가입된 이메일: ${res.data.email}`);
       } else if (activeTab === "findPw") {
         // 비밀번호 변경 요청
-        const res = await axios.post("/find/pw-change", {
+        const res = await axios.post("/api/find/pw-change", {
           name,
           email,
           student_num: studentNum,

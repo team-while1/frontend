@@ -7,6 +7,7 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
+import axios from "../api/axiosInstance"; 
 
 
 export default function CategoryPage({ title }) {
@@ -23,9 +24,17 @@ export default function CategoryPage({ title }) {
   ];
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("meetings")) || [];
-    const filtered = stored.filter((meeting) => meeting.category === category);
-    setMeetings(filtered);
+    const fetchMeetings = async () => {
+      try {
+        const response = await axios.get(`/api/posts?category=${category}`);
+        console.log("✅ 불러온 모임 데이터:", response.data);
+        setMeetings(response.data); // 서버 응답 데이터를 세팅
+      } catch (err) {
+        console.error("❌ 모임 데이터를 불러오는 데 실패했습니다:", err);
+      }
+    };
+  
+    fetchMeetings();
   }, [category]);
 
   const [filters, setFilters] = useState({
@@ -75,7 +84,10 @@ export default function CategoryPage({ title }) {
             <CategoryCard
               key={index}
               meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`)}
+              onClick={() => navigate(`/${category}/${index}`,{
+                state: meeting,
+              })
+            }
             />
           ))}
         </div>

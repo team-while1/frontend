@@ -13,7 +13,7 @@ export default function MyPage() {
       console.log("MyPage 진입됨"); // 진입 여부 확인
       try {
         console.log('MyPage: /member API 호출 시도...'); // 이 로그가 찍히는지 확인
-        const res = await axios.get('/member');
+        const res = await getMember();
         console.log('MyPage: /member API 응답 성공:', res); // 이 로그가 찍히면 성공
         setUser(res.data);
       } catch (err) {

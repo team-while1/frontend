@@ -12,7 +12,7 @@ function Write() {
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  // const [period, setPeriod] = useState('');
+  const [period, setPeriod] = useState('');
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [file, setFile] = useState(null);
@@ -52,36 +52,36 @@ function Write() {
       return;
     }
 
-    const postData = {
-      member_id: user?.id || 1, // 로그인 사용자 ID로 대체
-      title,
-      content,
-      category,
-      start_date: startDate,
-      end_date: endDate,
-      total_slots: Number(totalSlots),
-    };
 
-    try {
-      setLoading(true);
-      await axios.post("/api/posts", postData);
-      alert("모집 글이 등록되었습니다.");
-      navigate(`/${category}`);
-    } catch (err) {
-      console.error("등록 실패:", err);
-      alert("등록 중 오류가 발생했습니다.");
-    } finally {
+    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
+
+    
+    setErrors({});
+    setLoading(true);
+
+    const period = `${startDate} ~ ${endDate}`;
+
+
+
+    setTimeout(() => {
+      navigate(`/${category}`, {
+        state: {
+          author,
+          title,
+          content,
+          period,
+          people,
+          category,
+          totalSlots,
+          imageUrl: preview,
+        },
+      });
       setLoading(false);
-    }
-  };
+    }, 1000);
+  }
+
   return (
     <div className="write-layout">
-      {/* 사이드바 */}
-      {/* <aside className="sidebar">
-        <h2>KNUNNECT :</h2>
-        <input placeholder="Search..." />
-        <p className="sidebar-label">동아리 모집 게시판</p>
-      </aside> */}
 
       {/* 메인 */}
       <main className="write-main">

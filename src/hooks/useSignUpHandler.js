@@ -32,6 +32,8 @@ export default function useSignUpHandler({ email, password, name, college, stude
     } catch(err){
       console.error(err);
       alert('회원가입에 실패했습니다. 입력값을 확인해주세요');
+        console.error("❗️회원가입 실패 응답:", err.response?.data || err.message);
+  alert(err.response?.data?.message || "회원가입 중 오류가 발생했습니다");
     }
   };
 
