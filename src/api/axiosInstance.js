@@ -36,6 +36,7 @@ instance.interceptors.request.use(
         console.log("🔑 전체 토큰:", token);
         navigator.clipboard.writeText(token).then(() => {});
       }
+
     } else {
       console.log('🔓 공개 요청:', config.url);
     }

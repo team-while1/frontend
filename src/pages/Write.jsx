@@ -59,18 +59,21 @@ function Write() {
     setErrors({});
     setLoading(true);
 
-    const categoryMap = {
-      "동아리": "club",
-      "스터디": "study",
-      "공모전": "competition",
-      "기타": "etc",
-    };
+    const period = `${startDate} ~ ${endDate}`;
 
-    const routeCategory = categoryMap[category] || "etc";
+    // const categoryMap = { 
+    //   "동아리": "club",
+    //   "스터디": "study",
+    //   "공모전": "competition",
+    //   "기타": "etc",
+    // }; 
+    // 불필요해짐 
+
+    // const routeCategory = categoryMap[category] || "etc";
     
 
     setTimeout(() => {
-      navigate(`/${routeCategory}`, {
+      navigate(`/${category}`, {
         state: {
           author,
           title,

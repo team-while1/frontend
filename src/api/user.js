@@ -2,6 +2,7 @@
 import axios from './axiosInstance';
 
 export function updateUserInfo(data) {
+
   return axios.put('/auth/member', data, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -14,6 +15,7 @@ export function updateProfileImage(formData) {
   // ⚠️ 수정된 부분: 프로필 이미지 업데이트 API 경로를 수정했습니다.
   return axios.put(
     "/auth/member/profile", // ⭐️ 이 경로를 백엔드 API 문서 또는 백엔드 개발자에게 확인해주세요!
+
     formData, // FormData 객체 직접 전송
     {
       headers: {
