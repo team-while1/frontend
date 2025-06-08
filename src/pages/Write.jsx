@@ -12,7 +12,7 @@ function Write() {
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  // const [period, setPeriod] = useState('');
+  const [period, setPeriod] = useState('');
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [file, setFile] = useState(null);
