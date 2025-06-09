@@ -16,19 +16,16 @@ export default function CategoryCard({ meeting, onClick }) {
       />
       <div className="card-content">
         <strong>{meeting.title}</strong>
-        <p>{meeting.content}</p> {/* ✅ description → content로 변경 */}
+        <p>{meeting.content}</p>
         {meeting.writerName && <small>개설자: {meeting.writerName}</small>}
-        <small>
-          모집 기간: {meeting.start_date} ~ {meeting.end_date}
-        </small>{" "}
-        {/* ✅ 모집 기간 추가 */}
-        <small>모집 인원: {totalCount}명</small> {/* ✅ 모집 인원 명시 */}
+        <p>모집 기간: {meeting.startDate} ~ {meeting.endDate}</p>
+        <p>모집 인원: {meeting.totalSlots}명</p>
       </div>
       <div className="gauge-container">
         <div className="gauge-fill" style={{ width: `${percentage}%` }} />
       </div>
       <div className="gauge-label">
-        {participantCount} / {totalCount} 명 모집
+        {participantCount} / {meeting.totalSlots} 명 모집
       </div>
     </div>
   );
