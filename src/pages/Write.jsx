@@ -77,6 +77,7 @@ function Write() {
 
   };
 
+
   return (
     <div className="write-layout">
 

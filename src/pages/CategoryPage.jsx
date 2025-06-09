@@ -93,7 +93,10 @@ export default function CategoryPage({ title }) {
             <CategoryCard
               key={index}
               meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`)}
+              onClick={() => navigate(`/${category}/${index}`,{
+                state: meeting,
+              })
+            }
             />
           ))}
         </div>
