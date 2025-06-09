@@ -28,11 +28,14 @@ export default function CategoryPage({ title }) {
       try {
         const response = await axios.get("/api/posts");
         const allPosts = response.data;
+
+        console.log("📦 현재 카테고리:", category);
+        console.log("📄 전체 글 목록:", allPosts.map(p => p.categoryId));
         
         const filtered = allPosts.filter(
-          (post) => post.category === category || post.categoryId === category
+          (post) => post.categoryId === category
         );
-  
+
         console.log("🎯 필터링된 글:", filtered);
         setMeetings(filtered);
       } catch (err) {

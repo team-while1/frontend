@@ -22,7 +22,7 @@ function Write() {
   const [totalSlots, setTotalSlots] = useState("");
 
   const handleFileChange = (e) => {
-    console.log(postData)
+    
     const selected = e.target.files[0];
     if (selected && !selected.type.startsWith("image/")) {
       alert("이미지 파일만 업로드할 수 있습니다.");
@@ -56,11 +56,12 @@ function Write() {
       member_id: user?.id || 1,
       title,
       content,
-      category,                 // ✅ 올바른 키 이름
-      start_date: startDate,    // ✅ snake_case
+      categoryId: category,               
+      start_date: startDate,    
       end_date: endDate,
       total_slots: Number(totalSlots),
     };
+
 
     try {
       setLoading(true);
@@ -73,6 +74,7 @@ function Write() {
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
