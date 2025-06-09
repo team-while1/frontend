@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import { updateUserInfo, updateProfileImage } from "../api/user";
+import { updateUserInfo, updateProfileImage } from "../api/user"; // updateProfileImage 함수는 이제 JSON을 받도록 수정되어야 합니다.
 import "../styles/EditProfile.css";
+import { Options } from '../../node_modules/browser-image-compression/dist/browser-image-compression.d';
 
 export default function EditProfile() {
   const { user, login } = useUser();
@@ -62,36 +63,55 @@ export default function EditProfile() {
   };
 
   const [previewImage, setPreviewImage] = useState(null);
-  const [uploadImage, setUploadImage] = useState(null); // File 객체 자체를 저장
+  const [uploadImage, setUploadImage] = useState(null); // ⭐️ Base64 문자열 (데이터 URL)을 저장하도록 변경
 
   useEffect(() => {
     if (user) {
-      // ⭐️ 사용자 정보를 폼 필드에 초기 로드
       const currentUserForm = {
         name: user.name || "",
         college: user.college || "",
         major: user.major || "",
       };
       setForm(currentUserForm);
-      setInitialUserForm(currentUserForm); // 초기값을 저장하여 나중에 변경 여부 비교
-      setPreviewImage(user.profile_url || "/images/profile/anonymous.png");
+      setInitialUserForm(currentUserForm); 
+
+    const profileUrl = user.profile_url?.startsWith('/')
+      ? `https://kunnect.co.kr${user.profile_url}`
+      : `https://kunnect.co.kr/${user.profile_url}`;
+
+      setPreviewImage(profileUrl);
+      setUploadImage(profileUrl); // 초기 Base64 이미지도 저장
     }
-  }, [user]); // user 객체 의존성 유지
+  }, [user]); 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result); // 미리보기 이미지로
-      };
-      reader.readAsDataURL(file);
-      setUploadImage(file);  // ⭐️ File 객체 자체를 저장 (FormData에 추가하기 위함)
+      try{
+        const options = {
+          maxSizeMB : 0.5,
+          maxWidthOrHeight: 800,
+          useWebWorker: true
+        };
+        const compressedFile = await imageCompression(file, options);
+        console.log('압축된 파일: ' , compressedFile);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result); // 미리보기 이미지로 (Base64 URL)
+          setUploadImage(reader.result);  // ⭐️ Base64 URL 자체를 저장
+        };
+        reader.readAsDataURL(file); // 파일을 Base64 데이터 URL로 읽음
+
+      }catch(err){
+        console.error('이미지 압축 중 오류 발생:', error);
+        alert('이미지 처리 중 오류가 발생했습니다. 다른 이미지를 사용하세요');
+      }
     };
 
 
@@ -100,25 +120,24 @@ export default function EditProfile() {
       setLoading(true);
       let updatedUser = user; // 기본적으로 현재 사용자 정보로 시작
 
-      // ⭐️ 변경된 필드만 추려내기
       const changedData = {};
       if (form.name !== initialUserForm.name) changedData.name = form.name;
       if (form.college !== initialUserForm.college) changedData.college = form.college;
       if (form.major !== initialUserForm.major) changedData.major = form.major;
 
-      // 이름, 단과대, 전공 필드에 변경 사항이 있을 때만 API 호출
       if (Object.keys(changedData).length > 0) {
         const res1 = await updateUserInfo(changedData);
         updatedUser = res1.data.member;
       }
 
       // 프로필 이미지 변경 요청이 있을 때만 API 호출
-      if (uploadImage) {
-        const formData = new FormData();
-        formData.append('profile_image', uploadImage); // 'profile_image'는 백엔드가 기대하는 필드명
+      // uploadImage에 새로운 파일의 Base64 URL이 있거나, 기존 프로필 URL이 있는 경우
+      if (uploadImage && uploadImage !== user.profile_url) { // 새로운 이미지가 선택되었거나, 기존 이미지와 다른 경우
+        const imageData = {
+            image: uploadImage // ⭐️ Base64 문자열 (data:image/jpeg;base64,...)을 'image' 필드에 담아 전송
+        };
 
-        // updateProfileImage 함수는 이제 FormData를 받도록 수정됨 (user.js 확인)
-        const res2 = await updateProfileImage(formData);
+        const res2 = await updateProfileImage(imageData);
         updatedUser = res2.data.member; // 최신 사용자 정보로 업데이트
       }
 

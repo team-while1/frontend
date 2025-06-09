@@ -2,9 +2,6 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://kunnect.co.kr',
-  headers: {
-    'Content-Type': 'application/json'
-  },
   withCredentials: false,
 });
 
@@ -31,14 +28,6 @@ instance.interceptors.request.use(
 
     if (token && !isPublicRequest) {
       config.headers['Authorization'] = `Bearer ${token}`;
-
-      if (process.env.NODE_ENV === 'development') {
-        console.log("🔑 전체 토큰:", token);
-        navigator.clipboard.writeText(token).then(() => {});
-      }
-
-    } else {
-      console.log('🔓 공개 요청:', config.url);
     }
 
     return config;
