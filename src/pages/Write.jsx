@@ -10,7 +10,6 @@ function Write() {
   const { user } = useUser();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [period, setPeriod] = useState('');
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [file, setFile] = useState(null);
@@ -18,11 +17,8 @@ function Write() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [category, setCategory] = useState("");
-
   const [totalSlots, setTotalSlots] = useState("");
-
   const handleFileChange = (e) => {
-    
     const selected = e.target.files[0];
     if (selected && !selected.type.startsWith("image/")) {
       alert("이미지 파일만 업로드할 수 있습니다.");
@@ -34,8 +30,8 @@ function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = {};
 
+    const newErrors = {};
     if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
     if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
     if (!category.trim()) newErrors.category = "카테고리를 선택해주세요.";
@@ -48,7 +44,7 @@ function Write() {
       setErrors(newErrors);
       return;
     }
-    
+
     setErrors({});
     setLoading(true);
 
@@ -56,16 +52,46 @@ function Write() {
       member_id: user?.id || 1,
       title,
       content,
-      categoryId: category,               
-      startDate: startDate, 
-      endDate: endDate,     
-      totalSlots: Number(totalSlots), 
+      categoryId: category,
+      startDate: startDate,
+      endDate: endDate,
+      totalSlots: Number(totalSlots),
     };
 
-
     try {
+      // 1. 모집글 등록
       setLoading(true);
-      await axios.post("/api/posts", postData);
+      // await axios.post("/api/posts", postData);
+
+      const postRes = await axios.post("/api/posts", postData);
+      const postId = postRes.data?.post_id;
+
+      // 2. 이미지가 있으면 업로드
+      let imageUrl = "";
+
+      if (file && postId) {
+        const formData = new FormData();
+        formData.append("post_id", postId);
+        formData.append("file", file);
+
+        const fileRes = await axios.post("/api/files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        const fileId = fileRes.data.file_id;
+        console.log("📸 파일 업로드 완료 - file_id:", fileId);
+        // imageUrl = fileRes.data[0]?.filePath || ""; 
+
+        // if (imageUrl) {
+        //   await axios.patch(`/api/posts/${postId}`, {
+        //     image: imageUrl, // 🔄 'image'가 실제 백엔드 필드명인지 확인!
+        //   });
+        // }
+        await axios.patch(`/api/posts/${postId}`, {
+          file_id: fileId, // ✅ 백엔드에서 이 필드를 받아야 함
+        });
+      }
+
       alert("모집 글이 등록되었습니다.");
       navigate(`/${category}`);
     } catch (err) {
@@ -74,13 +100,10 @@ function Write() {
     } finally {
       setLoading(false);
     }
-
   };
-
 
   return (
     <div className="write-layout">
-
       <main className="write-main">
         <div className="form-wrapper">
           <h3 className="form-title">글 작성하기</h3>
@@ -177,44 +200,17 @@ function Write() {
 
 export default Write;
 
-
-      {/* 사이드바 */}
-      {/* <aside className="sidebar">
+{
+  /* 사이드바 */
+}
+{
+  /* <aside className="sidebar">
         <h2>KNUNNECT :</h2>
         <input placeholder="Search..." />
         <p className="sidebar-label">동아리 모집 게시판</p>
-      </aside> */}
+      </aside> */
+}
 
-      {/* 메인 */}
-
-
-
-    // const period = `${startDate} ~ ${endDate}`;
-
-    // const categoryMap = { 
-    //   "동아리": "club",
-    //   "스터디": "study",
-    //   "공모전": "competition",
-    //   "기타": "etc",
-    // }; 
-    // 불필요해짐 
-
-    // const routeCategory = categoryMap[category] || "etc";
-    
-
-  //   setTimeout(() => {
-  //     navigate(`/${category}`, {
-  //       state: {
-  //         author,
-  //         title,
-  //         content,
-  //         period,
-  //         people,
-  //         category,
-  //         totalSlots,
-  //         imageUrl: preview,
-  //       },
-  //     });
-  //     setLoading(false);
-  //   }, 1000);
-  // }
+{
+  /* 메인 */
+}
