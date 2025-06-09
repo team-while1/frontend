@@ -28,18 +28,26 @@ export default function CategoryPage({ title }) {
       try {
         const response = await axios.get("/api/posts");
         const allPosts = response.data;
-
-        console.log("📦 현재 카테고리:", category);
-        console.log("📄 전체 글 목록:", allPosts.map(p => p.categoryId));
-        
-        const filtered = allPosts.filter(
-          (post) => post.categoryId === category
+  
+        const filtered = allPosts.filter((post) => post.categoryId === category);
+  
+        // ✅ 새로운 이미지 API로 이미지 경로 가져오기
+        const postsWithImages = await Promise.all(
+          filtered.map(async (post) => {
+            try {
+              const res = await axios.get(`/api/files/by-post/${post.id}`);
+              const imagePath = res.data?.file_path;
+              return { ...post, image: imagePath };
+            } catch (e) {
+              console.warn(`❗ 이미지 불러오기 실패 - post_id: ${post.id}`, e);
+              return { ...post, image: null };
+            }
+          })
         );
-
-        console.log("🎯 필터링된 글:", filtered);
-        setMeetings(filtered);
-      } catch (err) {
-        console.error("❌ 모임 데이터를 불러오는 데 실패했습니다:", err);
+        setMeetings(postsWithImages);
+      } 
+      catch (err) {
+        console.error("❌ 모집글 불러오기 실패:", err);
       }
     };
   
