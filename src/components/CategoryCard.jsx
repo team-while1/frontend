@@ -25,7 +25,7 @@ export default function CategoryCard({ meeting, onClick }) {
         <div className="gauge-fill" style={{ width: `${percentage}%` }} />
       </div>
       <div className="gauge-label">
-        {participantCount} / {totalCount} 명 모집
+        {participantCount} / {meeting.totalSlots} 명 모집
       </div>
     </div>
   );

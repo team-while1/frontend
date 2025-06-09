@@ -57,9 +57,9 @@ function Write() {
       title,
       content,
       categoryId: category,               
-      start_date: startDate,    
-      end_date: endDate,
-      total_slots: Number(totalSlots),
+      startDate: startDate, 
+      endDate: endDate,     
+      totalSlots: Number(totalSlots), 
     };
 
 
