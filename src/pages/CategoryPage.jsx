@@ -7,9 +7,11 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
+
 import axios from "../api/axiosInstance";
 
 export default function CategoryPage({ title }) {
+
   const navigate = useNavigate();
   const category = useCategoryFromPath();
   const [search, setSearch] = useState("");
@@ -25,12 +27,12 @@ export default function CategoryPage({ title }) {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
+
         const response = await axios.get("/api/posts");
         const allPosts = response.data;
-  
+
         const filtered = allPosts.filter((post) => post.categoryId === category);
-  
-        // ✅ 새로운 이미지 API로 이미지 경로 가져오기
+
         const postsWithImages = await Promise.all(
           filtered.map(async (post) => {
             try {
@@ -44,8 +46,7 @@ export default function CategoryPage({ title }) {
           })
         );
         setMeetings(postsWithImages);
-      } 
-      catch (err) {
+      } catch (err) {
         console.error("❌ 모집글 불러오기 실패:", err);
       }
     };
@@ -67,9 +68,7 @@ export default function CategoryPage({ title }) {
         {categories.map((cat) => (
           <button
             key={cat.path}
-            className={`tab-button ${
-              cat.path === `/${category}` ? "active" : ""
-            }`}
+            className={`tab-button ${cat.path === `/${category}` ? "active" : ""}`}
             onClick={() => navigate(cat.path)}
           >
             {cat.label}
@@ -80,9 +79,11 @@ export default function CategoryPage({ title }) {
       <div className="category-header">
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
         <FilterPanel filters={filters} setFilters={setFilters} />
+
         <CommonButton onClick={() => navigate("/create")}>
           + 모임 추가
         </CommonButton>
+
       </div>
 
       <div className="line" />
@@ -93,7 +94,7 @@ export default function CategoryPage({ title }) {
         </div>
       ) : (
         <div className="category-list">
-          {/* ✅ 게시글 카드 클릭 시 정확한 ID 기반으로 navigate */}
+
           {filteredMeetings.map((meeting) => {
             console.log("🧾 개별 meeting:", meeting);
 

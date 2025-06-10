@@ -6,11 +6,12 @@ export default function CategoryCard({ meeting, onClick }) {
   const totalCount = meeting.total_slots || 10;
   const percentage = Math.min((participantCount / totalCount) * 100, 100);
 
+  console.log("🔥 writerName", meeting.writerName); // 왜 갑자기 게시자가 안 나올까
   return (
     <div className="category-card" onClick={onClick}>
       <img
         src={
-          meeting.image ? `https://kunnect.co.kr${meeting.image}` : megaphoneImg
+          meeting.image ? `https://kunnect.co.kr/${meeting.image.replace(/^\/?/, "")}` : megaphoneImg
         }
         alt="모임 이미지"
         className="card-image"
