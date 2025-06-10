@@ -36,6 +36,7 @@ export default function CommentInput({ postId, onCommentSubmitted }) {
                 post_id: postId,
                 content,
                 is_anonymous: isAnonymous,
+                member_id: user.member_id,
             });
             setContent('');
             setIsAnonymous(false);

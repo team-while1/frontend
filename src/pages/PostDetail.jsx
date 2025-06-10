@@ -11,36 +11,20 @@ function PostDetail() {
   const navigate = useNavigate();
   const { user } = useUser(); 
   const [post, setPost] = useState(null);
-  const [authorInfo, setAuthorInfo] = useState(null); 
   const [error, setError] = useState('');
   const [isApplying, setIsApplying] = useState(false); 
 
   useEffect(() => {
-    const fetchPostAndAuthor = async () => {
+    const fetchPost = async () => {
       try {
         const postRes = await axios.get(`/api/posts/${postId}`);
         setPost(postRes.data);
-
-        if (postRes.data.memberId) { 
-          try {
-            const authorRes = await axios.get(`/api/member/${postRes.data.memberId}`);
-            setAuthorInfo(authorRes.data);
-          } catch (authorErr) {
-            console.error('❌ 작성자 정보 불러오기 실패:', authorErr);
-            setAuthorInfo(null); 
-          }
-        } else {
-          console.warn('게시글 응답에 작성자 memberId가 없습니다. 작성자 정보 표시가 제한됩니다.');
-          setAuthorInfo(null);
-        }
-
       } catch (err) {
         console.error('❌ 게시글 불러오기 실패:', err);
         setError('존재하지 않는 게시글이거나 잘못된 접근입니다.');
       }
     };
-
-    fetchPostAndAuthor();
+    fetchPost();
   }, [postId]);
 
   if (error) return <p className="error-message">{error}</p>;
@@ -48,7 +32,6 @@ function PostDetail() {
 
   const {
     id: post_id,
-    memberId: member_id,
     title,
     content,
     views,
@@ -57,6 +40,8 @@ function PostDetail() {
     totalSlots: total_slots,
     categoryId: category,
     createdAt: created_at,
+    writerName, // ✅ 작성자 이름
+    writerProfileUrl, // ✅ (있다면) 프로필 이미지 URL
   } = post;
 
   if (!post_id) {
@@ -64,8 +49,8 @@ function PostDetail() {
     return <p className="error-message">게시물 데이터를 불러오는데 실패했습니다</p>;
   }
 
-  const authorNickname = authorInfo ? authorInfo.name : `사용자 ${member_id || '알 수 없음'}`;
-  const authorProfileUrl = authorInfo ? authorInfo.profile_url : "/images/profile/anonymous.png";
+  const authorNickname = writerName || '알 수 없음';
+  const authorProfileUrl = writerProfileUrl || "/images/profile/anonymous.png";
 
   const categoryLabelMap = {
     club: '🎓 동아리 모집',
@@ -75,7 +60,6 @@ function PostDetail() {
   };
   const categoryLabel = categoryLabelMap[category] || '📌 모임 모집';
 
-  const isAuthor = user && user.member_id === member_id;
   const isRecruiting = new Date() < new Date(end_date);
 
   const formatDate = (dateString) => {
@@ -118,52 +102,12 @@ function PostDetail() {
     }
   };
 
-  const handleEdit = () => {
-    if (!user || !post) {
-      alert('수정 권한이 없습니다.');
-      return;
-    }
-    if (user.member_id !== member_id) {
-      alert('본인의 게시물만 수정할 수 있습니다.');
-      return;
-    }
-    navigate(`/edit-post/${postId}`);
-  };
-
-  const handleDelete = async () => {
-    if (!user || !post) {
-      alert('삭제 권한이 없습니다.');
-      return;
-    }
-    if (user.member_id !== member_id) {
-      alert('본인의 게시물만 삭제할 수 있습니다.');
-      return;
-    }
-
-    if (window.confirm('정말로 이 게시물을 삭제하시겠습니까?')) {
-      try {
-        await axios.delete(`/api/posts/${postId}`, { data: { member_id: user.member_id } });
-        alert('게시물이 삭제되었습니다.');
-        navigate('/posts'); 
-      } catch (err) {
-        console.error('게시물 삭제 실패:', err);
-        alert(err.response?.data?.message || '게시물 삭제에 실패했습니다. 다시 시도해주세요.');
-      }
-    }
-  };
-
   return (
     <div className="post-detail-layout">
       <div className="post-main">
         <div className="post-content-area">
           <div className="post-header-top">
             <div className="post-label">{categoryLabel}</div>
-            {isAuthor && (
-              <div className="author-actions">
-                <button onClick={handleEdit} className="action-button edit">수정</button>
-                <button onClick={handleDelete} className="action-button delete">삭제</button>
-              </div>
-            )}
           </div>
 
           <h1 className="post-title">{title}</h1>
