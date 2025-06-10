@@ -25,11 +25,28 @@ export default function CategoryPage({ title }) {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-        const response = await axios.get(`/api/posts?category=${category}`);
-        console.log("✅ 불러온 모임 데이터:", response.data);
-        setMeetings(response.data);
-      } catch (err) {
-        console.error("❌ 모임 데이터를 불러오는 데 실패했습니다:", err);
+        const response = await axios.get("/api/posts");
+        const allPosts = response.data;
+  
+        const filtered = allPosts.filter((post) => post.categoryId === category);
+  
+        // ✅ 새로운 이미지 API로 이미지 경로 가져오기
+        const postsWithImages = await Promise.all(
+          filtered.map(async (post) => {
+            try {
+              const res = await axios.get(`/api/files/by-post/${post.id}`);
+              const imagePath = res.data?.file_path;
+              return { ...post, image: imagePath };
+            } catch (e) {
+              console.warn(`❗ 이미지 불러오기 실패 - post_id: ${post.id}`, e);
+              return { ...post, image: null };
+            }
+          })
+        );
+        setMeetings(postsWithImages);
+      } 
+      catch (err) {
+        console.error("❌ 모집글 불러오기 실패:", err);
       }
     };
 

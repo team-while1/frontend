@@ -8,23 +8,16 @@ import "../styles/Write.css";
 function Write() {
   const navigate = useNavigate();
   const { user } = useUser();
-
-  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [period, setPeriod] = useState('');
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [people, setPeople] = useState("");
-  // 🚨 추가: category 상태와 setCategory 함수 선언
   const [category, setCategory] = useState("");
-
   const [totalSlots, setTotalSlots] = useState("");
-
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected && !selected.type.startsWith("image/")) {
@@ -37,8 +30,8 @@ function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = {};
 
+    const newErrors = {};
     if (!title.trim()) newErrors.title = "제목을 입력해주세요.";
     if (!content.trim()) newErrors.content = "내용을 입력해주세요.";
     if (!category.trim()) newErrors.category = "카테고리를 선택해주세요.";
@@ -52,49 +45,76 @@ function Write() {
       return;
     }
 
-
-    if (!people.trim()) newErrors.people = "모집 인원을 입력해주세요.";
-
-    
     setErrors({});
     setLoading(true);
 
-    const period = `${startDate} ~ ${endDate}`;
+    const postData = {
+      member_id: user?.id || 1,
+      title,
+      content,
+      categoryId: category,
+      startDate: startDate,
+      endDate: endDate,
+      totalSlots: Number(totalSlots),
+    };
 
+    try {
+      // 1. 모집글 등록
+      setLoading(true);
+      // await axios.post("/api/posts", postData);
 
+      const postRes = await axios.post("/api/posts", postData);
+      const postId = postRes.data?.post_id;
 
-    setTimeout(() => {
-      navigate(`/${category}`, {
-        state: {
-          author,
-          title,
-          content,
-          period,
-          people,
-          category,
-          totalSlots,
-          imageUrl: preview,
-        },
-      });
+      // 2. 이미지가 있으면 업로드
+      let imageUrl = "";
+
+      if (file && postId) {
+        const formData = new FormData();
+        formData.append("post_id", postId);
+        formData.append("file", file);
+
+        const fileRes = await axios.post("/api/files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        const fileId = fileRes.data.file_id;
+        console.log("📸 파일 업로드 완료 - file_id:", fileId);
+        // imageUrl = fileRes.data[0]?.filePath || ""; 
+
+        // if (imageUrl) {
+        //   await axios.patch(`/api/posts/${postId}`, {
+        //     image: imageUrl, // 🔄 'image'가 실제 백엔드 필드명인지 확인!
+        //   });
+        // }
+        await axios.patch(`/api/posts/${postId}`, {
+          file_id: fileId, // ✅ 백엔드에서 이 필드를 받아야 함
+        });
+      }
+
+      alert("모집 글이 등록되었습니다.");
+      navigate(`/${category}`);
+    } catch (err) {
+      console.error("등록 실패:", err);
+      alert("등록 중 오류가 발생했습니다.");
+    } finally {
       setLoading(false);
-    }, 1000);
-  }
+    }
+  };
 
   return (
     <div className="write-layout">
-
-      {/* 메인 */}
       <main className="write-main">
         <div className="form-wrapper">
           <h3 className="form-title">글 작성하기</h3>
           <form onSubmit={handleSubmit} className="write-form">
-            <label>작성자</label>
+            {/* <label>작성자</label>
             <input
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="작성자 이름"
-            />
-            {errors.author && <p className="error-msg">{errors.author}</p>}
+            /> */}
+            {/* {errors.author && <p className="error-msg">{errors.author}</p>} */}
 
             <label>제목</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -179,3 +199,18 @@ function Write() {
 }
 
 export default Write;
+
+{
+  /* 사이드바 */
+}
+{
+  /* <aside className="sidebar">
+        <h2>KNUNNECT :</h2>
+        <input placeholder="Search..." />
+        <p className="sidebar-label">동아리 모집 게시판</p>
+      </aside> */
+}
+
+{
+  /* 메인 */
+}
