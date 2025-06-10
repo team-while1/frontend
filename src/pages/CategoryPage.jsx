@@ -9,8 +9,7 @@ import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
 import axios from "../api/axiosInstance"; 
 
-
-export default function CategoryPage({ title }) {
+export default function CategoryPage() {
   const navigate = useNavigate();
   const category = useCategoryFromPath();
   const [search, setSearch] = useState("");
@@ -26,12 +25,12 @@ export default function CategoryPage({ title }) {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
+
         const response = await axios.get("/api/posts");
         const allPosts = response.data;
-  
+
         const filtered = allPosts.filter((post) => post.categoryId === category);
-  
-        // ✅ 새로운 이미지 API로 이미지 경로 가져오기
+
         const postsWithImages = await Promise.all(
           filtered.map(async (post) => {
             try {
@@ -45,12 +44,11 @@ export default function CategoryPage({ title }) {
           })
         );
         setMeetings(postsWithImages);
-      } 
-      catch (err) {
+      } catch (err) {
         console.error("❌ 모집글 불러오기 실패:", err);
       }
     };
-  
+
     fetchMeetings();
   }, [category]);
 
@@ -68,9 +66,7 @@ export default function CategoryPage({ title }) {
         {categories.map((cat) => (
           <button
             key={cat.path}
-            className={`tab-button ${
-              cat.path === `/${category}` ? "active" : ""
-            }`}
+            className={`tab-button ${cat.path === `/${category}` ? "active" : ""}`}
             onClick={() => navigate(cat.path)}
           >
             {cat.label}
@@ -81,16 +77,11 @@ export default function CategoryPage({ title }) {
       <div className="category-header">
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
         <FilterPanel filters={filters} setFilters={setFilters} />
-        <CommonButton
-          onClick={() => {
-            console.log("모임 추가 버튼 클릭됨");
-            navigate("/create");
-          }}
-        >
-          + 모임 추가
-        </CommonButton>
+        <CommonButton onClick={() => navigate("/create")}>+ 모임 추가</CommonButton>
       </div>
+
       <div className="line" />
+
       {filteredMeetings.length === 0 ? (
         <div className="empty-wrapper-inline">
           <p className="empty-text">아직 등록된 모임이 없습니다.</p>
@@ -101,10 +92,7 @@ export default function CategoryPage({ title }) {
             <CategoryCard
               key={index}
               meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`,{
-                state: meeting,
-              })
-            }
+              onClick={() => navigate(`/${category}/${index}`, { state: meeting })}
             />
           ))}
         </div>
