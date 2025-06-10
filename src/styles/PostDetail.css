@@ -179,7 +179,7 @@ div.post-label {
 
 .progress-bar-fill {
     height: 100%;
-    background-color: #4c51bf; /* 진한 보라색 */
+    background-color: #6ECFFF; /* 진한 보라색 */
     border-radius: 4px;
     transition: width 0.5s ease-out;
 }
@@ -252,7 +252,7 @@ div.post-label {
 }
 
 .action-button.apply-button {
-    background-color: #6b46c1; /* 보라색 계열 */
+    background-color: #3A84FF; /* 보라색 계열 */
     color: #fff;
     font-size: 1.1rem;
     padding: 12px 25px;
@@ -261,7 +261,7 @@ div.post-label {
 }
 
 .action-button.apply-button:hover:not(:disabled) {
-    background-color: #553c9a;
+    background-color: #3751D5;
 }
 
 .action-button.disabled-button {

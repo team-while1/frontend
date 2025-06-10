@@ -21,16 +21,16 @@ function PostDetail() {
         const postRes = await axios.get(`/api/posts/${postId}`);
         setPost(postRes.data);
 
-        if (postRes.data.member_id) { 
+        if (postRes.data.memberId) { 
           try {
-            const authorRes = await axios.get(`/api/member/${postRes.data.member_id}`);
+            const authorRes = await axios.get(`/api/member/${postRes.data.memberId}`);
             setAuthorInfo(authorRes.data);
           } catch (authorErr) {
             console.error('❌ 작성자 정보 불러오기 실패:', authorErr);
             setAuthorInfo(null); 
           }
         } else {
-          console.warn('게시글 응답에 작성자 member_id가 없습니다. 작성자 정보 표시가 제한됩니다.');
+          console.warn('게시글 응답에 작성자 memberId가 없습니다. 작성자 정보 표시가 제한됩니다.');
           setAuthorInfo(null);
         }
 
@@ -41,8 +41,56 @@ function PostDetail() {
     };
 
     fetchPostAndAuthor();
-  }, [postId]); 
+  }, [postId]);
 
+  if (error) return <p className="error-message">{error}</p>;
+  if (!post) return <p className="loading-message">로딩 중...</p>;
+
+  const {
+    id: post_id,
+    memberId: member_id,
+    title,
+    content,
+    views,
+    startDate: start_date,
+    endDate: end_date,
+    totalSlots: total_slots,
+    categoryId: category,
+    createdAt: created_at,
+  } = post;
+
+  if (!post_id) {
+    console.error("로드된 게시물 데이터에 post_id가 없습니다.");
+    return <p className="error-message">게시물 데이터를 불러오는데 실패했습니다</p>;
+  }
+
+  const authorNickname = authorInfo ? authorInfo.name : `사용자 ${member_id || '알 수 없음'}`;
+  const authorProfileUrl = authorInfo ? authorInfo.profile_url : "/images/profile/anonymous.png";
+
+  const categoryLabelMap = {
+    club: '🎓 동아리 모집',
+    study: '📚 스터디 모집',
+    competition: '🏆 공모전 모집',
+    etc: '✨ 기타 모집',
+  };
+  const categoryLabel = categoryLabelMap[category] || '📌 모임 모집';
+
+  const isAuthor = user && user.member_id === member_id;
+  const isRecruiting = new Date() < new Date(end_date);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      console.warn("유효하지 않은 날짜 문자열:", dateString);
+      return '';
+    }
+    return date.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
   const handleApply = async () => {
     if (!user) {
@@ -54,7 +102,7 @@ function PostDetail() {
       alert('게시글 정보가 없습니다.');
       return;
     }
-    if (new Date() >= new Date(post.end_date)) {
+    if (new Date() >= new Date(end_date)) {
       alert('모집 기간이 종료되었습니다.');
       return;
     }
@@ -75,11 +123,11 @@ function PostDetail() {
       alert('수정 권한이 없습니다.');
       return;
     }
-    if (user.member_id !== post.member_id) {
+    if (user.member_id !== member_id) {
       alert('본인의 게시물만 수정할 수 있습니다.');
       return;
     }
-    navigate(`/edit-post/${postId}`); // 게시물 수정 페이지로 이동
+    navigate(`/edit-post/${postId}`);
   };
 
   const handleDelete = async () => {
@@ -87,7 +135,7 @@ function PostDetail() {
       alert('삭제 권한이 없습니다.');
       return;
     }
-    if (user.member_id !== post.member_id) {
+    if (user.member_id !== member_id) {
       alert('본인의 게시물만 삭제할 수 있습니다.');
       return;
     }
@@ -104,67 +152,13 @@ function PostDetail() {
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      console.warn("유효하지 않은 날짜 문자열:", dateString);
-      return '';
-    }
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-  if (error) return <p className="error-message">{error}</p>;
-  if (!post) return <p className="loading-message">로딩 중...</p>;
-
-  if(!post.post_id){
-    console.error("로드된 게시물 데이터에 post_id가 없습니다.");
-    return <p className="error-message">게시물 데이터를 불러오는데 실패했습니다</p>
-  }
-
-  const {
-    post_id,
-    member_id, 
-    title,
-    content,
-    views,
-    start_date,
-    end_date,
-    total_slots,
-    category,
-  } = post;
-
-  // ⭐ authorInfo에서 닉네임과 프로필 URL 가져오기
-  const authorNickname = authorInfo ? authorInfo.name : `사용자 ${member_id || '알 수 없음'}`;
-  const authorProfileUrl = authorInfo ? authorInfo.profile_url : "/images/profile/anonymous.png";
-  
-  const postCreatedAt = post.created_at; 
-
-  // 카테고리 라벨 매핑
-  const categoryLabelMap = {
-    club: '🎓 동아리 모집',
-    study: '📚 스터디 모집',
-    competition: '🏆 공모전 모집',
-    etc: '✨ 기타 모집',
-  };
-  const categoryLabel = categoryLabelMap[category] || '📌 모임 모집';
-
-  // 작성자 여부 확인
-  const isAuthor = user && user.member_id === member_id;
-
-  const isRecruiting = new Date() < new Date(end_date);
-
   return (
     <div className="post-detail-layout">
       <div className="post-main">
         <div className="post-content-area">
           <div className="post-header-top">
             <div className="post-label">{categoryLabel}</div>
-            {isAuthor && ( // 작성자에게만 보이는 수정/삭제 버튼
+            {isAuthor && (
               <div className="author-actions">
                 <button onClick={handleEdit} className="action-button edit">수정</button>
                 <button onClick={handleDelete} className="action-button delete">삭제</button>
@@ -174,42 +168,31 @@ function PostDetail() {
 
           <h1 className="post-title">{title}</h1>
 
-          {/* 작성자 정보 섹션 */}
           <div className="post-author-info">
-            <img
-              src={authorProfileUrl}
-              alt="Profile"
-              className="author-profile-pic"
-            />
+            <img src={authorProfileUrl} alt="Profile" className="author-profile-pic" />
             <div className="author-details">
               <span className="author-nickname">{authorNickname}</span>
               <span className="post-date">
-                작성일: {postCreatedAt ? formatDate(postCreatedAt) : '날짜 정보 없음'}
+                작성일: {created_at ? formatDate(created_at) : '날짜 정보 없음'}
               </span>
             </div>
           </div>
 
-          {/* 주요 정보 요약 (모집 기간, 정원, 조회수) */}
           <div className="post-summary-info">
             <div className="info-item">
               <strong>🗓️ 모집 기간:</strong> {formatDate(start_date)} ~ {formatDate(end_date)}
             </div>
             <div className="info-item">
-              <strong>👨‍👩‍👧‍👦 정원:</strong> 0 / {total_slots}명 {/* current_participants가 없으므로 0으로 고정 */}
+              <strong>👨‍👩‍👧‍👦 정원:</strong> 0 / {total_slots}명
               <div className="progress-bar-container">
-                <div
-                  className="progress-bar-fill"
-                  style={{ width: `0%` }} // 참여 인원 알 수 없으므로 0% 고정
-                ></div>
+                <div className="progress-bar-fill" style={{ width: `0%` }}></div>
               </div>
             </div>
             <div className="info-item">
               <strong>👁️ 조회수:</strong> {views}
             </div>
-            {/* 좋아요 버튼 제거됨 */}
           </div>
 
-          {/* 게시물 본문 */}
           <div className="post-content">
             <h3>📢 모집 상세 안내</h3>
             <div className="post-body">
@@ -217,7 +200,6 @@ function PostDetail() {
             </div>
           </div>
 
-          {/* 참여/신청 버튼 */}
           <div className="post-actions">
             {isRecruiting ? (
               <button
@@ -234,11 +216,8 @@ function PostDetail() {
             )}
           </div>
 
-          {/* 댓글 섹션 */}
           <div className="post-comment-section">
-            {post_id &&(
-            <CommentSection postId={post_id} memberId={member_id} />
-            )}
+            {post_id && <CommentSection postId={post_id} />}
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@
 }
 
 .comment-input-form textarea:focus {
-    border-color: #4c51bf;
+    border-color: #3A84FF;
     box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.2);
     outline: none;
 }
@@ -69,11 +69,11 @@
     margin-right: 8px;
     width: 16px;
     height: 16px;
-    accent-color: #4c51bf; /* 체크박스 색상 */
+    accent-color: #3A84FF; /* 체크박스 색상 */
 }
 
 .comment-input-form button[type="submit"] {
-    background-color: #4c51bf;
+    background-color: #3A84FF;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -85,7 +85,7 @@
 }
 
 .comment-input-form button[type="submit"]:hover:not(:disabled) {
-    background-color: #3b3a7a;
+    background-color: #3751D5;
 }
 
 .comment-input-form button[type="submit"]:disabled {
