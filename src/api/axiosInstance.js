@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'https://kunnect.co.kr',
-  withCredentials: false,
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
@@ -20,6 +20,7 @@ instance.interceptors.request.use(
       '/check-name',
       '/auth/login',
       '/auth/signup',
+      '/posts',
     ];
 
     const isPublicRequest = publicPaths.some((url) =>

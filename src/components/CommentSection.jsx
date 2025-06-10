@@ -1,23 +1,28 @@
+import React, { useState } from "react";
 import CommentInput from "./CommentInput";
 import CommentList from "./CommentList";
-import { useState } from "react";
+import '../styles/CommentSection.css'; 
 
-export default function CommentSection({postId, memberId}){
-    const [refresh, setRefresh] = useState(0);
+export default function CommentSection({ postId, memberId: postAuthorMemberId }) { // memberId를 postAuthorMemberId로 변경하여 props 이름 명확화
+    const [refreshComments, setRefreshComments] = useState(0);
 
-    const reload = () => setRefresh((prev) => prev + 1); //댓글 새로고침
+    const handleCommentSubmitted = () => {
+        setRefreshComments((prev) => prev + 1); 
+    };
 
     return (
-        <div>
+        <div className="comment-section-container">
+            <h3>💬 댓글 ({/* TODO: 백엔드에서 댓글 총 개수 가져오기 */})</h3> {/* 댓글 개수 표시 */}
             <CommentInput
-            postId={postId}
-            memberId={memberId}
-            onCommentSubmitted={reload}
+                postId={postId}
+                // memberId={memberId} // CommentInput에서 useUser 훅 사용하므로 불필요
+                onCommentSubmitted={handleCommentSubmitted}
             />
             <CommentList
-            key={refresh} //key 변경 시 List 컴포넌트 리렌더링
-            postId={postId}
+                key={refreshComments} 
+                postId={postId}
+                postAuthorMemberId={postAuthorMemberId}
             />
         </div>
-    )
+    );
 }

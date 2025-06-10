@@ -7,8 +7,7 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
-import axios from "../api/axiosInstance"; 
-
+import axios from "../api/axiosInstance";
 
 export default function CategoryPage({ title }) {
   const navigate = useNavigate();
@@ -28,12 +27,12 @@ export default function CategoryPage({ title }) {
       try {
         const response = await axios.get(`/api/posts?category=${category}`);
         console.log("✅ 불러온 모임 데이터:", response.data);
-        setMeetings(response.data); // 서버 응답 데이터를 세팅
+        setMeetings(response.data);
       } catch (err) {
         console.error("❌ 모임 데이터를 불러오는 데 실패했습니다:", err);
       }
     };
-  
+
     fetchMeetings();
   }, [category]);
 
@@ -64,32 +63,41 @@ export default function CategoryPage({ title }) {
       <div className="category-header">
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
         <FilterPanel filters={filters} setFilters={setFilters} />
-        <CommonButton
-          onClick={() => {
-            console.log("모임 추가 버튼 클릭됨");
-            navigate("/create");
-          }}
-        >
+        <CommonButton onClick={() => navigate("/create")}>
           + 모임 추가
         </CommonButton>
       </div>
+
       <div className="line" />
+
       {filteredMeetings.length === 0 ? (
         <div className="empty-wrapper-inline">
           <p className="empty-text">아직 등록된 모임이 없습니다.</p>
         </div>
       ) : (
         <div className="category-list">
-          {filteredMeetings.map((meeting, index) => (
-            <CategoryCard
-              key={index}
-              meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`,{
-                state: meeting,
-              })
-            }
-            />
-          ))}
+          {/* ✅ 게시글 카드 클릭 시 정확한 ID 기반으로 navigate */}
+          {filteredMeetings.map((meeting) => {
+            console.log("🧾 개별 meeting:", meeting);
+
+            const id = meeting.post_id || meeting.id;
+
+            return (
+              <CategoryCard
+                key={id}
+                meeting={meeting}
+                onClick={() => {
+                  if (!id) {
+                    console.warn("⚠️ 유효하지 않은 게시글 ID:", meeting);
+                    alert("이 게시글은 이동할 수 없습니다.");
+                    return;
+                  }
+                  console.log("➡️ 이동할 게시글 ID:", id);
+                  navigate(`/${category}/${id}`);
+                }}
+              />
+            );
+          })}
         </div>
       )}
     </div>
