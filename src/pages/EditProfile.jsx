@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { updateUserInfo, updateProfileImage } from "../api/user";
 import "../styles/EditProfile.css";
-// import { Options } from '../../node_modules/browser-image-compression/dist/browser-image-compression.d'; // ❌ 이 줄을 제거해야 합니다.
 
 // ⭐ browser-image-compression 라이브러리를 올바르게 import 합니다.
 import imageCompression from 'browser-image-compression';
@@ -80,17 +79,15 @@ export default function EditProfile() {
       // 프로필 이미지 URL 처리
       let profileUrl = user.profile_url;
       if (profileUrl && profileUrl.startsWith('/')) {
+        // 백엔드에서 '/images/profile/...' 형태로 URL을 준다면 전체 URL을 만듭니다.
+        // 하지만 public 폴더 바로 아래 있다면 아래 if 문으로 들어가지 않습니다.
         profileUrl = `https://kunnect.co.kr${profileUrl}`;
       } else if (!profileUrl) {
-        profileUrl = "/images/profile/anonymous.png"; // 기본 이미지 설정
+        // ✨ 변경된 부분: public 폴더 바로 아래 anonymous.png가 있을 경우
+        profileUrl = "/anonymous.png";
       }
       
       setPreviewImage(profileUrl);
-      // user.profile_url이 '/images/profile/anonymous.png'인 경우, 
-      // 이 값을 그대로 uploadImage에 넣으면 변경이 없는 것으로 판단될 수 있으므로,
-      // 실제 사용자가 파일을 업로드한 경우에만 uploadImage를 설정합니다.
-      // 초기에는 uploadImage를 null로 유지하여, 변경이 없으면 서버에 보내지 않도록 합니다.
-      // setUploadImage(profileUrl); // ⭐️ 이 줄은 초기에는 필요 없습니다.
     }
   }, [user]); 
 
@@ -108,18 +105,16 @@ export default function EditProfile() {
           maxWidthOrHeight: 800, // 최대 너비/높이 800px
           useWebWorker: true // 웹 워커 사용 (선택 사항, 성능 향상)
         };
-        // ⭐ imageCompression 함수는 Options 타입을 직접 import 하지 않고,
-        // 객체 형태로 옵션을 전달받습니다.
         const compressedFile = await imageCompression(file, options);
         console.log('압축된 파일: ', compressedFile);
 
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreviewImage(reader.result); // 미리보기 이미지로 (Base64 URL)
-          setUploadImage(reader.result);  // ⭐️ Base64 URL 자체를 저장
+          setUploadImage(reader.result);  // Base64 URL 자체를 저장
         };
-        reader.readAsDataURL(compressedFile); // ⭐️ 압축된 파일을 Base64 데이터 URL로 읽음
-      } catch(error) { // catch 블록의 변수명을 'error'로 통일
+        reader.readAsDataURL(compressedFile); // 압축된 파일을 Base64 데이터 URL로 읽음
+      } catch(error) { 
         console.error('이미지 압축 중 오류 발생:', error);
         alert('이미지 처리 중 오류가 발생했습니다. 다른 이미지를 사용하거나 다시 시도해주세요.');
       }
@@ -174,7 +169,7 @@ export default function EditProfile() {
       <div className="contentWrap">
         <div className="inputTitle">프로필 이미지</div>
         <img
-          src={previewImage || "/images/profile/anonymous.png"} // previewImage가 null일 때 기본 이미지
+          src={previewImage || "/anonymous.png"} // ✨ 변경된 부분: previewImage가 null일 때 기본 이미지 경로 수정
           alt="Profile"
           width="100"
           height="100"

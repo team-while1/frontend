@@ -194,6 +194,13 @@
     color: #2d3748;
 }
 
+.section-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 768px) {
     .comment-section-container {

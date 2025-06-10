@@ -12,7 +12,10 @@ export default function CommentSection({ postId, postAuthorMemberId }) {
 
     return (
         <div className="comment-section-container">
-            <h3>💬 댓글</h3>
+            <h3>
+            <img src="/comment.png" alt="댓글" className="section-icon" />
+            댓글
+            </h3>
             <CommentInput
                 postId={postId}
                 onCommentSubmitted={handleCommentSubmitted}

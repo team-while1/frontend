@@ -313,6 +313,20 @@ div.post-label {
   font-weight: 600;
 }
 
+.info-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.section-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .post-content-area {
