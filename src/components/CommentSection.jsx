@@ -1,23 +1,27 @@
+import React, { useState } from "react";
 import CommentInput from "./CommentInput";
 import CommentList from "./CommentList";
-import { useState } from "react";
+import '../styles/CommentSection.css'; 
 
-export default function CommentSection({postId, memberId}){
-    const [refresh, setRefresh] = useState(0);
+export default function CommentSection({ postId, postAuthorMemberId }) {
+    const [refreshComments, setRefreshComments] = useState(0);
 
-    const reload = () => setRefresh((prev) => prev + 1); //댓글 새로고침
+    const handleCommentSubmitted = () => {
+        setRefreshComments((prev) => prev + 1); 
+    };
 
     return (
-        <div>
+        <div className="comment-section-container">
+            <h3>💬 댓글</h3>
             <CommentInput
-            postId={postId}
-            memberId={memberId}
-            onCommentSubmitted={reload}
+                postId={postId}
+                onCommentSubmitted={handleCommentSubmitted}
             />
             <CommentList
-            key={refresh} //key 변경 시 List 컴포넌트 리렌더링
-            postId={postId}
+                key={refreshComments} 
+                postId={postId}
+                postAuthorMemberId={postAuthorMemberId}
             />
         </div>
-    )
+    );
 }

@@ -36,7 +36,7 @@ function App() {
         {/*정보 수정*/}
         <Route path="/edit" element={<EditProfile />} />
         {/* 모임 상세 */}
-        <Route path="/:category/:id" element={<PostDetail />} />
+        <Route path="/:category/:postId" element={<PostDetail />} />
 
         {/* 인증 */}
         <Route path="/login" element={<Login />} />

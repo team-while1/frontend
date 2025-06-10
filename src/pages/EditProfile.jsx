@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { updateUserInfo, updateProfileImage } from "../api/user";
 import "../styles/EditProfile.css";
+// import { Options } from '../../node_modules/browser-image-compression/dist/browser-image-compression.d'; // ❌ 이 줄을 제거해야 합니다.
+
+// ⭐ browser-image-compression 라이브러리를 올바르게 import 합니다.
+import imageCompression from 'browser-image-compression';
 
 export default function EditProfile() {
   const { user, login } = useUser();
@@ -14,7 +18,6 @@ export default function EditProfile() {
     major: "",
   });
 
-  // ⭐️ 추가: 초기 사용자 정보를 저장하여 변경 여부 비교
   const [initialUserForm, setInitialUserForm] = useState({
     name: "",
     college: "",
@@ -62,68 +65,95 @@ export default function EditProfile() {
   };
 
   const [previewImage, setPreviewImage] = useState(null);
-  const [uploadImage, setUploadImage] = useState(null); // File 객체 자체를 저장
+  const [uploadImage, setUploadImage] = useState(null);
 
   useEffect(() => {
     if (user) {
-      // ⭐️ 사용자 정보를 폼 필드에 초기 로드
       const currentUserForm = {
         name: user.name || "",
         college: user.college || "",
         major: user.major || "",
       };
       setForm(currentUserForm);
-      setInitialUserForm(currentUserForm); // 초기값을 저장하여 나중에 변경 여부 비교
-      setPreviewImage(user.profile_url || "/images/profile/anonymous.png");
+      setInitialUserForm(currentUserForm); 
+
+      // 프로필 이미지 URL 처리
+      let profileUrl = user.profile_url;
+      if (profileUrl && profileUrl.startsWith('/')) {
+        profileUrl = `https://kunnect.co.kr${profileUrl}`;
+      } else if (!profileUrl) {
+        profileUrl = "/images/profile/anonymous.png"; // 기본 이미지 설정
+      }
+      
+      setPreviewImage(profileUrl);
+      // user.profile_url이 '/images/profile/anonymous.png'인 경우, 
+      // 이 값을 그대로 uploadImage에 넣으면 변경이 없는 것으로 판단될 수 있으므로,
+      // 실제 사용자가 파일을 업로드한 경우에만 uploadImage를 설정합니다.
+      // 초기에는 uploadImage를 null로 유지하여, 변경이 없으면 서버에 보내지 않도록 합니다.
+      // setUploadImage(profileUrl); // ⭐️ 이 줄은 초기에는 필요 없습니다.
     }
-  }, [user]); // user 객체 의존성 유지
+  }, [user]); 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result); // 미리보기 이미지로
-      };
-      reader.readAsDataURL(file);
-      setUploadImage(file);  // ⭐️ File 객체 자체를 저장 (FormData에 추가하기 위함)
+      try {
+        const options = {
+          maxSizeMB : 0.5, // 0.5MB로 압축
+          maxWidthOrHeight: 800, // 최대 너비/높이 800px
+          useWebWorker: true // 웹 워커 사용 (선택 사항, 성능 향상)
+        };
+        // ⭐ imageCompression 함수는 Options 타입을 직접 import 하지 않고,
+        // 객체 형태로 옵션을 전달받습니다.
+        const compressedFile = await imageCompression(file, options);
+        console.log('압축된 파일: ', compressedFile);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result); // 미리보기 이미지로 (Base64 URL)
+          setUploadImage(reader.result);  // ⭐️ Base64 URL 자체를 저장
+        };
+        reader.readAsDataURL(compressedFile); // ⭐️ 압축된 파일을 Base64 데이터 URL로 읽음
+      } catch(error) { // catch 블록의 변수명을 'error'로 통일
+        console.error('이미지 압축 중 오류 발생:', error);
+        alert('이미지 처리 중 오류가 발생했습니다. 다른 이미지를 사용하거나 다시 시도해주세요.');
+      }
     };
 
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      let updatedUser = user; // 기본적으로 현재 사용자 정보로 시작
+      let updatedUser = { ...user }; // 사용자 객체를 복사하여 업데이트
 
-      // ⭐️ 변경된 필드만 추려내기
       const changedData = {};
       if (form.name !== initialUserForm.name) changedData.name = form.name;
       if (form.college !== initialUserForm.college) changedData.college = form.college;
       if (form.major !== initialUserForm.major) changedData.major = form.major;
 
-      // 이름, 단과대, 전공 필드에 변경 사항이 있을 때만 API 호출
       if (Object.keys(changedData).length > 0) {
         const res1 = await updateUserInfo(changedData);
-        updatedUser = res1.data.member;
+        updatedUser = { ...updatedUser, ...res1.data.member }; // 기존 정보와 병합
       }
 
-      // 프로필 이미지 변경 요청이 있을 때만 API 호출
-      if (uploadImage) {
-        const formData = new FormData();
-        formData.append('profile_image', uploadImage); // 'profile_image'는 백엔드가 기대하는 필드명
+      // uploadImage에 새로운 파일의 Base64 URL이 저장되어 있고,
+      // 이것이 기존 user.profile_url과 다르다면 (즉, 새로운 이미지 선택)
+      if (uploadImage && uploadImage !== user.profile_url) {
+        const imageData = {
+            image: uploadImage // Base64 문자열 (data:image/jpeg;base64,...)을 'image' 필드에 담아 전송
+        };
 
-        // updateProfileImage 함수는 이제 FormData를 받도록 수정됨 (user.js 확인)
-        const res2 = await updateProfileImage(formData);
-        updatedUser = res2.data.member; // 최신 사용자 정보로 업데이트
+        const res2 = await updateProfileImage(imageData);
+        updatedUser = { ...updatedUser, ...res2.data.member }; // 최신 사용자 정보로 업데이트
       }
 
-      login(updatedUser);
-      localStorage.setItem("loginUser", JSON.stringify(updatedUser));
+      login(updatedUser); // 전역 상태 업데이트
+      localStorage.setItem("loginUser", JSON.stringify(updatedUser)); // 로컬 스토리지 업데이트
       alert("정보가 수정되었습니다.");
       navigate("/mypage");
     } catch (err) {
@@ -144,7 +174,7 @@ export default function EditProfile() {
       <div className="contentWrap">
         <div className="inputTitle">프로필 이미지</div>
         <img
-          src={previewImage || "/images/profile/anonymous.png"}
+          src={previewImage || "/images/profile/anonymous.png"} // previewImage가 null일 때 기본 이미지
           alt="Profile"
           width="100"
           height="100"

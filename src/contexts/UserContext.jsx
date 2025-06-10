@@ -1,12 +1,11 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, useRef } from "react";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  let logoutTimer = null;
+  const logoutTimer = useRef(null); // 🟢 변경된 부분
 
-  // 이메일에서 닉네임을 추출하는 헬퍼 함수
   const getNicknameFromEmail = (email) => {
     if (email && typeof email === 'string' && email.includes('@')) {
       return email.split('@')[0];
@@ -14,17 +13,15 @@ export function UserProvider({ children }) {
     return '';
   };
 
-  // 🔐 로그아웃 함수
   const logout = () => {
     setUser(null);
     localStorage.removeItem("loginUser");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     alert("자동 로그아웃 되었습니다.");
-    window.location.href = "/login"; // 강제 리디렉션
+    window.location.href = "/login";
   };
 
-  // ✅ 페이지 닫을 때 로그아웃
   useEffect(() => {
     const handleUnload = () => {
       logout();
@@ -35,7 +32,6 @@ export function UserProvider({ children }) {
     };
   }, []);
 
-  // ✅ 로그인 상태 복원 + 자동 로그아웃 타이머 설정
   useEffect(() => {
     const storedUser = localStorage.getItem("loginUser");
 
@@ -44,49 +40,41 @@ export function UserProvider({ children }) {
         const parsedUser = JSON.parse(storedUser);
 
         if (parsedUser) {
-          if (!parsedUser.name && parsedUser.email) {
-            parsedUser.nickname = getNicknameFromEmail(parsedUser.email);
-          } else if (parsedUser.name) {
-            parsedUser.nickname = parsedUser.name;
-          }
+          parsedUser.nickname = parsedUser.name || getNicknameFromEmail(parsedUser.email);
         }
 
         setUser(parsedUser);
 
-        // ⏰ 자동 로그아웃 타이머 설정 (30분 후 로그아웃)
-        logoutTimer = setTimeout(() => {
+        // 🟢 기존 타이머 제거 후 2시간 타이머 설정
+        if (logoutTimer.current) clearTimeout(logoutTimer.current);
+        logoutTimer.current = setTimeout(() => {
           logout();
-        }, 30 * 60 * 1000); // 30분
-
+        }, 2 * 60 * 60 * 1000); // 2시간
+<wbr></wbr>
       } catch (error) {
-        console.error("Failed to parse 'loginUser' from localStorage:", error);
+        console.error("Failed to parse 'loginUser':", error);
         localStorage.removeItem("loginUser");
         setUser(null);
       }
     }
 
     return () => {
-      if (logoutTimer) clearTimeout(logoutTimer);
+      if (logoutTimer.current) clearTimeout(logoutTimer.current);
     };
   }, []);
 
   const login = (userInfo) => {
     if (userInfo) {
-      if (!userInfo.name && userInfo.email) {
-        userInfo.nickname = getNicknameFromEmail(userInfo.email);
-      } else if (userInfo.name) {
-        userInfo.nickname = userInfo.name;
-      }
+      userInfo.nickname = userInfo.name || getNicknameFromEmail(userInfo.email);
     }
 
     setUser(userInfo);
     localStorage.setItem("loginUser", JSON.stringify(userInfo));
 
-    // ⏰ 로그인 시에도 자동 로그아웃 타이머 다시 설정
-    if (logoutTimer) clearTimeout(logoutTimer);
-    logoutTimer = setTimeout(() => {
+    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    logoutTimer.current = setTimeout(() => {
       logout();
-    }, 30 * 60 * 1000);
+    }, 2 * 60 * 60 * 1000); // 2시간
   };
 
   return (

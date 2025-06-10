@@ -7,9 +7,11 @@ import useSearch from "../hooks/useSearch";
 import useCategoryFromPath from "../hooks/useCategoryFromPath";
 import "../styles/CategoryPage.css";
 import FilterPanel from "../components/FilterPanel";
-import axios from "../api/axiosInstance"; 
 
-export default function CategoryPage() {
+import axios from "../api/axiosInstance";
+
+export default function CategoryPage({ title }) {
+
   const navigate = useNavigate();
   const category = useCategoryFromPath();
   const [search, setSearch] = useState("");
@@ -77,7 +79,11 @@ export default function CategoryPage() {
       <div className="category-header">
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
         <FilterPanel filters={filters} setFilters={setFilters} />
-        <CommonButton onClick={() => navigate("/create")}>+ 모임 추가</CommonButton>
+
+        <CommonButton onClick={() => navigate("/create")}>
+          + 모임 추가
+        </CommonButton>
+
       </div>
 
       <div className="line" />
@@ -88,13 +94,28 @@ export default function CategoryPage() {
         </div>
       ) : (
         <div className="category-list">
-          {filteredMeetings.map((meeting, index) => (
-            <CategoryCard
-              key={index}
-              meeting={meeting}
-              onClick={() => navigate(`/${category}/${index}`, { state: meeting })}
-            />
-          ))}
+
+          {filteredMeetings.map((meeting) => {
+            console.log("🧾 개별 meeting:", meeting);
+
+            const id = meeting.post_id || meeting.id;
+
+            return (
+              <CategoryCard
+                key={id}
+                meeting={meeting}
+                onClick={() => {
+                  if (!id) {
+                    console.warn("⚠️ 유효하지 않은 게시글 ID:", meeting);
+                    alert("이 게시글은 이동할 수 없습니다.");
+                    return;
+                  }
+                  console.log("➡️ 이동할 게시글 ID:", id);
+                  navigate(`/${category}/${id}`);
+                }}
+              />
+            );
+          })}
         </div>
       )}
     </div>
