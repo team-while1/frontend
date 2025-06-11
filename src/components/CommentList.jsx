@@ -4,8 +4,7 @@ import { useUser } from "../contexts/UserContext";
 import axios from '../api/axiosInstance';
 import { toast } from 'react-toastify';
 
-// refreshCount prop을 CommentList의 함수 인자에 추가합니다.
-export default function CommentList({ postId, postAuthorMemberId, refreshCount }) { 
+export default function CommentList({ postId, postAuthorMemberId, refreshCount }) {
   const { user } = useUser();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,8 +12,6 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editContents, setEditContents] = useState({});
 
-  // 댓글을 불러오는 함수를 useCallback으로 감싸서 메모이제이션
-  // refreshCount가 변경될 때마다 이 함수가 재생성되고, useEffect가 이를 감지하여 다시 실행됩니다.
   const loadComments = useCallback(async () => {
     if (!postId) {
       setLoading(false);
@@ -30,12 +27,9 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
       const fetchedComments = res.data;
 
       const commentsWithAuthorInfo = fetchedComments.map((comment) => {
-        // 백엔드 응답 필드명에 따라 'comment_id' 또는 'id'를 사용하도록 통일 (둘 중 하나만 오게 하는 것이 가장 좋음)
-        const commentId = comment.comment_id || comment.id; 
-        // 백엔드 응답 필드명에 따라 'created_at' 또는 'createdAt'을 사용하도록 통일
+        const commentId = comment.comment_id || comment.id;
         const createdAt = comment.created_at || comment.createdAt;
 
-        // 익명 여부에 따라 프로필 정보 설정
         let authorNickname = '익명';
         let profileUrl = '/anonymous.png';
 
@@ -46,8 +40,8 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
 
         return {
           ...comment,
-          id: commentId, // 모든 댓글 객체에 'id' 필드로 통일하여 사용 (comment_id 대신)
-          createdAt: createdAt, // 모든 댓글 객체에 'createdAt' 필드로 통일하여 사용
+          id: commentId,
+          createdAt: createdAt,
           authorNickname,
           profileUrl,
         };
@@ -59,11 +53,11 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
     } finally {
       setLoading(false);
     }
-  }, [postId, refreshCount]); // postId와 refreshCount가 변경될 때만 함수 재생성
+  }, [postId, refreshCount]); // refreshCount가 변경될 때마다 loadComments 함수가 재생성되어 useEffect를 트리거
 
   useEffect(() => {
     loadComments();
-  }, [loadComments]); // loadComments가 변경될 때만 실행
+  }, [loadComments]);
 
   const formatCommentDate = (dateString) => {
     if (!dateString) return '날짜 없음';
@@ -96,23 +90,22 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
   };
 
   const saveEdit = async (comment) => {
-    const commentId = comment.id; // 이미 id로 통일되었으므로 comment.id 사용
+    const commentId = comment.id;
     const newContent = editContents[commentId];
     const memberId = user?.member_id;
 
-    // 클라이언트 단에서의 권한 체크 (서버에서도 반드시 재검증되어야 함)
     if (Number(comment.member_id) !== Number(memberId)) {
       toast.error('수정 권한이 없습니다.', { autoClose: 2000, closeOnClick: true });
       return;
     }
+    if (newContent.trim() === '') {
+        toast.warn('댓글 내용을 입력해주세요.');
+        return;
+    }
 
     try {
-      // TODO: 백엔드 API가 JWT 토큰 등을 통해 member_id를 스스로 추출하여 검증한다면
-      //       body에 member_id를 명시적으로 보내는 것은 불필요할 수 있습니다.
-      //       백엔드 API 설계에 따라 이 부분을 조정하세요.
       await axios.put(`/api/comments/${commentId}`, {
         content: newContent,
-        // member_id: memberId, // 서버에서 토큰 검증 시 제거 가능
       });
       toast.success('댓글이 수정되었습니다.', {
         autoClose: 1500,
@@ -138,13 +131,7 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
   const handleDeleteComment = async (commentId) => {
     if (window.confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
       try {
-        // TODO: 백엔드 API가 JWT 토큰 등을 통해 member_id를 스스로 추출하여 검증한다면
-        //       data에 member_id를 명시적으로 보내는 것은 불필요할 수 있습니다.
-        //       또한, DELETE 요청은 body를 포함하지 않는 경우가 많으므로
-        //       백엔드 API 설계에 따라 이 부분을 조정하세요.
-        await axios.delete(`/api/comments/${commentId}`, {
-          // data: { member_id: user.member_id }, // 서버에서 토큰 검증 시 제거 가능 또는 query parameter로 변경 고려
-        });
+        await axios.delete(`/api/comments/${commentId}`); // DELETE 요청에 body는 보통 없습니다.
         toast.success('댓글이 삭제되었습니다.', {
           autoClose: 1500,
           closeOnClick: true,
@@ -171,7 +158,7 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
         <p className="no-comments">아직 댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
       ) : (
         comments.map((comment) => {
-          const commentId = comment.id; // 이제 comment.id로 통일
+          const commentId = comment.id;
 
           return (
             <div key={commentId} className="comment-item">
@@ -185,7 +172,7 @@ export default function CommentList({ postId, postAuthorMemberId, refreshCount }
                     )}
                   </span>
                   <span className="comment-date">
-                    {formatCommentDate(comment.createdAt)} {/* 이제 comment.createdAt으로 통일 */}
+                    {formatCommentDate(comment.createdAt)}
                   </span>
                 </div>
                 {user && Number(user.member_id) === Number(comment.member_id) && (

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import { createPost } from "../api/post";
 import axios from "../api/axiosInstance";
 import "../styles/Write.css";
 
@@ -18,6 +17,9 @@ function Write() {
   const [errors, setErrors] = useState({});
   const [category, setCategory] = useState("");
   const [totalSlots, setTotalSlots] = useState("");
+  const [status, setStatus] = useState("RECRUITING"); // 기본값 설정
+
+  // ✅ 오류 수정된 부분: 파일 선택 핸들러 함수 선언
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected && !selected.type.startsWith("image/")) {
@@ -53,21 +55,15 @@ function Write() {
       title,
       content,
       categoryId: category,
-      startDate: startDate,
-      endDate: endDate,
+      startDate,
+      endDate,
       totalSlots: Number(totalSlots),
+      status,
     };
 
     try {
-      // 1. 모집글 등록
-      setLoading(true);
-      // await axios.post("/api/posts", postData);
-
       const postRes = await axios.post("/api/posts", postData);
       const postId = postRes.data?.post_id;
-
-      // 2. 이미지가 있으면 업로드
-      let imageUrl = "";
 
       if (file && postId) {
         const formData = new FormData();
@@ -79,16 +75,9 @@ function Write() {
         });
 
         const fileId = fileRes.data.file_id;
-        console.log("📸 파일 업로드 완료 - file_id:", fileId);
-        // imageUrl = fileRes.data[0]?.filePath || ""; 
 
-        // if (imageUrl) {
-        //   await axios.patch(`/api/posts/${postId}`, {
-        //     image: imageUrl, // 🔄 'image'가 실제 백엔드 필드명인지 확인!
-        //   });
-        // }
         await axios.patch(`/api/posts/${postId}`, {
-          file_id: fileId, // ✅ 백엔드에서 이 필드를 받아야 함
+          file_id: fileId,
         });
       }
 
@@ -108,22 +97,13 @@ function Write() {
         <div className="form-wrapper">
           <h3 className="form-title">글 작성하기</h3>
           <form onSubmit={handleSubmit} className="write-form">
-            {/* <label>작성자</label>
-            <input
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              placeholder="작성자 이름"
-            /> */}
-            {/* {errors.author && <p className="error-msg">{errors.author}</p>} */}
 
             <label>제목</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} />
             {errors.title && <p className="error-msg">{errors.title}</p>}
+
             <label>카테고리</label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
+            <select value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">카테고리 선택</option>
               <option value="club">동아리</option>
               <option value="study">스터디·비교과</option>
@@ -135,18 +115,13 @@ function Write() {
             <label>모집 인원 (숫자)</label>
             <input
               type="number"
-              value={totalSlots} // 🚨 이제 totalSlots가 정의됨
-              onChange={(e) => setTotalSlots(e.target.value)} // 🚨 이제 setTotalSlots가 정의됨
+              value={totalSlots}
+              onChange={(e) => setTotalSlots(e.target.value)}
             />
-            {errors.totalSlots && (
-              <p className="error-msg">{errors.totalSlots}</p>
-            )}
+            {errors.totalSlots && <p className="error-msg">{errors.totalSlots}</p>}
 
             <label>내용</label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
+            <textarea value={content} onChange={(e) => setContent(e.target.value)} />
             {errors.content && <p className="error-msg">{errors.content}</p>}
 
             <label>모집 기간</label>
@@ -165,14 +140,17 @@ function Write() {
                 className="date-input"
               />
             </div>
-            {errors.startDate && (
-              <p className="error-msg">{errors.startDate}</p>
-            )}
+            {errors.startDate && <p className="error-msg">{errors.startDate}</p>}
             {errors.endDate && <p className="error-msg">{errors.endDate}</p>}
+
+            <label>모집 상태</label>
+            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+              <option value="RECRUITING">모집 중</option>
+              <option value="ENDED">모집 종료</option>
+            </select>
 
             <label>이미지 파일 첨부</label>
             <input type="file" accept="image/*" onChange={handleFileChange} />
-
             {preview ? (
               <img src={preview} alt="미리보기" className="preview" />
             ) : (
@@ -199,18 +177,3 @@ function Write() {
 }
 
 export default Write;
-
-{
-  /* 사이드바 */
-}
-{
-  /* <aside className="sidebar">
-        <h2>KNUNNECT :</h2>
-        <input placeholder="Search..." />
-        <p className="sidebar-label">동아리 모집 게시판</p>
-      </aside> */
-}
-
-{
-  /* 메인 */
-}
