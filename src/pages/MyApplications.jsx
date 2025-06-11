@@ -1,43 +1,36 @@
-// src/pages/MyApplications.jsx
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../api/axiosInstance";
-import "../styles/MyApplications.css";
-import { toast } from "react-toastify";
+import { useUser } from "../contexts/UserContext";
 
-export default function MyApplications() {
+function MyApplications() {
   const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
 
   useEffect(() => {
-    const fetchApplications = async () => {
+    const fetchMyApplications = async () => {
       try {
-        const res = await axios.get("/api/applications/my");
+        const res = await axios.get(`/api/member/${user.id}/applications`);
         setApplications(res.data);
       } catch (err) {
-        toast.error("내 신청 내역을 불러오는 데 실패했습니다.");
-        console.error(err);
-      } finally {
-        setLoading(false);
+        console.error("신청 내역 불러오기 실패:", err);
       }
     };
-    fetchApplications();
-  }, []);
 
-  if (loading) return <p>불러오는 중...</p>;
-  if (applications.length === 0) return <p>신청한 내역이 없습니다.</p>;
+    if (user?.id) fetchMyApplications();
+  }, [user]);
 
   return (
-    <div className="my-applications-container">
-      <h2>내 신청 내역</h2>
-      <ul className="applications-list">
+    <div>
+      <h3>내가 신청한 글 목록</h3>
+      <ul>
         {applications.map((app) => (
-          <li key={app.id} className="application-item">
-            <strong>{app.postTitle}</strong>
-            <div>신청일: {new Date(app.appliedAt).toLocaleString("ko-KR")}</div>
-            <div>상태: <span className={`status-${app.status.toLowerCase()}`}>{app.status}</span></div>
+          <li key={app.id}>
+            <strong>{app.postTitle}</strong> - 상태: {app.status}
           </li>
         ))}
       </ul>
     </div>
   );
 }
+
+export default MyApplications;

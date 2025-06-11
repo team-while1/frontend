@@ -4,6 +4,7 @@ import { getMember } from '../api/auth';
 import '../styles/MyPage.css';
 import axios from '../api/axiosInstance'; 
 import { toast } from 'react-toastify';
+import MyApplicationsManage from "../components/MyApplicationsManage";
 
 export default function MyPage() {
   const [user, setUser] = useState(null);
@@ -26,6 +27,10 @@ export default function MyPage() {
 
     fetchUser();
   }, [navigate]);
+
+  const handleManageApplications = () => {
+    navigate("/applications/manage");
+  };
 
   if (!user) return <p>회원 정보를 불러오는 중...</p>;
 
@@ -57,8 +62,8 @@ export default function MyPage() {
       <div className="mypage-buttons">
         <button onClick={() => navigate("/edit")}>정보 수정</button>
         <button onClick={() => navigate("/find")}>비밀번호 변경</button>
-        <button onClick={() => navigate("/my-applications")}>내 신청 내역</button> {/* 🔹 추가된 부분 */}
-        <button
+        <button onClick={handleManageApplications}>신청 관리</button>       
+         <button
           onClick={() => {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');

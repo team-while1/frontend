@@ -17,6 +17,7 @@ import React from 'react';
 import './styles/toast.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ApplicationManagePage from "./pages/ApplicationManagePage";
 function App() {
   return (
     <>
@@ -36,8 +37,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/find" element={<FindAccount />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/my-applications" element={<MyApplications />} />       
-        </Routes>
+          <Route path="/my-applications" element={<MyApplications />} />   
+          <Route path="/applications/manage" element={<ApplicationManagePage />} />        </Routes>
         <ToastContainer
           position="top-center"
           autoClose={2000}

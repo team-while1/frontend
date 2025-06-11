@@ -204,8 +204,7 @@ function PostDetail() {
 
             {/* ✅ ✨ 신청 관리 컴포넌트 - 작성자 본인일 경우만 표시 */}
             {user?.id === post?.member_id && (
-              <ApplicationManage postId={post.id} />
-            )}
+            <ApplicationManage postId={post.id} onStatusChange={fetchPost} />            )}
 
           </div>
 
