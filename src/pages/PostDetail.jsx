@@ -81,7 +81,16 @@ function PostDetail() {
       navigate('/login');
       return;
     }
+    
+  if (!post_id || !user?.member_id) {
+    toast.error("신청에 필요한 정보가 누락되었습니다.");
+    return;
+  }
 
+  if (new Date() >= new Date(end_date)) {
+    toast.info('모집 기간이 종료되었습니다.');
+    return;
+  }
     if (!post_id) {
       toast.error("post_id 누락");
       return;
@@ -100,6 +109,11 @@ function PostDetail() {
     setIsApplying(true);
     try {
       console.log("📦 신청 데이터", post_id);
+    console.log("🔥 신청 요청 데이터 점검:");
+    console.log("post_id:", post_id);
+    console.log("user.member_id:", user.member_id);
+    console.log("end_date:", end_date);
+    console.log("현재 시각:", new Date());
       await axios.post('/api/applications', {
         postId: post_id,
         comment: '참여 신청합니다.',
