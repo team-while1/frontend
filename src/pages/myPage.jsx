@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getMember } from '../api/auth';
 import '../styles/MyPage.css';
 import axios from '../api/axiosInstance'; 
+import { toast } from 'react-toastify';
 
 export default function MyPage() {
   const [user, setUser] = useState(null);
@@ -10,15 +11,15 @@ export default function MyPage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      console.log("MyPage 진입됨"); // 진입 여부 확인
+      console.log("MyPage 진입됨");
       try {
-        console.log('MyPage: /member API 호출 시도...'); // 이 로그가 찍히는지 확인
+        console.log('MyPage: /member API 호출 시도...');
         const res = await getMember();
-        console.log('MyPage: /member API 응답 성공:', res); // 이 로그가 찍히면 성공
+        console.log('MyPage: /member API 응답 성공:', res);
         setUser(res.data);
       } catch (err) {
         console.error('회원 정보 불러오기 실패:', err);
-        alert('로그인이 필요합니다.');
+        toast.error('로그인이 필요합니다.');
         navigate('/login');
       }
     };
@@ -31,7 +32,7 @@ export default function MyPage() {
   return (
     <div className="mypage-container">
       <p className="mypage-title">{user.name}<span>님</span></p>
-      
+
       <table className="info-table">
         <tbody>
           <tr>
@@ -56,6 +57,7 @@ export default function MyPage() {
       <div className="mypage-buttons">
         <button onClick={() => navigate("/edit")}>정보 수정</button>
         <button onClick={() => navigate("/find")}>비밀번호 변경</button>
+        <button onClick={() => navigate("/my-applications")}>내 신청 내역</button> {/* 🔹 추가된 부분 */}
         <button
           onClick={() => {
             localStorage.removeItem('accessToken');

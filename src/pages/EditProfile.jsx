@@ -133,8 +133,6 @@ export default function EditProfile() {
         updatedUser = { ...updatedUser, ...res1.data.member }; // 기존 정보와 병합
       }
 
-      // uploadImage에 새로운 파일의 Base64 URL이 저장되어 있고,
-      // 이것이 기존 user.profile_url과 다르다면 (즉, 새로운 이미지 선택)
       if (uploadImage && uploadImage !== user.profile_url) {
         const imageData = {
             image: uploadImage // Base64 문자열 (data:image/jpeg;base64,...)을 'image' 필드에 담아 전송

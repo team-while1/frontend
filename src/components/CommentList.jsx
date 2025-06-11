@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getCommentByPostId } from "../api/comments";
 import { useUser } from "../contexts/UserContext";
 import axios from '../api/axiosInstance';
+import { toast } from 'react-toastify';
 
 export default function CommentList({ postId, postAuthorMemberId }) {
   const { user } = useUser();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [authorInfoCache, setAuthorInfoCache] = useState({});
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editContents, setEditContents] = useState({});
 
@@ -26,50 +26,21 @@ export default function CommentList({ postId, postAuthorMemberId }) {
       const res = await getCommentByPostId(postId);
       const fetchedComments = res.data;
 
-      console.log("📌 [DEBUG] 원본 댓글 리스트:", fetchedComments);
+      const commentsWithAuthorInfo = fetchedComments.map((comment) => {
+        if (comment.is_anonymous) {
+          return {
+            ...comment,
+            authorNickname: '익명',
+            profileUrl: '/anonymous.png',
+          };
+        }
 
-      const commentsWithAuthorInfo = await Promise.all(
-        fetchedComments.map(async (comment) => {
-          console.log(`🔎 [DEBUG] comment_id: ${comment.comment_id || comment.id}, member_id: ${comment.member_id}, content: ${comment.content}`);
-
-          if (comment.is_anonymous) {
-            return { ...comment, authorNickname: '익명', profileUrl: '/anonymous.png' };
-          }
-
-          if (!comment.member_id) {
-            return {
-              ...comment,
-              authorNickname: `알 수 없음`,
-              profileUrl: '/anonymous.png',
-            };
-          }
-
-          if (authorInfoCache[comment.member_id]) {
-            return {
-              ...comment,
-              authorNickname: authorInfoCache[comment.member_id].name,
-              profileUrl: authorInfoCache[comment.member_id].profile_url,
-            };
-          }
-
-          try {
-            const authorRes = await axios.get(`/api/member/${comment.member_id}`);
-            const author = authorRes.data;
-            setAuthorInfoCache(prev => ({ ...prev, [comment.member_id]: author }));
-            return {
-              ...comment,
-              authorNickname: author.name,
-              profileUrl: author.profile_url,
-            };
-          } catch (authorErr) {
-            return {
-              ...comment,
-              authorNickname: `사용자 ${comment.member_id}`,
-              profileUrl: '/anonymous.png',
-            };
-          }
-        })
-      );
+        return {
+          ...comment,
+          authorNickname: comment.writer_name || '이름 없음',
+          profileUrl: comment.profile_url || '/anonymous.png',
+        };
+      });
 
       setComments(commentsWithAuthorInfo);
     } catch (err) {
@@ -113,18 +84,26 @@ export default function CommentList({ postId, postAuthorMemberId }) {
     setEditContents(prev => ({ ...prev, [commentId]: content }));
   };
 
-  const saveEdit = async (commentId) => {
+  const saveEdit = async (comment) => {
+    const commentId = comment.comment_id || comment.id;
     const newContent = editContents[commentId];
     const memberId = user?.member_id;
 
-    console.log("📤 [DEBUG] 수정 요청:", { commentId, member_id: memberId, content: newContent });
+    if (Number(comment.member_id) !== Number(memberId)) {
+      toast.error('수정 권한이 없습니다.', { autoClose: 2000, closeOnClick: true });
+      return;
+    }
 
     try {
       await axios.put(`/api/comments/${commentId}`, {
         member_id: memberId,
         content: newContent,
       });
-      alert('댓글이 수정되었습니다.');
+      toast.success('댓글이 수정되었습니다.', {
+        autoClose: 1500,
+        closeOnClick: true,
+        pauseOnHover: false
+      });
       setEditingCommentId(null);
       setEditContents(prev => {
         const updated = { ...prev };
@@ -133,8 +112,11 @@ export default function CommentList({ postId, postAuthorMemberId }) {
       });
       loadComments();
     } catch (err) {
-      console.error('❌ 댓글 수정 실패:', err);
-      alert(err.response?.data?.message || '댓글 수정에 실패했습니다.');
+      toast.error(err.response?.data?.message || '댓글 수정에 실패했습니다.', {
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: false
+      });
     }
   };
 
@@ -144,10 +126,18 @@ export default function CommentList({ postId, postAuthorMemberId }) {
         await axios.delete(`/api/comments/${commentId}`, {
           data: { member_id: user.member_id },
         });
-        alert('댓글이 삭제되었습니다.');
+        toast.success('댓글이 삭제되었습니다.', {
+          autoClose: 1500,
+          closeOnClick: true,
+          pauseOnHover: false
+        });
         loadComments();
       } catch (err) {
-        alert('댓글 삭제에 실패했습니다.');
+        toast.error('댓글 삭제에 실패했습니다.', {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: false
+        });
       }
     }
   };
@@ -163,6 +153,7 @@ export default function CommentList({ postId, postAuthorMemberId }) {
       ) : (
         comments.map((comment) => {
           const commentId = comment.comment_id || comment.id;
+          if (!commentId) return null;
 
           return (
             <div key={commentId} className="comment-item">
@@ -171,15 +162,19 @@ export default function CommentList({ postId, postAuthorMemberId }) {
                 <div className="comment-author-info">
                   <span className="comment-author-nickname">
                     {comment.is_anonymous ? '익명' : comment.authorNickname}
-                    {comment.member_id === postAuthorMemberId && <span className="comment-author-tag"> (작성자)</span>}
+                    {Number(comment.member_id) === Number(postAuthorMemberId) && (
+                      <span className="comment-author-tag"> (작성자)</span>
+                    )}
                   </span>
-                  <span className="comment-date">{formatCommentDate(comment.created_at)}</span>
+                  <span className="comment-date">
+                    {formatCommentDate(comment.created_at || comment.createdAt)}
+                  </span>
                 </div>
-                {user && user.member_id === comment.member_id && !comment.is_anonymous && (
+                {user && Number(user.member_id) === Number(comment.member_id) && (
                   <div className="comment-actions">
                     {editingCommentId === commentId ? (
                       <>
-                        <button onClick={() => saveEdit(commentId)}>저장</button>
+                        <button onClick={() => saveEdit(comment)}>저장</button>
                         <button onClick={() => setEditingCommentId(null)}>취소</button>
                       </>
                     ) : (

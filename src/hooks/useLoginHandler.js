@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { login as loginAPI, getMember } from '../api/auth';
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 // JWT 토큰 페이로드를 디코딩하는 함수
 function parseJwt(token) {
@@ -42,34 +43,27 @@ export default function useLoginHandler(email, password) {
         accessToken,
         refreshToken,
       };
-      // 로컬스토리지 저장
+
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      
+
       if (!userInfo.id || !userInfo.email) {
         throw new Error("토큰에서 필수 사용자 정보를 추출할 수 없습니다.");
       }
 
-      // ✅ 추가 사용자 정보 보완을 위해 서버에서 전체 정보 조회
-      const memberRes = await getMember();
-      userInfo = { ...userInfo, ...memberRes.data };
       try {
         const memberRes = await getMember();
         userInfo = { ...userInfo, ...memberRes.data };
       } catch (memberError) {
         console.warn("회원 정보 불러오기 실패 (토큰 문제일 수 있음):", memberError);
-        // 계속 진행할 수도 있고, alert만 띄우고 홈으로 보낼 수도 있음
+        // toast.warning("회원 정보 일부를 불러오지 못했습니다."); // 선택사항
       }
 
-
       localStorage.setItem("loginUser", JSON.stringify(userInfo));
-
-      // Context에 저장
       setUserInfo(userInfo);
 
-      alert('로그인 성공!');
+      toast.success('로그인 성공!');
       navigate("/");
-
     } catch (err) {
       console.error("로그인 처리 중 에러 발생: ", err);
 
@@ -87,7 +81,7 @@ export default function useLoginHandler(email, password) {
         errorMessage = `로그인 처리 중 알 수 없는 오류 발생: ${err.message}`;
       }
 
-      alert(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

@@ -201,6 +201,40 @@
   margin-right: 8px;
 }
 
+
+.comment-actions button {
+  background-color: #edf2f7;
+  border: none;
+  color: #4a5568;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.comment-actions button:hover {
+  background-color: #cbd5e0;
+  color: #2d3748;
+}
+
+.comment-edit-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  resize: vertical;
+  line-height: 1.6;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.comment-edit-textarea:focus {
+  outline: none;
+  border-color: #3A84FF;
+  box-shadow: 0 0 0 3px rgba(58, 132, 255, 0.2);
+}
+
 /* 모바일 반응형 */
 @media (max-width: 768px) {
     .comment-section-container {

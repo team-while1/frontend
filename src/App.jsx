@@ -10,43 +10,44 @@ import NotFound from './pages/NotFound';
 import Write from './pages/Write';
 import MyPage from './pages/myPage';
 import EditProfile from './pages/EditProfile'; 
-import { UserProvider } from './contexts/UserContext'; 
+import { UserProvider } from './contexts/UserContext';
+import MyApplications from './pages/MyApplications';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React from 'react';
-
+import './styles/toast.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <>
       <UserProvider>
-      <Header />
-      <Routes>
-        {/* 메인 */}
-        <Route path="/" element={<Home />} />
-
-        {/* 카테고리별 모임 목록 */}
-        <Route path="/club" element={<CategoryPage title="동아리" />} />
-        <Route path="/study" element={<CategoryPage title="스터디·비교과" />} />
-        <Route path="/competition" element={<CategoryPage title="공모전" />} />
-        <Route path="/etc" element={<CategoryPage title="기타" />} />
-
-        <Route path="/create" element={<Write />} />
-
-        {/*마이 페이지*/}
-        <Route path="/mypage" element={<MyPage />} />
-        {/*정보 수정*/}
-        <Route path="/edit" element={<EditProfile />} />
-        {/* 모임 상세 */}
-        <Route path="/:category/:postId" element={<PostDetail />} />
-
-        {/* 인증 */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/find" element={<FindAccount />} />
-
-        {/* 예외 */}
-        <Route path="*" element={<NotFound />} /> {/* 선택사항 */}
-      </Routes>
-      <Footer />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/club" element={<CategoryPage title="동아리" />} />
+          <Route path="/study" element={<CategoryPage title="스터디·비교과" />} />
+          <Route path="/competition" element={<CategoryPage title="공모전" />} />
+          <Route path="/etc" element={<CategoryPage title="기타" />} />
+          <Route path="/create" element={<Write />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/edit" element={<EditProfile />} />
+          <Route path="/:category/:postId" element={<PostDetail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/find" element={<FindAccount />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/my-applications" element={<MyApplications />} />       
+        </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="light"
+          toastClassName="toast-container"
+/>        <Footer />
       </UserProvider>
     </>
   );
