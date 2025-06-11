@@ -14,19 +14,13 @@
   flex-direction: column;
   margin-bottom: 120px;
 }
-.mypage-title {
-  margin-top: 60px;
-  font-size: 26px;
-  font-weight: 700;
-  color: #262626;
-  text-align: center;
-}
 
 .mypage-title {
+  margin-top: 60px;
   margin-bottom: 32px;
   font-size: 28px;
   font-weight: 700;
-  color: #1f2937; /* 진한 회색 */
+  color: #1f2937;
   text-align: center;
 }
 
@@ -34,19 +28,19 @@
   margin-top: 8px;
   font-size: 18px;
   font-weight: 500;
-  color: #6b7280; /* 중간 회색 */
+  color: #6b7280;
 }
+
 .mypage-buttons {
   margin-top: 30px;
+  margin-bottom: 20px;
   display: flex;
   gap: 10px;
-  justify-content: center; 
-  align-items: center;  
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .mypage-buttons button {
-
   padding: 10px 16px;
   border: none;
   background-color: #4285f4;
@@ -59,6 +53,7 @@
 .mypage-buttons button:hover {
   background-color: #3367d6;
 }
+
 .info-table {
   width: 100%;
   border-collapse: collapse;
@@ -83,25 +78,36 @@
   width: 30%;
 }
 
-.mypage-buttons {
-  margin-top: 30px;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
-  gap: 10px;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  z-index: 999;
 }
 
-.mypage-buttons button {
-  padding: 10px 16px;
+.modal-content {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
   border: none;
-  background-color: #4285f4;
-  color: white;
-  border-radius: 6px;
+  font-size: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.mypage-buttons button:hover {
-  background-color: #3367d6;
 }

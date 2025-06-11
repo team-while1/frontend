@@ -5,345 +5,319 @@
   box-sizing: border-box;
 }
 
-/* PostDetail 전체 레이아웃 */
+/* 전체 글꼴 및 배경 설정 */
 body {
-    font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif; /* 폰트 적용 */
-    color: #333;
-    line-height: 1.6;
-    background-color: #f0f2f5; /* 전체 배경색 */
+  font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background-color: #f0f2f5;
 }
 
+/* PostDetail 전체 레이아웃 */
 .post-detail-layout {
   width: 100%;
   min-height: 100vh;
-  background-color: #f0f2f5; /* 페이지 전체 배경색 */
-  padding: 60px 0; /* 상하 패딩 */
+  background-color: #f0f2f5;
+  padding: 60px 0;
   box-sizing: border-box;
 }
 
 .post-main {
-  max-width: 900px; /* 최대 너비 조정 */
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 20px; /* 좌우 패딩 */
+  padding: 0 20px;
 }
 
 .post-content-area {
   background-color: #fff;
   border-radius: 12px;
-  padding: 40px; /* 패딩 조정 */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* 그림자 강화 */
+  padding: 40px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 28px; /* 요소 간 간격 */
+  gap: 28px;
 }
 
-/* 상단 헤더 (카테고리 라벨 & 작성자 액션 버튼) */
 .post-header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px; /* 제목과의 간격 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-/* 카테고리 라벨 */
 div.post-label {
-  font-size: 0.8rem; /* 폰트 크기 미세 조정 */
-  font-weight: 700; /* 폰트 두께 */
-  color: #2563eb; /* 더 진한 파란색 */
-  background-color: #dbeafe; /* 더 연한 파란색 배경 */
-  padding: 6px 14px; /* 패딩 조정 */
-  border-radius: 999px; /* 둥근 모서리 */
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2563eb;
+  background-color: #dbeafe;
+  padding: 6px 14px;
+  border-radius: 999px;
   width: fit-content;
-  text-transform: uppercase; /* 대문자 변환 */
-  letter-spacing: 0.5px; /* 자간 조정 */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* 제목 */
 .post-content-area .post-title {
-  font-size: 2.2rem; /* 제목 크기 키움 */
-  font-weight: 800; /* 매우 두껍게 */
-  color: #1a202c; /* 거의 검정에 가까운 색상 */
-  margin: 0 0 25px 0; /* 하단 마진 추가 */
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1a202c;
+  margin: 0 0 25px 0;
   line-height: 1.3;
 }
 
-/* 작성자 액션 버튼 (수정/삭제) */
 .author-actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .action-button {
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
 .action-button.edit {
-    background-color: #edf2f7; /* 연한 회색 */
-    color: #4a5568;
+  background-color: #edf2f7;
+  color: #4a5568;
 }
 
 .action-button.edit:hover {
-    background-color: #e2e8f0;
+  background-color: #e2e8f0;
 }
 
 .action-button.delete {
-    background-color: #fde8ed; /* 연한 빨강 */
-    color: #e53e3e;
+  background-color: #fde8ed;
+  color: #e53e3e;
 }
 
 .action-button.delete:hover {
-    background-color: #fbd3e5;
+  background-color: #fbd3e5;
 }
 
+.action-button.apply-button {
+  background-color: #3b82f6;
+  color: white;
+  margin-bottom: 12px;
+}
 
-/* 작성자 정보 섹션 */
+.action-button.apply-button:hover {
+  background-color: #2563eb;
+}
+
+.action-button.manage-button {
+  background-color: #f1f5f9;
+  color: #374151;
+  border: 1px solid #cbd5e1;
+}
+
+.action-button.manage-button:hover {
+  background-color: #e2e8f0;
+}
+
 .post-author-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #edf2f7; /* 얇은 구분선 */
-    margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #edf2f7;
+  margin-bottom: 25px;
 }
 
 .author-profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #e2e8f0; /* 프로필 이미지 테두리 */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
 }
 
 .author-details {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .author-nickname {
-    font-weight: 700;
-    color: #2d3748;
-    font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 1rem;
 }
 
 .post-date {
-    font-size: 0.85rem;
-    color: #718096;
+  font-size: 0.85rem;
+  color: #718096;
 }
 
-/* 주요 정보 요약 (모집 기간, 정원, 조회수, 좋아요) */
 .post-summary-info {
-    display: grid; /* 그리드 레이아웃으로 변경 */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 반응형 그리드 */
-    gap: 20px; /* 그리드 항목 간 간격 */
-    padding-bottom: 25px;
-    border-bottom: 1px solid #edf2f7; /* 구분선 */
-    margin-bottom: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #edf2f7;
+  margin-bottom: 25px;
 }
 
 .info-item {
-    background-color: #f7fafc; /* 항목 배경색 */
-    padding: 15px 20px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    font-size: 0.95rem;
-    color: #4a5568;
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    gap: 8px;
+  background-color: #f7fafc;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+  color: #4a5568;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .info-item strong {
-    color: #2d3748;
-    font-weight: 700;
-    font-size: 1rem;
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
-/* 모집 현황 진행 바 */
 .progress-bar-container {
-    width: 100%;
-    height: 8px;
-    background-color: #e2e8f0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 5px;
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 5px;
 }
 
 .progress-bar-fill {
-    height: 100%;
-    background-color: #6ECFFF; /* 진한 보라색 */
-    border-radius: 4px;
-    transition: width 0.5s ease-out;
+  height: 100%;
+  background-color: #6ECFFF;
+  border-radius: 4px;
+  transition: width 0.5s ease-out;
 }
 
-/* 좋아요 버튼 */
 .like-button {
-    background: none;
-    border: none;
-    font-size: 1.2rem; /* 하트 크기 */
-    color: #cbd5e0; /* 기본 회색 */
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px; /* 하트와 숫자 간격 */
-    font-weight: 600;
-    color: #4a5568; /* 숫자 색상 */
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #cbd5e0;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #4a5568;
 }
 
 .like-button.liked {
-    color: #ef4444; /* 좋아요 눌렀을 때 빨간색 */
+  color: #ef4444;
 }
 
 .like-button.liked span {
-    color: #ef4444; /* 숫자도 빨간색으로 */
+  color: #ef4444;
 }
 
 .like-button:hover {
-    color: #e53e3e; /* 호버 시 더 진한 빨간색 */
+  color: #e53e3e;
 }
 
-
-/* 본문 */
 .post-content h3 {
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 15px;
   color: #2d3748;
-  border-bottom: 2px solid #edf2f7; /* 제목 아래 두꺼운 선 */
+  border-bottom: 2px solid #edf2f7;
   padding-bottom: 10px;
 }
 
 .post-body {
   font-size: 1rem;
-  line-height: 1.8; /* 줄 간격 넓힘 */
+  line-height: 1.8;
   color: #374151;
   white-space: pre-wrap;
-  word-break: break-word; /* 긴 단어 줄바꿈 */
+  word-break: break-word;
 }
 
-/* 본문 내 인라인 이미지 (content에 이미지가 있을 경우) */
 .post-body img {
   display: block;
   max-width: 100%;
   height: auto;
-  margin: 20px auto; /* 이미지 중앙 정렬 */
+  margin: 20px auto;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   border: 1px solid #e0e0e0;
 }
 
-/* 하단 액션 버튼 (참여 신청, 작성자 연락 등) */
+/* 신청 섹션 정렬 */
 .post-actions {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    gap: 15px;
-    padding-top: 30px;
-    border-top: 1px solid #edf2f7; /* 상단 구분선 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 32px;
 }
 
-.action-button.apply-button {
-    background-color: #3A84FF; /* 보라색 계열 */
-    color: #fff;
-    font-size: 1.1rem;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-weight: 700;
+.apply-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.action-button.apply-button:hover:not(:disabled) {
-    background-color: #3751D5;
+.application-manage-wrapper {
+  width: 100%;
 }
 
-.action-button.disabled-button {
-    background-color: #e2e8f0;
-    color: #a0aec0;
-    cursor: not-allowed;
-    font-size: 1.1rem;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-weight: 700;
-}
-
-.action-button.contact-button {
-    background-color: #edf2f7;
-    color: #4a5568;
-    font-size: 1.1rem;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-weight: 700;
-    border: 1px solid #cbd5e0;
-}
-
-.action-button.contact-button:hover {
-    background-color: #e2e8f0;
-}
-
-
-/* 댓글 섹션은 CommentSection 컴포넌트의 CSS에서 관리 */
-.post-comment-section {
-    margin-top: 40px; /* 게시물 본문과 댓글 섹션 간격 */
-}
-
-
-/* 로딩 및 에러 메시지 */
-.loading-message, .error-message {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #555;
-  padding: 50px;
-  background-color: #fff;
-  margin: 20px auto;
+.application-manage-box {
+  border: 1px solid #ddd;
+  background-color: #f9fafb;
+  padding: 16px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  max-width: 600px;
+  margin-bottom: 16px;
 }
 
-.error-message {
-  color: #e53e3e;
-  font-weight: 600;
+.application-manage-box strong {
+  font-size: 15px;
+  color: #1e293b;
 }
 
+.application-manage-box .status {
+  margin: 4px 0;
+  font-weight: 500;
+  color: #475569;
+}
+
+.application-manage-box .buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.application-manage-box .buttons button {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.application-manage-box .buttons .approve {
+  background-color: #10b981;
+  color: white;
+}
+
+.application-manage-box .buttons .reject {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* 요약 정보 아이콘 크기 제한 */
 .info-icon {
   width: 18px;
   height: 18px;
+  object-fit: contain;
   margin-right: 6px;
   vertical-align: middle;
-}
-
-.section-icon {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-/* 모바일 반응형 */
-@media (max-width: 768px) {
-  .post-content-area {
-    padding: 25px;
-    gap: 20px;
-  }
-
-  .post-title {
-    font-size: 1.8rem;
-  }
-
-  .post-summary-info {
-    grid-template-columns: 1fr; /* 한 줄에 하나씩 */
-  }
-
-  .post-actions {
-    flex-direction: column; /* 세로로 쌓이도록 */
-    gap: 10px;
-  }
 }

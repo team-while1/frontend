@@ -11,13 +11,10 @@ import Write from './pages/Write';
 import MyPage from './pages/myPage';
 import EditProfile from './pages/EditProfile'; 
 import { UserProvider } from './contexts/UserContext';
-import MyApplications from './pages/MyApplications';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import React from 'react';
 import './styles/toast.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ApplicationManagePage from "./pages/ApplicationManagePage";
 function App() {
   return (
     <>
@@ -37,8 +34,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/find" element={<FindAccount />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/my-applications" element={<MyApplications />} />   
-          <Route path="/applications/manage" element={<ApplicationManagePage />} />        </Routes>
+          </Routes>
         <ToastContainer
           position="top-center"
           autoClose={2000}
