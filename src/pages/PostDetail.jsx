@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react'; // useCallback 추가
 import '../styles/PostDetail.css';
 import CommentSection from "../components/CommentSection";
 import axios from '../api/axiosInstance';
@@ -15,18 +15,20 @@ function PostDetail() {
   const [error, setError] = useState('');
   const [isApplying, setIsApplying] = useState(false);
 
+  // 게시글을 불러오는 함수를 useCallback으로 감싸서 메모이제이션
+  const fetchPost = useCallback(async () => {
+    try {
+      const postRes = await axios.get(`/api/posts/${postId}`);
+      setPost(postRes.data);
+    } catch (err) {
+      console.error('❌ 게시글 불러오기 실패:', err);
+      setError('존재하지 않는 게시글이거나 잘못된 접근입니다.');
+    }
+  }, [postId]); // postId가 변경될 때만 함수 재생성
+
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const postRes = await axios.get(`/api/posts/${postId}`);
-        setPost(postRes.data);
-      } catch (err) {
-        console.error('❌ 게시글 불러오기 실패:', err);
-        setError('존재하지 않는 게시글이거나 잘못된 접근입니다.');
-      }
-    };
     fetchPost();
-  }, [postId]);
+  }, [fetchPost]); // fetchPost가 변경될 때만 실행
 
   if (error) return <p className="error-message">{error}</p>;
   if (!post) return <p className="loading-message">로딩 중...</p>;
@@ -44,9 +46,10 @@ function PostDetail() {
     createdAt: created_at,
     writerName,
     writerProfileUrl,
+    writerId: post_author_member_id, // TODO: 백엔드 API 응답에 이 필드가 있는지 확인하고 없다면 백엔드 수정 필요
   } = post;
 
-  const isFull = appliedCount >= total_slots;
+  const isFull = total_slots > 0 && appliedCount >= total_slots; // total_slots가 0인 경우 예외 처리 추가
 
   const authorNickname = writerName || '알 수 없음';
   const authorProfileUrl = writerProfileUrl || "/anonymous.png";
@@ -84,15 +87,27 @@ function PostDetail() {
       return;
     }
 
+    if (isFull) { // 정원 마감 시 신청 불가
+      toast.warn("정원이 마감되었습니다.");
+      return;
+    }
+
+    if (!isRecruiting) { // 모집 기간 종료 시 신청 불가
+      toast.warn("모집 기간이 종료되었습니다.");
+      return;
+    }
+
     setIsApplying(true);
     try {
       console.log("📦 신청 데이터", post_id);
-      const res = await axios.post('/api/applications', {
+      await axios.post('/api/applications', {
         postId: post_id,
         comment: '참여 신청합니다.',
       });
 
       toast.success('참여 신청이 완료되었습니다!');
+      // 참여 신청 성공 후, 게시글 데이터 새로고침하여 UI 업데이트
+      await fetchPost(); // 게시글 정보 다시 불러오기
     } catch (err) {
       const serverError = err.response?.data;
       console.error('❌ 참여 신청 실패 응답:', serverError);
@@ -102,6 +117,11 @@ function PostDetail() {
       setIsApplying(false);
     }
   };
+
+  // progress bar width 계산 시 total_slots가 0인 경우 처리
+  const progressBarWidth = total_slots > 0
+    ? Math.min((appliedCount / total_slots) * 100, 100)
+    : 0;
 
   return (
     <div className="post-detail-layout">
@@ -134,7 +154,7 @@ function PostDetail() {
               </strong>
               {appliedCount || 0} / {total_slots}명
               <div className="progress-bar-container">
-                <div className="progress-bar-fill" style={{ width: `${Math.min((appliedCount / total_slots) * 100, 100)}%` }}></div>
+                <div className="progress-bar-fill" style={{ width: `${progressBarWidth}%` }}></div>
               </div>
             </div>
             <div className="info-item">
@@ -169,7 +189,7 @@ function PostDetail() {
           </div>
 
           <div className="post-comment-section">
-            {post_id && <CommentSection postId={post_id} />}
+            {post_id && <CommentSection postId={post_id} postAuthorMemberId={post_author_member_id} />}
           </div>
         </div>
       </div>
