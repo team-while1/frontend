@@ -4,22 +4,25 @@
   width: 100%;
   max-width: 500px;
   height: auto;
-  padding: 30px 30px;
+  padding: 0 20px;
   border-radius: 20px;
   border: 1px solid #cecece;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   overflow: hidden;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  margin-bottom: 200px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
 }
 .mypage-title {
-  font-weight: bold;
-  font-size: 30px;
-  display: flex;
-  justify-content: center; 
-  align-items: center;  
+  margin-top: 60px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #262626;
+  text-align: center;
 }
 
 .mypage-title span{
@@ -39,9 +42,11 @@
   gap: 10px;
   justify-content: center; 
   align-items: center;  
+  margin-bottom: 20px;
 }
 
 .mypage-buttons button {
+
   padding: 10px 16px;
   border: none;
   background-color: #4285f4;

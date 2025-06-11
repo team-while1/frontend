@@ -79,11 +79,8 @@ export default function EditProfile() {
       // 프로필 이미지 URL 처리
       let profileUrl = user.profile_url;
       if (profileUrl && profileUrl.startsWith('/')) {
-        // 백엔드에서 '/images/profile/...' 형태로 URL을 준다면 전체 URL을 만듭니다.
-        // 하지만 public 폴더 바로 아래 있다면 아래 if 문으로 들어가지 않습니다.
         profileUrl = `https://kunnect.co.kr${profileUrl}`;
       } else if (!profileUrl) {
-        // ✨ 변경된 부분: public 폴더 바로 아래 anonymous.png가 있을 경우
         profileUrl = "/anonymous.png";
       }
       

@@ -50,14 +50,6 @@ export default function MyPage() {
             <th>학번</th>
             <td>{user.student_num}</td>
           </tr>
-          <tr>
-            <th>전화번호</th>
-            <td>{user.phone || '입력 안됨'}</td>
-          </tr>
-          <tr>
-            <th>가입일</th>
-            <td>{user.joinDate || '입력 안됨'}</td>
-          </tr>
         </tbody>
       </table>
 
