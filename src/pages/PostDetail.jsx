@@ -6,6 +6,7 @@ import axios from '../api/axiosInstance';
 import { useUser } from '../contexts/UserContext';
 import parse from 'html-react-parser';
 import { toast } from 'react-toastify';
+import ApplicationManage from "../components/ApplicationManage";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -200,6 +201,12 @@ function PostDetail() {
                 {isFull ? '정원 마감' : '모집 기간 종료'}
               </button>
             )}
+
+            {/* ✅ ✨ 신청 관리 컴포넌트 - 작성자 본인일 경우만 표시 */}
+            {user?.id === post?.member_id && (
+              <ApplicationManage postId={post.id} />
+            )}
+
           </div>
 
           <div className="post-comment-section">

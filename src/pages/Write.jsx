@@ -76,13 +76,7 @@ function Write() {
 
         const fileId = fileRes.data.file_id;
         console.log("📸 파일 업로드 완료 - file_id:", fileId);
-        // imageUrl = fileRes.data[0]?.filePath || ""; 
 
-        // if (imageUrl) {
-        //   await axios.patch(`/api/posts/${postId}`, {
-        //     image: imageUrl, // 🔄 'image'가 실제 백엔드 필드명인지 확인!
-        //   });
-        // }
         await axios.patch(`/api/posts/${postId}`, {
           file_id: fileId, // ✅ 백엔드에서 이 필드를 받아야 함
         });
