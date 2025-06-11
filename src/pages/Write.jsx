@@ -71,25 +71,29 @@ function Write() {
 
       if (file && postId) {
         const formData = new FormData();
-        formData.append("post_id", postId);
-        formData.append("file", file);
-
-        const fileRes = await axios.post("/api/files", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        const fileId = fileRes.data.file_id;
-        console.log("📸 파일 업로드 완료 - file_id:", fileId);
-        // imageUrl = fileRes.data[0]?.filePath || ""; 
-
-        // if (imageUrl) {
-        //   await axios.patch(`/api/posts/${postId}`, {
-        //     image: imageUrl, // 🔄 'image'가 실제 백엔드 필드명인지 확인!
-        //   });
-        // }
-        await axios.patch(`/api/posts/${postId}`, {
-          file_id: fileId, // ✅ 백엔드에서 이 필드를 받아야 함
-        });
+        formData.append("postId", postId); // ✅ 백엔드에서 요구하는 파라미터명
+        formData.append("files", file);    // ✅ 반드시 'files'로 보내야 함
+      
+        try {
+          const fileRes = await axios.post(
+            "/api/files/upload-multiple",
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+      
+          const imagePath = fileRes.data[0]?.filePath; // ✅ 리스트의 첫번째 이미지 경로
+      
+          if (imagePath) {
+            await axios.patch(`/api/posts/${postId}`, {
+              image: imagePath, // ✅ 백엔드가 'image' 필드를 지원해야 함
+            });
+          }
+      
+        } catch (err) {
+          console.error("📸 파일 업로드 실패:", err);
+        }
       }
 
       alert("모집 글이 등록되었습니다.");

@@ -27,17 +27,17 @@ export default function CategoryPage({ title }) {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-
         const response = await axios.get("/api/posts");
         const allPosts = response.data;
-
+  
         const filtered = allPosts.filter((post) => post.categoryId === category);
-
+  
+        // ✅ 이미지 가져오기
         const postsWithImages = await Promise.all(
           filtered.map(async (post) => {
             try {
               const res = await axios.get(`/api/files/by-post/${post.id}`);
-              const imagePath = res.data?.file_path;
+              const imagePath = res.data[0]?.filePath; // 첫 번째 이미지만 사용
               return { ...post, image: imagePath };
             } catch (e) {
               console.warn(`❗ 이미지 불러오기 실패 - post_id: ${post.id}`, e);
@@ -45,15 +45,15 @@ export default function CategoryPage({ title }) {
             }
           })
         );
+  
         setMeetings(postsWithImages);
       } catch (err) {
-        console.error("❌ 모집글 불러오기 실패:", err);
+        console.error("모임 목록 불러오기 실패:", err);
       }
     };
-
+  
     fetchMeetings();
   }, [category]);
-
   const [filters, setFilters] = useState({
     onlySupported: false,
     onlyNotEnded: false,

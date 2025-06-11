@@ -92,10 +92,10 @@ function PostDetail() {
       return;
     }
 
-    if (!isRecruiting) { // 모집 기간 종료 시 신청 불가
-      toast.warn("모집 기간이 종료되었습니다.");
-      return;
-    }
+    // if (!isRecruiting) { // 모집 기간 종료 시 신청 불가
+    //   toast.warn("모집 기간이 종료되었습니다.");
+    //   return;
+    // }
 
     setIsApplying(true);
     try {
